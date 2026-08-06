@@ -1,0 +1,56 @@
+<section class="section section-soft">
+  <div class="container philosophy-grid">
+    <div>
+      <p class="eyebrow">Engineering Philosophy</p>
+
+      <h2>
+        Successful delivery combines technology, planning and communication.
+      </h2>
+    </div>
+
+    <div class="philosophy-copy">
+      <p>
+        My approach is to build solutions that are secure, observable,
+        maintainable and well documented.
+      </p>
+
+      <p>
+        Technical success depends on more than implementation. It requires
+        clear objectives, stakeholder alignment, risk management, effective
+        communication and a controlled transition into operational support.
+      </p>
+
+      <p>
+        I aim to leave every platform, process and team in a stronger position
+        than before the work began.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 5rem;
+  }
+
+  .philosophy-grid h2 {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+  }
+
+  .philosophy-copy {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 850px) {
+    .philosophy-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

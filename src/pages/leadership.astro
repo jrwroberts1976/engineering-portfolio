@@ -1,155 +1,225 @@
 ---
 /*
-|--------------------------------------------------------------------------
-| Technical Leadership Page
-|--------------------------------------------------------------------------
-|
-| Leadership examples are loaded from:
-|
-|   src/data/profile.ts
-|
+===============================================================================
+Page: Technical Leadership and Project Delivery
+
+Purpose:
+Demonstrates practical experience in planning, stakeholder coordination,
+supplier management, risk control, implementation and operational handover.
+===============================================================================
 */
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-import {
-  leadershipExamples,
-} from '../data/profile';
+const deliveryExamples = [
+  {
+    category: 'Service Transition',
+    title: 'Offshore Infrastructure Patching Transition',
+    challenge:
+      'Routine infrastructure patching needed to be transferred to an offshore service provider while maintaining security, service continuity and operational quality.',
+    role:
+      'I provided technical and process leadership across planning, knowledge transfer, documentation and operational handover.',
+    actions: [
+      'Defined the technical and operational requirements.',
+      'Documented repeatable patching procedures.',
+      'Coordinated knowledge transfer with the offshore team.',
+      'Managed security, language, cultural and time-zone challenges.',
+      'Supported governance and implementation planning.',
+      'Monitored the transition to ensure service quality was maintained.',
+    ],
+    risks: [
+      'Security and access concerns',
+      'Incomplete knowledge transfer',
+      'Service disruption',
+      'Different working practices',
+      'Reliance on individual knowledge',
+    ],
+    outcomes: [
+      'Created a consistent and repeatable patching process.',
+      'Reduced reliance on individual team members.',
+      'Improved operational sustainability.',
+      'Supported cost-effective service delivery.',
+      'Minimised disruption to business operations.',
+    ],
+  },
+  {
+    category: 'Infrastructure Separation',
+    title: 'Shared IT Environment Separation',
+    challenge:
+      'A shared company IT solution needed to be separated so two organisations could operate independently.',
+    role:
+      'I worked with internal stakeholders and a third-party provider to coordinate the technical separation and manage operational dependencies.',
+    actions: [
+      'Helped define the technical scope and expected outcomes.',
+      'Identified infrastructure and application dependencies.',
+      'Coordinated technical workstreams and suppliers.',
+      'Supported implementation planning and change control.',
+      'Communicated technical decisions to affected stakeholders.',
+      'Helped manage internal resistance and operational concerns.',
+    ],
+    risks: [
+      'Loss of service during separation',
+      'Unidentified dependencies',
+      'Conflicting stakeholder priorities',
+      'Supplier coordination failures',
+      'Incomplete operational handover',
+    ],
+    outcomes: [
+      'Supported the successful separation of the shared environment.',
+      'Enabled both organisations to operate independently.',
+      'Maintained focus on service continuity throughout delivery.',
+      'Improved clarity around technical responsibilities.',
+      'Strengthened collaboration across supplier and internal teams.',
+    ],
+  },
+  {
+    category: 'Technical Delivery',
+    title: 'DrayTek SIM Upgrade Programme',
+    challenge:
+      'A structured upgrade programme was required for deployed DrayTek network equipment, with potential customer and service impact.',
+    role:
+      'I acted as a technical lead, supporting implementation planning, complex escalations and coordination between support and delivery teams.',
+    actions: [
+      'Provided technical guidance during planning.',
+      'Supported engineers with complex upgrade issues.',
+      'Helped identify risks before implementation.',
+      'Worked across support and delivery responsibilities.',
+      'Maintained focus on customer and service impact.',
+      'Supported issue resolution during rollout activity.',
+    ],
+    risks: [
+      'Loss of remote connectivity',
+      'Customer service disruption',
+      'Inconsistent implementation',
+      'Unresolved technical exceptions',
+    ],
+    outcomes: [
+      'Improved confidence during the upgrade programme.',
+      'Provided a clear escalation route for technical issues.',
+      'Reduced operational risk during implementation.',
+      'Helped maintain continuity of customer services.',
+    ],
+  },
+  {
+    category: 'Service Improvement',
+    title: 'Grafana Monitoring Proof of Concept',
+    challenge:
+      'Support teams had limited central visibility of service behaviour, infrastructure health and emerging operational trends.',
+    role:
+      'I identified the opportunity, developed the Grafana proof of concept and communicated how improved monitoring could support operational decisions.',
+    actions: [
+      'Identified useful service and infrastructure metrics.',
+      'Created Grafana dashboards and monitoring views.',
+      'Demonstrated the value of centralised visibility.',
+      'Translated technical data into accessible operational information.',
+      'Gathered feedback from technical users.',
+      'Used the proof of concept to support continual improvement.',
+    ],
+    risks: [
+      'Monitoring data without clear operational value',
+      'Poor adoption by support teams',
+      'Incorrect interpretation of technical metrics',
+      'Alert noise',
+    ],
+    outcomes: [
+      'Improved understanding of service health.',
+      'Created a foundation for more proactive support.',
+      'Demonstrated practical monitoring and observability benefits.',
+      'Supported better communication of technical conditions.',
+    ],
+  },
+];
+
+const deliverySkills = [
+  'Scope and requirements',
+  'Stakeholder engagement',
+  'Third-party supplier coordination',
+  'Risk and dependency management',
+  'Implementation planning',
+  'Technical leadership',
+  'Governance and change control',
+  'Knowledge transfer',
+  'Operational handover',
+  'Service continuity',
+  'Issue and escalation management',
+  'Continuous improvement',
+];
 ---
 
 <BaseLayout
-  title="Technical Leadership"
-  description="Examples of technical leadership, mentoring, delivery and operational improvement by James Roberts."
+  title="Technical Leadership and Project Delivery"
+  description="Technical leadership, stakeholder management and project-delivery experience demonstrated through infrastructure change, service transition and operational improvement."
 >
   <!-- ======================================================= -->
   <!-- HERO                                                    -->
   <!-- ======================================================= -->
 
   <section class="leadership-hero">
-    <div class="container leadership-hero-grid">
+    <div class="container hero-grid">
       <div>
-        <p class="eyebrow">Technical Leadership</p>
+        <p class="eyebrow">Technical Leadership and Project Delivery</p>
 
         <h1>
-          Leadership through delivery,
-          <span>support and knowledge sharing.</span>
+          Delivering technical change through
+          <span>planning, coordination and operational focus.</span>
         </h1>
 
         <p class="hero-summary">
-          My leadership approach is practical and collaborative: helping teams
-          understand technical problems, supporting delivery and enabling
-          colleagues to develop greater confidence and ownership.
+          My background combines hands-on infrastructure experience with
+          responsibilities closely aligned to project management, including
+          planning, stakeholder engagement, supplier coordination, risk
+          management, implementation and operational handover.
         </p>
+
+        <div class="button-row">
+          <a class="button button-primary" href="#case-studies">
+            View Delivery Examples
+          </a>
+
+          <a class="button button-secondary" href="/journey">
+            Engineering Journey
+          </a>
+        </div>
       </div>
 
-      <aside class="leadership-panel">
-        <p class="eyebrow">Leadership Approach</p>
+      <aside class="delivery-overview">
+        <p class="eyebrow">Delivery Approach</p>
 
         <ul>
-          <li>Provide clear technical direction.</li>
-          <li>Support engineers during complex investigations.</li>
-          <li>Translate between technical and operational teams.</li>
-          <li>Document knowledge and reduce individual dependency.</li>
-          <li>Maintain focus on service continuity and risk.</li>
+          <li>Understand the business and technical objective.</li>
+          <li>Define scope, dependencies and responsibilities.</li>
+          <li>Identify risks before implementation.</li>
+          <li>Coordinate teams, suppliers and stakeholders.</li>
+          <li>Communicate clearly throughout delivery.</li>
+          <li>Ensure supportable operational handover.</li>
         </ul>
       </aside>
     </div>
   </section>
 
   <!-- ======================================================= -->
-  <!-- PRINCIPLES                                              -->
+  <!-- DELIVERY SKILLS                                         -->
   <!-- ======================================================= -->
 
   <section class="section section-soft">
     <div class="container">
       <div class="section-heading">
-        <p class="eyebrow">Leadership Principles</p>
+        <p class="eyebrow">Project Delivery Capability</p>
 
-        <h2>Creating confidence, clarity and momentum.</h2>
+        <h2>Technical depth supported by structured delivery.</h2>
 
         <p>
-          Technical leadership is not only about having the answer. It is also
-          about helping others understand the problem and move forward safely.
+          These responsibilities have been developed through practical
+          infrastructure change rather than theory alone.
         </p>
       </div>
 
-      <div class="principles-grid">
-        <article class="card">
-          <span>01</span>
-          <h3>Clarity</h3>
-          <p>
-            Break complex issues into understandable technical and operational
-            steps.
-          </p>
-        </article>
-
-        <article class="card">
-          <span>02</span>
-          <h3>Ownership</h3>
-          <p>
-            Encourage engineers to participate actively rather than becoming
-            dependent on escalation.
-          </p>
-        </article>
-
-        <article class="card">
-          <span>03</span>
-          <h3>Collaboration</h3>
-          <p>
-            Bring development, infrastructure and support perspectives together.
-          </p>
-        </article>
-
-        <article class="card">
-          <span>04</span>
-          <h3>Operational focus</h3>
-          <p>
-            Keep reliability, customer impact, risk and supportability central
-            to delivery.
-          </p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======================================================= -->
-  <!-- LEADERSHIP EXAMPLES                                     -->
-  <!-- ======================================================= -->
-
-  <section class="section">
-    <div class="container">
-      <div class="section-heading">
-        <p class="eyebrow">Practical Examples</p>
-
-        <h2>Leadership demonstrated through real work.</h2>
-
-        <p>
-          These examples cover technical delivery, mentoring, operational
-          improvement and cross-team collaboration.
-        </p>
-      </div>
-
-      <div class="examples-grid">
+      <div class="skills-grid">
         {
-          leadershipExamples.map((example) => (
-            <article class="example-card">
-              <p class="example-category">{example.category}</p>
-
-              <h3>{example.title}</h3>
-
-              <p class="example-description">
-                {example.description}
-              </p>
-
-              <h4>Outcomes</h4>
-
-              <ul>
-                {
-                  example.outcomes.map((outcome) => (
-                    <li>{outcome}</li>
-                  ))
-                }
-              </ul>
+          deliverySkills.map((skill, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <strong>{skill}</strong>
             </article>
           ))
         }
@@ -158,33 +228,106 @@ import {
   </section>
 
   <!-- ======================================================= -->
-  <!-- MENTORING                                               -->
+  <!-- DELIVERY CASE STUDIES                                   -->
+  <!-- ======================================================= -->
+
+  <section id="case-studies" class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Delivery Case Studies</p>
+
+        <h2>Examples of leading and coordinating technical change.</h2>
+
+        <p>
+          Each example demonstrates a combination of technical understanding,
+          planning, stakeholder communication and operational responsibility.
+        </p>
+      </div>
+
+      <div class="case-studies">
+        {
+          deliveryExamples.map((example, index) => (
+            <article class="case-study">
+              <header>
+                <span class="case-number">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+
+                <div>
+                  <p class="case-category">{example.category}</p>
+                  <h3>{example.title}</h3>
+                </div>
+              </header>
+
+              <div class="case-introduction">
+                <div>
+                  <h4>Challenge</h4>
+                  <p>{example.challenge}</p>
+                </div>
+
+                <div>
+                  <h4>My role</h4>
+                  <p>{example.role}</p>
+                </div>
+              </div>
+
+              <div class="case-details">
+                <div>
+                  <h4>Delivery actions</h4>
+                  <ul>
+                    {example.actions.map((action) => <li>{action}</li>)}
+                  </ul>
+                </div>
+
+                <div>
+                  <h4>Risks managed</h4>
+                  <ul>
+                    {example.risks.map((risk) => <li>{risk}</li>)}
+                  </ul>
+                </div>
+
+                <div>
+                  <h4>Outcomes</h4>
+                  <ul>
+                    {example.outcomes.map((outcome) => <li>{outcome}</li>)}
+                  </ul>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- MANAGEMENT APPROACH                                     -->
   <!-- ======================================================= -->
 
   <section class="section section-soft">
-    <div class="container mentoring-grid">
+    <div class="container approach-grid">
       <div class="section-heading">
-        <p class="eyebrow">Mentoring</p>
+        <p class="eyebrow">Management Approach</p>
 
-        <h2>Helping engineers build technical confidence.</h2>
+        <h2>Bridging technical teams and business outcomes.</h2>
       </div>
 
       <div class="prose">
         <p>
-          I encourage engineers to become involved in more complex issues by
-          explaining the reasoning behind technical decisions rather than only
-          providing instructions.
+          My project-delivery approach is grounded in understanding both the
+          technology and the operational consequences of change.
         </p>
 
         <p>
-          This helps develop troubleshooting capability, improves confidence
-          and creates a stronger technical team.
+          I work to ensure that technical teams understand the objective,
+          stakeholders understand the risks and progress, and operational
+          teams receive a solution that can be supported after implementation.
         </p>
 
         <p>
-          The separate Engineering Training Platform supports this approach by
-          providing structured learning material across Linux, Docker,
-          Kubernetes, cloud, monitoring and security.
+          This allows me to bridge project management, engineering and service
+          operations—helping technical initiatives move from planning through
+          implementation to successful handover.
         </p>
       </div>
     </div>
@@ -197,20 +340,19 @@ import {
   <section class="section">
     <div class="container final-panel">
       <div>
-        <p class="eyebrow">Leadership in Practice</p>
+        <p class="eyebrow">Supporting Evidence</p>
 
-        <h2>Explore the projects and platforms I have built.</h2>
+        <h2>Explore the engineering platforms behind the delivery experience.</h2>
 
         <p>
-          The portfolio demonstrates the technical delivery, operational
-          thinking and documentation practices supporting this leadership
-          approach.
+          The projects, architecture and live dashboards demonstrate the
+          technical capability supporting my leadership and delivery approach.
         </p>
       </div>
 
       <div class="button-row">
         <a class="button button-primary" href="/projects">
-          Engineering projects
+          Engineering Projects
         </a>
 
         <a class="button button-secondary" href="/lab">
@@ -226,7 +368,7 @@ import {
     padding: 7rem 0 5rem;
   }
 
-  .leadership-hero-grid {
+  .hero-grid {
     display: grid;
     grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
     align-items: center;
@@ -234,7 +376,7 @@ import {
   }
 
   h1 {
-    max-width: 900px;
+    max-width: 920px;
     margin: 0 0 1.5rem;
     font-size: clamp(3rem, 7vw, 5.8rem);
     letter-spacing: -0.055em;
@@ -247,12 +389,12 @@ import {
   }
 
   .hero-summary {
-    max-width: 760px;
+    max-width: 780px;
     color: var(--text-muted);
     font-size: 1.2rem;
   }
 
-  .leadership-panel {
+  .delivery-overview {
     padding: 1.75rem;
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -260,46 +402,69 @@ import {
     box-shadow: var(--shadow);
   }
 
-  .leadership-panel ul {
+  .delivery-overview ul {
     display: grid;
     gap: 0.8rem;
     padding-left: 1.2rem;
     color: var(--text-muted);
   }
 
-  .principles-grid {
+  .skills-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
   }
 
-  .principles-grid article > span {
+  .skills-grid article {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: var(--surface);
+  }
+
+  .skills-grid span {
     color: var(--primary);
-    font-size: 1.8rem;
     font-weight: 850;
   }
 
-  .examples-grid {
+  .case-studies {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.25rem;
+    gap: 1.5rem;
   }
 
-  .example-card {
-    padding: 1.6rem;
+  .case-study {
+    padding: 2rem;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background:
       radial-gradient(
         circle at top right,
         rgba(93, 184, 255, 0.1),
-        transparent 14rem
+        transparent 18rem
       ),
       var(--surface);
   }
 
-  .example-category {
-    margin: 0 0 0.4rem;
+  .case-study header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    padding-bottom: 1.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .case-number {
+    color: var(--primary);
+    font-size: 2rem;
+    font-weight: 850;
+  }
+
+  .case-category {
+    margin: 0;
     color: var(--primary);
     font-size: 0.72rem;
     font-weight: 800;
@@ -307,20 +472,40 @@ import {
     text-transform: uppercase;
   }
 
-  .example-card h3 {
-    margin-top: 0;
+  .case-study h3 {
+    margin: 0.25rem 0 0;
+    font-size: 1.65rem;
   }
 
-  .example-description,
-  .example-card li {
+  .case-introduction {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+    padding: 1.5rem 0;
+  }
+
+  .case-details {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .case-study h4 {
+    margin: 0 0 0.6rem;
+  }
+
+  .case-study p,
+  .case-study li {
     color: var(--text-muted);
   }
 
-  .example-card h4 {
-    margin-bottom: 0.5rem;
+  .case-study ul {
+    display: grid;
+    gap: 0.55rem;
+    padding-left: 1.2rem;
   }
 
-  .mentoring-grid {
+  .approach-grid {
     display: grid;
     grid-template-columns: 0.8fr 1.2fr;
     gap: 5rem;
@@ -346,21 +531,22 @@ import {
   }
 
   @media (max-width: 950px) {
-    .leadership-hero-grid,
-    .mentoring-grid {
+    .hero-grid,
+    .approach-grid {
       grid-template-columns: 1fr;
       gap: 2rem;
     }
 
-    .principles-grid,
-    .examples-grid {
+    .skills-grid,
+    .case-details {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   @media (max-width: 700px) {
-    .principles-grid,
-    .examples-grid {
+    .skills-grid,
+    .case-introduction,
+    .case-details {
       grid-template-columns: 1fr;
     }
 

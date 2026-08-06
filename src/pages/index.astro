@@ -1,29 +1,12 @@
 ---
-/*
-===============================================================================
-Page: Portfolio Homepage
-
-Purpose:
-Presents a concise professional narrative for recruiters, hiring managers and
-technical interviewers.
-
-Homepage flow:
-1. Professional introduction
-2. Project-delivery evidence
-3. Engineering journey
-4. Featured projects
-5. Engineering Lab
-6. Platform architecture
-7. Live operational dashboards
-===============================================================================
-*/
-
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 import Hero from '../components/Hero.astro';
 import DeliveryHighlights from '../components/DeliveryHighlights.astro';
+import EngineeringPhilosophy from '../components/EngineeringPhilosophy.astro';
 import JourneyPreview from '../components/JourneyPreview.astro';
 import FeaturedProjects from '../components/FeaturedProjects.astro';
+import RecentHighlights from '../components/RecentHighlights.astro';
 import LabPreview from '../components/LabPreview.astro';
 import ArchitecturePreview from '../components/ArchitecturePreview.astro';
 import LiveDashboards from '../components/LiveDashboards.astro';
@@ -37,9 +20,13 @@ import LiveDashboards from '../components/LiveDashboards.astro';
 
   <DeliveryHighlights />
 
+  <EngineeringPhilosophy />
+
   <JourneyPreview />
 
   <FeaturedProjects />
+
+  <RecentHighlights />
 
   <LabPreview />
 

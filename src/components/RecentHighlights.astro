@@ -1,0 +1,116 @@
+---
+/*
+===============================================================================
+Component: RecentHighlights
+
+Purpose:
+Shows that the portfolio and engineering work are active and continuously
+developing.
+===============================================================================
+*/
+
+const highlights = [
+  {
+    title: 'Engineering Portfolio',
+    description:
+      'Designed and deployed a data-driven Astro portfolio using Docker and Nginx.',
+    href: '/lab',
+  },
+  {
+    title: 'Public Security Monitoring',
+    description:
+      'Published a sanitised Grafana dashboard showing live CrowdSec and firewall activity.',
+    href: '/projects/crowdsec',
+  },
+  {
+    title: 'AWS Infrastructure as Code',
+    description:
+      'Developed Terraform remote state and reusable cloud infrastructure components.',
+    href: '/projects/aws-cloud-platform',
+  },
+  {
+    title: 'Kubernetes Engineering',
+    description:
+      'Built a K3s environment using MetalLB, Traefik and Git-based deployment practices.',
+    href: '/projects/kubernetes',
+  },
+];
+---
+
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <p class="eyebrow">Recent Engineering Highlights</p>
+
+      <h2>Continual development through practical delivery.</h2>
+
+      <p>
+        Recent work combines infrastructure engineering, automation,
+        observability, cloud development and professional documentation.
+      </p>
+    </div>
+
+    <div class="highlights-grid">
+      {
+        highlights.map((highlight, index) => (
+          <article>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <h3>{highlight.title}</h3>
+            <p>{highlight.description}</p>
+            <a class="card-link" href={highlight.href}>
+              Explore →
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .highlights-grid article {
+    display: flex;
+    min-height: 260px;
+    flex-direction: column;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .highlights-grid span {
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: 850;
+  }
+
+  .highlights-grid h3 {
+    margin: 0.8rem 0 0.4rem;
+  }
+
+  .highlights-grid p {
+    color: var(--text-muted);
+  }
+
+  .highlights-grid .card-link {
+    margin-top: auto;
+  }
+
+  @media (max-width: 950px) {
+    .highlights-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 650px) {
+    .highlights-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
