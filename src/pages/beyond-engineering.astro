@@ -1,0 +1,776 @@
+---
+/*
+===============================================================================
+Page: Beyond Engineering
+
+Purpose:
+Provides a personal introduction to interests outside work, including dancing,
+travel, wildlife, sea fishing, retro gaming and lifelong learning.
+
+The page is intentionally lighter and more personal than the technical case
+studies while remaining professional and suitable for recruiters and hiring
+managers.
+===============================================================================
+*/
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const interests = [
+  {
+    icon: '💃',
+    title: 'Salsa and Modern Jive',
+    summary:
+      'Dancing is one of my favourite interests and something my wife and I enjoy together.',
+    paragraphs: [
+      'My wife and I regularly enjoy both Salsa and Modern Jive. Dancing provides a great balance of learning, exercise, music and meeting new people.',
+      'One of our most memorable experiences was travelling to Cuba to learn Salsa. Experiencing the music, culture and local teaching styles first-hand gave us a much deeper appreciation of the dance.',
+      'Dancing also reinforces qualities that are valuable in professional life, including communication, trust, adaptability and working together towards a shared outcome.',
+    ],
+  },
+  {
+    icon: '🐦',
+    title: 'Wildlife and BirdNET',
+    summary:
+      'A simple question about the birds in our garden became one of my favourite engineering projects.',
+    paragraphs: [
+      'My wife wanted to know which birds were visiting our garden, including those that we could hear but did not always manage to see.',
+      'That question led me to build a BirdNET-Go monitoring system using Linux, Docker, a USB condenser microphone, machine learning, Prometheus and Grafana.',
+      'The project combines an interest in wildlife with practical engineering and gives us a new way to notice and enjoy the birds around our home.',
+    ],
+    link: {
+      href: '/projects/birdnet',
+      label: 'Explore the BirdNET project',
+    },
+  },
+  {
+    icon: '🎣',
+    title: 'Sea Fishing',
+    summary:
+      'Sea fishing gives me a chance to switch off from technology and spend time outdoors.',
+    paragraphs: [
+      'I enjoy sea fishing whenever I have the opportunity, particularly while travelling or spending time near the coast.',
+      'Fishing rewards patience, preparation and observation. Tides, weather, location and equipment all influence the approach, and conditions can change quickly.',
+      'Whether fishing from the shore, a harbour wall or a boat, I enjoy the challenge and the opportunity to relax outdoors as much as the catch itself.',
+    ],
+  },
+  {
+    icon: '🎮',
+    title: 'Retro Gaming',
+    summary:
+      'Classic games and computers reflect my long-standing interest in technology and creative engineering.',
+    paragraphs: [
+      'I have always enjoyed retro gaming and appreciate the creativity behind classic games, computers and consoles.',
+      'It is fascinating to see what developers achieved with limited processing power, memory and storage, often through clever programming and efficient use of resources.',
+      'Revisiting classic titles is relaxing, but it also provides an interesting reminder of how computing has developed over the years.',
+    ],
+  },
+  {
+    icon: '🌍',
+    title: 'Travel',
+    summary:
+      'Travel provides time to explore different places, cultures and ways of life.',
+    paragraphs: [
+      'My wife and I enjoy travelling, particularly visiting Spain and exploring coastal towns, local communities and different landscapes.',
+      'One of the most memorable trips was spending four weeks in the rainforest of Costa Rica. It was a completely different environment from everyday life and gave me the chance to experience the wildlife, climate and landscape at close range.',
+      'Our visit to Cuba was especially memorable because it combined travel, music, culture and our shared interest in Salsa.',
+      'Travel gives me the opportunity to step away from everyday routines, recharge and return with a fresh perspective.',
+    ],
+  },
+  {
+    icon: '💻',
+    title: 'Lifelong Learning',
+    summary:
+      'Curiosity connects many of my professional and personal interests.',
+    paragraphs: [
+      'Technology changes constantly, so I dedicate time outside work to developing new skills through practical projects.',
+      'My Engineering Lab allows me to experiment with Linux, Docker, Kubernetes, cloud platforms, monitoring, security and automation.',
+      'Whether I am learning a new technology, practising a dance step or investigating wildlife in the garden, I enjoy understanding how things work and continually improving.',
+    ],
+    link: {
+      href: '/lab',
+      label: 'Visit the Engineering Lab',
+    },
+  },
+];
+
+const personalValues = [
+  {
+    number: '01',
+    title: 'Curiosity',
+    description:
+      'I enjoy asking questions, exploring ideas and understanding how things work.',
+  },
+  {
+    number: '02',
+    title: 'Shared experiences',
+    description:
+      'Many of my favourite interests are activities I enjoy with my wife, family and friends.',
+  },
+  {
+    number: '03',
+    title: 'Balance',
+    description:
+      'Outdoor interests, music and travel provide a healthy balance to technical work.',
+  },
+  {
+    number: '04',
+    title: 'Continuous learning',
+    description:
+      'I value opportunities to improve, whether professionally or personally.',
+  },
+];
+---
+
+<BaseLayout
+  title="Beyond Engineering"
+  description="A little about James Roberts outside work, including Salsa and Modern Jive, travel to Cuba, wildlife, sea fishing, retro gaming and lifelong learning."
+>
+  <!-- ======================================================= -->
+  <!-- HERO                                                    -->
+  <!-- ======================================================= -->
+
+  <section class="personal-hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Beyond Engineering</p>
+
+        <h1>
+          A little about me
+          <span>away from the keyboard.</span>
+        </h1>
+
+        <p class="hero-summary">
+          Technology is an important part of my life, but I also enjoy
+          travelling, dancing, wildlife, sea fishing, retro gaming and spending
+          time with my wife.
+        </p>
+
+        <p class="hero-summary">
+          Many of the projects in this portfolio began through curiosity, and
+          that same curiosity shapes the interests I enjoy outside work.
+        </p>
+
+        <div class="button-row">
+          <a class="button button-primary" href="#interests">
+            Explore My Interests
+          </a>
+
+          <a class="button button-secondary" href="/about">
+            Professional Profile
+          </a>
+        </div>
+      </div>
+
+      <aside class="personal-summary">
+        <p class="eyebrow">Outside Work</p>
+
+        <div class="summary-list">
+          <article>
+            <span>💃</span>
+            <strong>Salsa and Modern Jive</strong>
+          </article>
+
+          <article>
+            <span>🐦</span>
+            <strong>Wildlife and BirdNET</strong>
+          </article>
+
+          <article>
+            <span>🎣</span>
+            <strong>Sea Fishing</strong>
+          </article>
+
+          <article>
+            <span>🎮</span>
+            <strong>Retro Gaming</strong>
+          </article>
+
+          <article>
+            <span>🌍</span>
+            <strong>Travel and Culture</strong>
+          </article>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- INTRODUCTION                                            -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container introduction-grid">
+      <div class="section-heading">
+        <p class="eyebrow">The Person Behind the Projects</p>
+
+        <h2>Curiosity does not stop at technology.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          Engineering and technology have been a major part of my career, but
+          maintaining interests away from work helps me remain motivated,
+          creative and open to new ideas.
+        </p>
+
+        <p>
+          I enjoy activities that involve learning, shared experiences and
+          exploring different environments. Some are closely connected to
+          technology, while others provide an opportunity to switch off from
+          it completely.
+        </p>
+
+        <p>
+          Together, these interests provide a more complete picture of the
+          person behind the technical projects and professional experience
+          presented throughout this portfolio.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- INTERESTS                                               -->
+  <!-- ======================================================= -->
+
+  <section id="interests" class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Interests and Hobbies</p>
+
+        <h2>Learning, travelling and enjoying time outdoors.</h2>
+      </div>
+
+      <div class="interests-list">
+        {
+          interests.map((interest, index) => (
+            <article class="interest-card">
+              <header>
+                <div class="interest-icon" aria-hidden="true">
+                  {interest.icon}
+                </div>
+
+                <div>
+                  <p class="interest-number">
+                    {String(index + 1).padStart(2, '0')}
+                  </p>
+
+                  <h3>{interest.title}</h3>
+                  <p class="interest-summary">{interest.summary}</p>
+                </div>
+              </header>
+
+              <div class="interest-content">
+                {
+                  interest.paragraphs.map((paragraph) => (
+                    <p>{paragraph}</p>
+                  ))
+                }
+              </div>
+
+              {
+                interest.link && (
+                  <a class="card-link" href={interest.link.href}>
+                    {interest.link.label} →
+                  </a>
+                )
+              }
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- CUBA FEATURE                                            -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container cuba-panel">
+      <div class="cuba-mark" aria-hidden="true">🇨🇺</div>
+
+      <div>
+        <p class="eyebrow">A Memorable Experience</p>
+
+        <h2>Travelling to Cuba to learn Salsa.</h2>
+
+        <p>
+          One of the highlights of our interest in dancing was visiting Cuba
+          and learning Salsa within the culture and musical environment closely
+          associated with the dance.
+        </p>
+
+        <p>
+          Learning from local teachers, experiencing live music and seeing the
+          role dance plays in everyday life gave us a much deeper appreciation
+          of Salsa than we could have gained from lessons at home alone.
+        </p>
+
+        <p>
+          It was a memorable shared experience that combined travel, learning,
+          music and culture.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- COSTA RICA FEATURE                                      -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container costa-rica-panel">
+      <div class="costa-rica-mark" aria-hidden="true">🌿</div>
+
+      <div>
+        <p class="eyebrow">Rainforest Experience</p>
+
+        <h2>Four weeks in the Costa Rican rainforest.</h2>
+
+        <p>
+          Spending four weeks in the rainforest of Costa Rica was one of the
+          most memorable travel experiences of my life.
+        </p>
+
+        <p>
+          Living close to the rainforest environment gave me the opportunity
+          to experience its wildlife, sounds, weather and landscape in a way
+          that would not have been possible during a short visit.
+        </p>
+
+        <p>
+          It strengthened my interest in wildlife and the natural world, and
+          it remains one of the experiences I remember most vividly.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- PERSONAL VALUES                                         -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">What Connects These Interests</p>
+
+        <h2>Curiosity, learning and shared experiences.</h2>
+      </div>
+
+      <div class="values-grid">
+        {
+          personalValues.map((value) => (
+            <article>
+              <span>{value.number}</span>
+              <h3>{value.title}</h3>
+              <p>{value.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- BIRDS AND TECHNOLOGY                                    -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container story-grid">
+      <div>
+        <p class="eyebrow">Where Interests Meet Engineering</p>
+
+        <h2>From garden birds to a monitored machine-learning workload.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          The BirdNET project is a good example of how my personal and
+          technical interests sometimes overlap.
+        </p>
+
+        <p>
+          What began with my wife asking which birds visit our garden developed
+          into a working Linux and Docker platform using a USB microphone,
+          audio processing, machine learning, Prometheus metrics and Grafana
+          dashboards.
+        </p>
+
+        <p>
+          It remains a light-hearted family project, but it also demonstrates
+          how a genuine user need can lead to research, design, implementation
+          and continual improvement.
+        </p>
+
+        <a class="button button-primary" href="/projects/birdnet">
+          Explore the BirdNET Project
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- CLOSING                                                 -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container closing-panel">
+      <div>
+        <p class="eyebrow">Life Beyond Technology</p>
+
+        <h2>A balance of engineering, learning and shared experiences.</h2>
+
+        <p>
+          My professional work demonstrates how I approach technical challenges.
+          These interests provide a glimpse of the curiosity, personality and
+          experiences behind that work.
+        </p>
+      </div>
+
+      <div class="button-column">
+        <a class="button button-primary" href="/about">
+          Professional Profile
+        </a>
+
+        <a class="button button-secondary" href="/journey">
+          Engineering Journey
+        </a>
+
+        <a class="button button-secondary" href="/contact">
+          Get in Touch
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .personal-hero {
+    padding: 7rem 0 5rem;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+    align-items: center;
+    gap: 4rem;
+  }
+
+  h1 {
+    max-width: 950px;
+    margin: 0 0 1.5rem;
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    letter-spacing: -0.06em;
+    line-height: 0.97;
+  }
+
+  h1 span {
+    display: block;
+    color: var(--primary);
+  }
+
+  .hero-summary {
+    max-width: 760px;
+    color: var(--text-muted);
+    font-size: 1.18rem;
+  }
+
+  .personal-summary {
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at top right,
+        rgba(93, 184, 255, 0.14),
+        transparent 16rem
+      ),
+      var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .summary-list {
+    display: grid;
+    gap: 0.7rem;
+    margin-top: 1rem;
+  }
+
+  .summary-list article {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-list article:last-child {
+    border-bottom: 0;
+  }
+
+  .summary-list span {
+    font-size: 1.3rem;
+  }
+
+  .summary-list strong {
+    font-size: 0.95rem;
+  }
+
+  .introduction-grid,
+  .story-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 5rem;
+  }
+
+  .interests-list {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .interest-card {
+    padding: 2rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .interest-card header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 1.4rem;
+    padding-bottom: 1.3rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .interest-icon {
+    display: grid;
+    width: 70px;
+    height: 70px;
+    place-items: center;
+    border: 1px solid rgba(93, 184, 255, 0.3);
+    border-radius: 18px;
+    background: rgba(93, 184, 255, 0.06);
+    font-size: 2rem;
+  }
+
+  .interest-number {
+    margin: 0;
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 850;
+    letter-spacing: 0.08em;
+  }
+
+  .interest-card h3 {
+    margin: 0.25rem 0 0.4rem;
+    font-size: 1.75rem;
+  }
+
+  .interest-summary {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+  }
+
+  .interest-content {
+    padding-top: 1.2rem;
+    color: var(--text-muted);
+  }
+
+  .interest-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .interest-card .card-link {
+    display: inline-block;
+    margin-top: 1rem;
+  }
+
+  .cuba-panel {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(93, 184, 255, 0.35);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at left,
+        rgba(93, 184, 255, 0.11),
+        transparent 24rem
+      ),
+      var(--surface);
+  }
+
+  .cuba-mark {
+    display: grid;
+    width: 120px;
+    height: 120px;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+    font-size: 4rem;
+  }
+
+  .cuba-panel h2 {
+    margin-top: 0;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .cuba-panel p {
+    color: var(--text-muted);
+  }
+
+  .costa-rica-panel {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(143, 240, 188, 0.35);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at left,
+        rgba(143, 240, 188, 0.11),
+        transparent 24rem
+      ),
+      var(--surface);
+  }
+
+  .costa-rica-mark {
+    display: grid;
+    width: 120px;
+    height: 120px;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+    font-size: 4rem;
+  }
+
+  .costa-rica-panel h2 {
+    margin-top: 0;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .costa-rica-panel p {
+    color: var(--text-muted);
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .values-grid article {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .values-grid span {
+    color: var(--primary);
+    font-size: 1.7rem;
+    font-weight: 850;
+  }
+
+  .values-grid h3 {
+    margin: 0.7rem 0 0.3rem;
+  }
+
+  .values-grid p {
+    color: var(--text-muted);
+  }
+
+  .closing-panel {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 4rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(93, 184, 255, 0.35);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .closing-panel p:last-child {
+    color: var(--text-muted);
+  }
+
+  .button-column {
+    display: grid;
+    min-width: 220px;
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 950px) {
+    .hero-grid,
+    .introduction-grid,
+    .story-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .values-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 700px) {
+    .personal-hero {
+      padding-top: 5rem;
+    }
+
+    .interest-card {
+      padding: 1.4rem;
+    }
+
+    .interest-card header {
+      grid-template-columns: 1fr;
+    }
+
+    .cuba-panel {
+      grid-template-columns: 1fr;
+      padding: 1.5rem;
+    }
+
+    .cuba-mark {
+      width: 90px;
+      height: 90px;
+      font-size: 3rem;
+    }
+
+    .costa-rica-panel {
+      grid-template-columns: 1fr;
+      padding: 1.5rem;
+    }
+
+    .costa-rica-mark {
+      width: 90px;
+      height: 90px;
+      font-size: 3rem;
+    }
+
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .closing-panel {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .button-column {
+      width: 100%;
+    }
+  }
+</style>
