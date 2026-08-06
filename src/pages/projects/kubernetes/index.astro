@@ -1,37 +1,1041 @@
 ---
+/*
+===============================================================================
+Page: Kubernetes Homelab
+
+Purpose:
+Documents the planning and implementation of a practical K3s platform using
+MetalLB, Traefik, containerd and Git-based deployment practices.
+===============================================================================
+*/
+
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getProjectById } from '../../../data/projects';
+
+const project = getProjectById('kubernetes');
+
+if (!project) {
+  throw new Error('Kubernetes project data could not be found.');
+}
+
+const objectives = [
+  {
+    title: 'Build practical Kubernetes experience',
+    description:
+      'Develop skills through operating a functioning cluster rather than using isolated examples.',
+  },
+  {
+    title: 'Create local load balancing',
+    description:
+      'Provide Kubernetes LoadBalancer services with addresses usable on the home network.',
+  },
+  {
+    title: 'Implement ingress',
+    description:
+      'Use a consistent ingress layer for routing requests to applications.',
+  },
+  {
+    title: 'Use Git-based deployment',
+    description:
+      'Store manifests, scripts and documentation in version control.',
+  },
+  {
+    title: 'Document the platform',
+    description:
+      'Maintain architecture, deployment, operations, security and troubleshooting guidance.',
+  },
+  {
+    title: 'Support future expansion',
+    description:
+      'Create a foundation for monitoring, GitOps and additional application workloads.',
+  },
+];
+
+const deliveryPhases = [
+  {
+    number: '01',
+    title: 'Prepare the host',
+    description:
+      'Validated Debian, system resources, networking, storage, sudo access and swap configuration.',
+  },
+  {
+    number: '02',
+    title: 'Install K3s',
+    description:
+      'Created a single-node control-plane environment using K3s and containerd.',
+  },
+  {
+    number: '03',
+    title: 'Validate cluster health',
+    description:
+      'Confirmed the node was Ready and core Kubernetes services were running.',
+  },
+  {
+    number: '04',
+    title: 'Configure MetalLB',
+    description:
+      'Defined a safe local address pool and assigned a stable LoadBalancer address.',
+  },
+  {
+    number: '05',
+    title: 'Use Traefik ingress',
+    description:
+      'Configured ingress routing for application access through the cluster.',
+  },
+  {
+    number: '06',
+    title: 'Deploy the first workload',
+    description:
+      'Created a namespace, deployment, service and ingress for a practical demonstration application.',
+  },
+];
+
+const components = [
+  {
+    category: 'Distribution',
+    title: 'K3s',
+    description:
+      'Provides a lightweight Kubernetes distribution suitable for the ARM64 lab environment.',
+  },
+  {
+    category: 'Runtime',
+    title: 'containerd',
+    description:
+      'Runs and manages container workloads beneath Kubernetes.',
+  },
+  {
+    category: 'Ingress',
+    title: 'Traefik',
+    description:
+      'Routes HTTP requests to services using Kubernetes ingress resources.',
+  },
+  {
+    category: 'Load Balancing',
+    title: 'MetalLB',
+    description:
+      'Provides usable LoadBalancer addresses on the local Layer 2 network.',
+  },
+  {
+    category: 'Storage',
+    title: 'NVMe Host Storage',
+    description:
+      'Provides sufficient local capacity for workloads, images and future persistent data.',
+  },
+  {
+    category: 'Delivery',
+    title: 'Git Repository',
+    description:
+      'Stores scripts, manifests, architecture decisions and operational documentation.',
+  },
+];
+
+const decisions = [
+  {
+    title: 'Use K3s',
+    decision:
+      'Select K3s rather than a heavier multi-component Kubernetes installation.',
+    reason:
+      'The platform needed to run efficiently on ARM64 hardware while providing genuine Kubernetes capability.',
+    benefit:
+      'Lower operational overhead with access to standard Kubernetes resources and tooling.',
+  },
+  {
+    title: 'Begin with one node',
+    decision:
+      'Start with a single control-plane node before expanding to multiple nodes.',
+    reason:
+      'This allowed focus on Kubernetes concepts, networking and deployment before adding cluster complexity.',
+    benefit:
+      'Created a manageable learning environment with a clear future expansion path.',
+  },
+  {
+    title: 'Use MetalLB',
+    decision:
+      'Provide Layer 2 LoadBalancer addresses from a reserved section of the LAN.',
+    reason:
+      'Local Kubernetes environments do not receive managed cloud load balancers.',
+    benefit:
+      'Applications can use standard LoadBalancer services with stable network addresses.',
+  },
+  {
+    title: 'Retain Traefik',
+    decision:
+      'Use the ingress controller provided and supported by K3s.',
+    reason:
+      'Traefik integrates naturally with K3s and avoids unnecessary replacement during the initial platform stage.',
+    benefit:
+      'Reduced implementation complexity while retaining standard ingress capability.',
+  },
+];
+
+const challenges = [
+  {
+    title: 'LoadBalancer address conflict',
+    problem:
+      'The initial MetalLB address selected was already in use by another device on the network.',
+    response:
+      'Scanned the available address range, identified safe addresses and changed the assigned IP.',
+    outcome:
+      'The Kubernetes service received a stable address without disrupting another device.',
+  },
+  {
+    title: 'Namespace deployment error',
+    problem:
+      'The first workload resources were applied before the expected namespace existed.',
+    response:
+      'Created the namespace and reapplied the deployment, service and ingress resources.',
+    outcome:
+      'The application deployed successfully and the importance of dependency order was reinforced.',
+  },
+  {
+    title: 'Host resource planning',
+    problem:
+      'The cluster needed sufficient memory, storage and network stability for future workloads.',
+    response:
+      'Validated the host before installation and documented available capacity.',
+    outcome:
+      'The cluster runs on a suitable foundation with room for continued development.',
+  },
+  {
+    title: 'Operational documentation',
+    problem:
+      'A working cluster without clear operating guidance would be difficult to maintain or demonstrate.',
+    response:
+      'Created architecture, deployment, operations, security, decision and troubleshooting documents.',
+    outcome:
+      'The project demonstrates both implementation and supportability.',
+  },
+];
+
+const projectDelivery = [
+  {
+    title: 'Requirements and readiness',
+    description:
+      'Validated the operating system, hardware, storage and networking before installation.',
+  },
+  {
+    title: 'Dependency sequencing',
+    description:
+      'Delivered host preparation, K3s, networking, ingress and workloads in a controlled order.',
+  },
+  {
+    title: 'Risk management',
+    description:
+      'Checked address availability and avoided introducing conflicts into the existing LAN.',
+  },
+  {
+    title: 'Issue resolution',
+    description:
+      'Investigated namespace and networking problems using Kubernetes and Linux tooling.',
+  },
+  {
+    title: 'Decision records',
+    description:
+      'Documented why K3s, Traefik, MetalLB and a single-node starting point were selected.',
+  },
+  {
+    title: 'Future planning',
+    description:
+      'Structured the repository to support GitOps, monitoring, security and additional nodes.',
+  },
+];
+
+const outcomes = [
+  {
+    value: 'Ready',
+    title: 'Control-plane node',
+    description:
+      'A functioning K3s control plane running on dedicated ARM64 hardware.',
+  },
+  {
+    value: 'Stable',
+    title: 'LoadBalancer address',
+    description:
+      'MetalLB provides a fixed address accessible from the local network.',
+  },
+  {
+    value: 'Routed',
+    title: 'Ingress traffic',
+    description:
+      'Traefik routes requests to applications through Kubernetes ingress.',
+  },
+  {
+    value: 'Versioned',
+    title: 'Platform definition',
+    description:
+      'Scripts, manifests and documentation are maintained through Git.',
+  },
+];
+
+const skills = [
+  'Kubernetes',
+  'K3s',
+  'Linux administration',
+  'containerd',
+  'MetalLB',
+  'Traefik',
+  'Kubernetes networking',
+  'Deployments and services',
+  'Ingress resources',
+  'Troubleshooting',
+  'Architecture decisions',
+  'Project documentation',
+];
 ---
 
 <BaseLayout
-  title="Kubernetes Homelab"
-  description="A practical K3s platform demonstrating orchestration, ingress, load balancing and Git-based deployment."
+  title={project.title}
+  description="A practical K3s platform using MetalLB, Traefik, containerd and Git-based Kubernetes deployment practices."
 >
-  <section class="page-intro">
-    <div class="container section-heading">
-      <p class="eyebrow">Kubernetes</p>
+  <section class="project-hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Container Orchestration Case Study</p>
 
-      <h1>Kubernetes Homelab</h1>
+        <h1>
+          Kubernetes
+          <span>Homelab Platform</span>
+        </h1>
 
-      <p>
-        A practical K3s platform demonstrating orchestration, ingress, load balancing and Git-based deployment.
-      </p>
+        <p class="hero-summary">
+          A practical K3s environment demonstrating Kubernetes deployment,
+          ingress, local load balancing, container orchestration and
+          operational documentation.
+        </p>
 
-      <div class="button-row">
-        <a class="button button-secondary" href="/projects">
-          Back to projects
-        </a>
+        <div class="button-row">
+          {
+            project.repositoryUrl && (
+              <a
+                class="button button-primary"
+                href={project.repositoryUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View GitHub Repository
+              </a>
+            )
+          }
+
+          <a class="button button-secondary" href="/architecture">
+            Platform Architecture
+          </a>
+        </div>
+      </div>
+
+      <aside class="project-facts">
+        <p class="eyebrow">Project Summary</p>
+
+        <dl>
+          <div>
+            <dt>Role</dt>
+            <dd>Platform designer and operator</dd>
+          </div>
+
+          <div>
+            <dt>Distribution</dt>
+            <dd>K3s</dd>
+          </div>
+
+          <div>
+            <dt>Ingress</dt>
+            <dd>Traefik</dd>
+          </div>
+
+          <div>
+            <dt>Load balancing</dt>
+            <dd>MetalLB</dd>
+          </div>
+
+          <div>
+            <dt>Status</dt>
+            <dd class="status-active">Active</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="technology-strip">
+    <div class="container">
+      <ul class="tag-list">
+        {project.technologies.map((technology) => <li>{technology}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Executive Summary</p>
+        <h2>Learning Kubernetes by operating a real platform.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          The Kubernetes Homelab was created to develop practical experience
+          beyond theory and temporary training clusters.
+        </p>
+
+        <p>
+          The platform runs K3s on dedicated ARM64 hardware and includes
+          containerd, MetalLB, Traefik, namespaces, deployments, services and
+          ingress resources.
+        </p>
+
+        <p>
+          The repository also includes architecture, deployment, operations,
+          security, troubleshooting and decision documentation, demonstrating
+          how the platform can be supported as well as deployed.
+        </p>
       </div>
     </div>
   </section>
 
   <section class="section section-soft">
-    <div class="container prose">
-      <h2>Case study in preparation</h2>
+    <div class="container challenge-panel">
+      <div>
+        <p class="eyebrow">The Challenge</p>
+        <h2>Translate container knowledge into orchestration capability.</h2>
+      </div>
 
-      <p>
-        This project page will document the architecture, implementation,
-        operational approach, technologies used and lessons learned.
-      </p>
+      <div>
+        <p>
+          Docker Compose provides effective container management on a single
+          host, but it does not demonstrate Kubernetes scheduling, services,
+          ingress, namespaces or cluster-oriented networking.
+        </p>
+
+        <p>
+          The challenge was to create a manageable Kubernetes platform that
+          provided real orchestration experience without introducing
+          unnecessary complexity during the first implementation stage.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Project Objectives</p>
+        <h2>A platform designed for practical Kubernetes development.</h2>
+      </div>
+
+      <div class="objectives-grid">
+        {
+          objectives.map((objective, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{objective.title}</h3>
+              <p>{objective.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Delivery Approach</p>
+        <h2>Building the platform in controlled stages.</h2>
+      </div>
+
+      <div class="delivery-timeline">
+        {
+          deliveryPhases.map((phase) => (
+            <article>
+              <span>{phase.number}</span>
+              <div>
+                <h3>{phase.title}</h3>
+                <p>{phase.description}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Core Components</p>
+        <h2>Lightweight services providing standard Kubernetes capability.</h2>
+      </div>
+
+      <div class="components-grid">
+        {
+          components.map((component) => (
+            <article>
+              <p>{component.category}</p>
+              <h3>{component.title}</h3>
+              <span>{component.description}</span>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Architecture</p>
+        <h2>From LAN traffic to container workloads.</h2>
+      </div>
+
+      <div class="architecture-flow">
+        <article>
+          <span>01</span>
+          <strong>Local Network</strong>
+          <small>Clients access the assigned MetalLB address</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>02</span>
+          <strong>MetalLB</strong>
+          <small>Provides a Kubernetes LoadBalancer address</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>03</span>
+          <strong>Traefik</strong>
+          <small>Matches ingress rules and routes requests</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>04</span>
+          <strong>Kubernetes Service</strong>
+          <small>Provides stable access to application pods</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>05</span>
+          <strong>Deployment and Pods</strong>
+          <small>Run and maintain the required workload</small>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Architecture Decisions</p>
+        <h2>Choices balancing realism and manageable complexity.</h2>
+      </div>
+
+      <div class="decisions-grid">
+        {
+          decisions.map((item) => (
+            <article>
+              <h3>{item.title}</h3>
+
+              <h4>Decision</h4>
+              <p>{item.decision}</p>
+
+              <h4>Reason</h4>
+              <p>{item.reason}</p>
+
+              <h4>Benefit</h4>
+              <p>{item.benefit}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Project Delivery</p>
+        <h2>Technical implementation supported by structured planning.</h2>
+      </div>
+
+      <div class="management-grid">
+        {
+          projectDelivery.map((item, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Challenges</p>
+        <h2>Resolving networking, sequencing and supportability issues.</h2>
+      </div>
+
+      <div class="challenges-grid">
+        {
+          challenges.map((challenge) => (
+            <article>
+              <h3>{challenge.title}</h3>
+
+              <h4>Problem</h4>
+              <p>{challenge.problem}</p>
+
+              <h4>Response</h4>
+              <p>{challenge.response}</p>
+
+              <h4>Outcome</h4>
+              <p>{challenge.outcome}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Outcomes</p>
+        <h2>A functioning base for continued Kubernetes development.</h2>
+      </div>
+
+      <div class="outcomes-grid">
+        {
+          outcomes.map((outcome) => (
+            <article>
+              <strong>{outcome.value}</strong>
+              <h3>{outcome.title}</h3>
+              <p>{outcome.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container skills-layout">
+      <div class="section-heading">
+        <p class="eyebrow">Skills Demonstrated</p>
+        <h2>Container orchestration with operational documentation.</h2>
+      </div>
+
+      <div class="skills-list">
+        {
+          skills.map((skill, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <strong>{skill}</strong>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Lessons Learned</p>
+        <h2>Cluster simplicity creates space to understand the fundamentals.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          A smaller Kubernetes environment still provides meaningful
+          experience with services, ingress, namespaces and orchestration.
+        </p>
+
+        <p>
+          Address planning is essential when integrating MetalLB into an
+          existing network.
+        </p>
+
+        <p>
+          Kubernetes resources have dependencies, and applying them in a clear
+          order makes failures easier to understand.
+        </p>
+
+        <p>
+          Documentation and decision records are as important as manifests
+          when the objective is to demonstrate an operable platform.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container final-panel">
+      <div>
+        <p class="eyebrow">Source and Related Work</p>
+        <h2>Explore the Kubernetes repository and connected platforms.</h2>
+      </div>
+
+      <div class="button-column">
+        {
+          project.repositoryUrl && (
+            <a
+              class="button button-primary"
+              href={project.repositoryUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub Repository
+            </a>
+          )
+        }
+
+        <a class="button button-secondary" href="/projects/docker-platform">
+          Docker Platform
+        </a>
+
+        <a class="button button-secondary" href="/projects/aws-cloud-platform">
+          AWS Cloud Platform
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .project-hero {
+    padding: 7rem 0 5rem;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+    align-items: center;
+    gap: 4rem;
+  }
+
+  h1 {
+    margin: 0 0 1.5rem;
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    letter-spacing: -0.06em;
+    line-height: 0.96;
+  }
+
+  h1 span {
+    display: block;
+    color: var(--primary);
+  }
+
+  .hero-summary {
+    max-width: 760px;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+  }
+
+  .project-facts {
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .project-facts dl {
+    margin: 0;
+  }
+
+  .project-facts dl div {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-facts dl div:last-child {
+    border-bottom: 0;
+  }
+
+  .project-facts dt {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .project-facts dd {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .status-active {
+    color: #8fcaff;
+  }
+
+  .technology-strip {
+    padding: 1.1rem 0;
+    border-block: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  .technology-strip .tag-list {
+    margin: 0;
+  }
+
+  .content-grid,
+  .challenge-panel,
+  .skills-layout {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 5rem;
+  }
+
+  .objectives-grid,
+  .components-grid,
+  .management-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .objectives-grid article,
+  .components-grid article,
+  .management-grid article {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .objectives-grid span,
+  .management-grid span {
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: 850;
+  }
+
+  .objectives-grid p,
+  .management-grid p {
+    color: var(--text-muted);
+  }
+
+  .components-grid article > p {
+    margin: 0;
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .components-grid h3 {
+    margin: 0.4rem 0;
+  }
+
+  .components-grid span {
+    color: var(--text-muted);
+  }
+
+  .delivery-timeline {
+    display: grid;
+    max-width: 950px;
+  }
+
+  .delivery-timeline article {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 1.2rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .delivery-timeline article > span {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    border: 1px solid rgba(93, 184, 255, 0.45);
+    border-radius: 50%;
+    color: var(--primary);
+    background: var(--surface);
+    font-weight: 850;
+  }
+
+  .delivery-timeline h3 {
+    margin: 0;
+  }
+
+  .delivery-timeline p {
+    color: var(--text-muted);
+  }
+
+  .architecture-flow {
+    display: grid;
+    justify-items: center;
+    max-width: 800px;
+    margin-inline: auto;
+  }
+
+  .architecture-flow article {
+    display: grid;
+    width: min(100%, 580px);
+    gap: 0.25rem;
+    padding: 1.2rem 1.4rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+  }
+
+  .architecture-flow article span {
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 850;
+  }
+
+  .architecture-flow article small {
+    color: var(--text-muted);
+  }
+
+  .architecture-flow > div {
+    padding: 0.5rem;
+    color: var(--primary);
+  }
+
+  .decisions-grid,
+  .challenges-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .decisions-grid article,
+  .challenges-grid article {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .decisions-grid h3,
+  .challenges-grid h3 {
+    margin-top: 0;
+    color: var(--primary);
+  }
+
+  .decisions-grid h4,
+  .challenges-grid h4 {
+    margin-bottom: 0.25rem;
+  }
+
+  .decisions-grid p,
+  .challenges-grid p {
+    color: var(--text-muted);
+  }
+
+  .outcomes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .outcomes-grid article {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .outcomes-grid strong {
+    color: var(--primary);
+    font-size: 1.7rem;
+  }
+
+  .outcomes-grid h3 {
+    margin: 0.7rem 0 0.3rem;
+  }
+
+  .outcomes-grid p {
+    color: var(--text-muted);
+  }
+
+  .skills-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+
+  .skills-list article {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.8rem;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: var(--surface);
+  }
+
+  .skills-list span {
+    color: var(--primary);
+    font-weight: 850;
+  }
+
+  .final-panel {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 4rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(93, 184, 255, 0.35);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .button-column {
+    display: grid;
+    gap: 0.75rem;
+    min-width: 230px;
+  }
+
+  @media (max-width: 950px) {
+    .hero-grid,
+    .content-grid,
+    .challenge-panel,
+    .skills-layout {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .objectives-grid,
+    .components-grid,
+    .management-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .outcomes-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 700px) {
+    .objectives-grid,
+    .components-grid,
+    .management-grid,
+    .decisions-grid,
+    .challenges-grid,
+    .outcomes-grid,
+    .skills-list {
+      grid-template-columns: 1fr;
+    }
+
+    .final-panel {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

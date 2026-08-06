@@ -1,37 +1,1042 @@
 ---
+/*
+===============================================================================
+Page: AWS Cloud Platform
+
+Purpose:
+Documents the design and incremental delivery of a modular AWS environment
+using Terraform, remote state, reusable modules and documented decisions.
+===============================================================================
+*/
+
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getProjectById } from '../../../data/projects';
+
+const project = getProjectById('aws-cloud-platform');
+
+if (!project) {
+  throw new Error('AWS Cloud Platform project data could not be found.');
+}
+
+const objectives = [
+  {
+    title: 'Build through code',
+    description:
+      'Provision cloud infrastructure through Terraform rather than relying on repeated manual console changes.',
+  },
+  {
+    title: 'Protect Terraform state',
+    description:
+      'Store state centrally with versioning and locking to support safer infrastructure changes.',
+  },
+  {
+    title: 'Create reusable modules',
+    description:
+      'Separate networking, compute, IAM, monitoring and security concerns into maintainable components.',
+  },
+  {
+    title: 'Support multiple environments',
+    description:
+      'Create a structure capable of supporting development, test and production configurations.',
+  },
+  {
+    title: 'Document decisions',
+    description:
+      'Record architectural choices, blockers, progress and implementation guidance alongside the code.',
+  },
+  {
+    title: 'Develop practical AWS skills',
+    description:
+      'Use a real repository and deployment workflow to build operational cloud capability.',
+  },
+];
+
+const deliveryPhases = [
+  {
+    number: '01',
+    title: 'Define repository architecture',
+    description:
+      'Created separate directories for environments, modules, scripts, documentation and supporting automation.',
+  },
+  {
+    number: '02',
+    title: 'Create the bootstrap layer',
+    description:
+      'Built a dedicated Terraform configuration responsible for creating the remote-state infrastructure.',
+  },
+  {
+    number: '03',
+    title: 'Configure remote state',
+    description:
+      'Provisioned an S3 bucket with versioning and encryption for central Terraform state storage.',
+  },
+  {
+    number: '04',
+    title: 'Implement state locking',
+    description:
+      'Added DynamoDB locking to reduce the risk of conflicting Terraform operations.',
+  },
+  {
+    number: '05',
+    title: 'Develop reusable modules',
+    description:
+      'Introduced modular structures for networking, IAM, security groups, EC2 and monitoring.',
+  },
+  {
+    number: '06',
+    title: 'Build environment configurations',
+    description:
+      'Created separate development, test and production directories to support controlled expansion.',
+  },
+];
+
+const platformComponents = [
+  {
+    category: 'Infrastructure as Code',
+    title: 'Terraform',
+    description:
+      'Defines cloud resources through version-controlled and reviewable configuration.',
+  },
+  {
+    category: 'Remote State',
+    title: 'Amazon S3',
+    description:
+      'Stores central Terraform state with versioning and server-side encryption.',
+  },
+  {
+    category: 'State Coordination',
+    title: 'Amazon DynamoDB',
+    description:
+      'Provides state locking to prevent simultaneous infrastructure modification.',
+  },
+  {
+    category: 'Identity',
+    title: 'AWS IAM',
+    description:
+      'Controls Terraform permissions and supports the principle of least privilege.',
+  },
+  {
+    category: 'Networking',
+    title: 'VPC and Subnets',
+    description:
+      'Provide the network foundation for future compute, security and application services.',
+  },
+  {
+    category: 'Delivery',
+    title: 'Git and GitHub',
+    description:
+      'Provide version history, collaboration, traceability and a future path to CI/CD.',
+  },
+];
+
+const decisions = [
+  {
+    title: 'Separate bootstrap state',
+    decision:
+      'Keep the state-backend configuration separate from the environments that consume it.',
+    reason:
+      'The state bucket and lock table must exist before other Terraform configurations can use them.',
+    benefit:
+      'Creates a clearer and safer infrastructure bootstrap process.',
+  },
+  {
+    title: 'Use environment directories',
+    decision:
+      'Maintain development, test and production configurations separately.',
+    reason:
+      'Different environments may require different resource sizes, controls and deployment timing.',
+    benefit:
+      'Supports controlled change while allowing common modules to be reused.',
+  },
+  {
+    title: 'Adopt reusable modules',
+    decision:
+      'Separate infrastructure capabilities into focused Terraform modules.',
+    reason:
+      'Large monolithic configurations become difficult to test, understand and maintain.',
+    benefit:
+      'Improves consistency, reuse and future expansion.',
+  },
+  {
+    title: 'Document as code',
+    decision:
+      'Store architecture, progress, blockers and decisions in the same repository.',
+    reason:
+      'Infrastructure code alone does not explain the context behind important choices.',
+    benefit:
+      'Improves maintainability and provides clear evidence of engineering reasoning.',
+  },
+];
+
+const challenges = [
+  {
+    title: 'AWS account readiness',
+    problem:
+      'Infrastructure work could not progress fully until the AWS account and required access were active.',
+    response:
+      'Documented the blocker and continued developing the repository structure and Terraform design.',
+    outcome:
+      'Work resumed quickly once access became available without losing project direction.',
+  },
+  {
+    title: 'Terraform authentication',
+    problem:
+      'Terraform required secure AWS credentials and clearly scoped permissions.',
+    response:
+      'Created a dedicated Terraform identity and kept credentials outside source control.',
+    outcome:
+      'Infrastructure provisioning could be performed without embedding secrets in the repository.',
+  },
+  {
+    title: 'State bootstrap dependency',
+    problem:
+      'Remote state cannot be used until the resources storing that state already exist.',
+    response:
+      'Created a separate bootstrap configuration for S3 and DynamoDB.',
+    outcome:
+      'The platform has a repeatable initialisation path for future environments.',
+  },
+  {
+    title: 'Repository SSH access',
+    problem:
+      'GitHub SSH configuration initially caused repository access and identity conflicts.',
+    response:
+      'Used an SSH host alias and corrected the repository remote configuration.',
+    outcome:
+      'The project could be pushed securely and maintained through Git.',
+  },
+];
+
+const projectDelivery = [
+  {
+    title: 'Scope definition',
+    description:
+      'Established the platform boundaries, repository structure and first delivery milestones.',
+  },
+  {
+    title: 'Dependency management',
+    description:
+      'Identified account activation, IAM access and state bootstrap as prerequisites.',
+  },
+  {
+    title: 'Risk reduction',
+    description:
+      'Used state locking, encryption, version control and modular design to reduce change risk.',
+  },
+  {
+    title: 'Incremental delivery',
+    description:
+      'Delivered bootstrap capability before networking and wider cloud resources.',
+  },
+  {
+    title: 'Documentation',
+    description:
+      'Maintained architecture, progress, blockers and decision records alongside implementation.',
+  },
+  {
+    title: 'Future readiness',
+    description:
+      'Designed the repository to support CI/CD, Ansible, monitoring and additional environments.',
+  },
+];
+
+const outcomes = [
+  {
+    value: 'Remote',
+    title: 'Central state',
+    description:
+      'Terraform state is stored centrally rather than remaining on one workstation.',
+  },
+  {
+    value: 'Locked',
+    title: 'Safer changes',
+    description:
+      'DynamoDB locking reduces the risk of conflicting infrastructure updates.',
+  },
+  {
+    value: 'Modular',
+    title: 'Reusable architecture',
+    description:
+      'Common infrastructure components can be reused across environments.',
+  },
+  {
+    value: 'Documented',
+    title: 'Engineering context',
+    description:
+      'Decisions and procedures are maintained with the infrastructure code.',
+  },
+];
+
+const skills = [
+  'AWS infrastructure',
+  'Terraform',
+  'Infrastructure as Code',
+  'Amazon S3',
+  'Amazon DynamoDB',
+  'AWS IAM',
+  'Cloud networking',
+  'State management',
+  'Git and GitHub',
+  'Architecture documentation',
+  'Risk management',
+  'Incremental project delivery',
+];
 ---
 
 <BaseLayout
-  title="AWS Cloud Platform"
-  description="A modular AWS infrastructure platform built using Terraform, remote state and reusable infrastructure components."
+  title={project.title}
+  description="A modular AWS infrastructure platform built with Terraform, remote state, reusable modules and documented architectural decisions."
 >
-  <section class="page-intro">
-    <div class="container section-heading">
-      <p class="eyebrow">Cloud Engineering</p>
+  <section class="project-hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Cloud Engineering Case Study</p>
 
-      <h1>AWS Cloud Platform</h1>
+        <h1>
+          AWS Cloud Platform
+          <span>with Terraform</span>
+        </h1>
 
-      <p>
-        A modular AWS infrastructure platform built using Terraform, remote state and reusable infrastructure components.
-      </p>
+        <p class="hero-summary">
+          A modular cloud-engineering platform using infrastructure as code,
+          encrypted remote state, state locking and reusable Terraform
+          components.
+        </p>
 
-      <div class="button-row">
-        <a class="button button-secondary" href="/projects">
-          Back to projects
-        </a>
+        <div class="button-row">
+          {
+            project.repositoryUrl && (
+              <a
+                class="button button-primary"
+                href={project.repositoryUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View GitHub Repository
+              </a>
+            )
+          }
+
+          <a class="button button-secondary" href="/projects">
+            All Projects
+          </a>
+        </div>
+      </div>
+
+      <aside class="project-facts">
+        <p class="eyebrow">Project Summary</p>
+
+        <dl>
+          <div>
+            <dt>Role</dt>
+            <dd>Cloud platform designer</dd>
+          </div>
+
+          <div>
+            <dt>Cloud provider</dt>
+            <dd>Amazon Web Services</dd>
+          </div>
+
+          <div>
+            <dt>Provisioning</dt>
+            <dd>Terraform</dd>
+          </div>
+
+          <div>
+            <dt>State management</dt>
+            <dd>S3 and DynamoDB</dd>
+          </div>
+
+          <div>
+            <dt>Status</dt>
+            <dd class="status-active">Active development</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="technology-strip">
+    <div class="container">
+      <ul class="tag-list">
+        {project.technologies.map((technology) => <li>{technology}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Executive Summary</p>
+        <h2>Creating a repeatable foundation for cloud engineering.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          The AWS Cloud Platform was created to develop practical experience
+          designing and managing cloud infrastructure through Terraform.
+        </p>
+
+        <p>
+          The project avoids treating AWS as a collection of manually created
+          resources. Instead, infrastructure is defined through code, separated
+          into reusable modules and supported by remote state, locking and
+          documentation.
+        </p>
+
+        <p>
+          The repository is structured to support multiple environments and
+          future integration with monitoring, configuration management and
+          automated deployment workflows.
+        </p>
       </div>
     </div>
   </section>
 
   <section class="section section-soft">
-    <div class="container prose">
-      <h2>Case study in preparation</h2>
+    <div class="container challenge-panel">
+      <div>
+        <p class="eyebrow">The Challenge</p>
+        <h2>Build cloud capability that remains controlled and repeatable.</h2>
+      </div>
 
-      <p>
-        This project page will document the architecture, implementation,
-        operational approach, technologies used and lessons learned.
-      </p>
+      <div>
+        <p>
+          Cloud consoles make it easy to create resources quickly, but manual
+          changes can become inconsistent, difficult to audit and hard to
+          reproduce.
+        </p>
+
+        <p>
+          The challenge was to create a structured platform where cloud
+          resources, dependencies, environments and architectural decisions
+          could be managed through a professional engineering workflow.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Project Objectives</p>
+        <h2>Cloud infrastructure designed for reuse and control.</h2>
+      </div>
+
+      <div class="objectives-grid">
+        {
+          objectives.map((objective, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{objective.title}</h3>
+              <p>{objective.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Delivery Approach</p>
+        <h2>Infrastructure developed in dependency order.</h2>
+      </div>
+
+      <div class="delivery-timeline">
+        {
+          deliveryPhases.map((phase) => (
+            <article>
+              <span>{phase.number}</span>
+              <div>
+                <h3>{phase.title}</h3>
+                <p>{phase.description}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Platform Components</p>
+        <h2>Cloud services with clear engineering responsibilities.</h2>
+      </div>
+
+      <div class="components-grid">
+        {
+          platformComponents.map((component) => (
+            <article>
+              <p>{component.category}</p>
+              <h3>{component.title}</h3>
+              <span>{component.description}</span>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Architecture</p>
+        <h2>From repository to managed AWS resources.</h2>
+      </div>
+
+      <div class="architecture-flow">
+        <article>
+          <span>01</span>
+          <strong>Git Repository</strong>
+          <small>Terraform, documentation and change history</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>02</span>
+          <strong>Terraform Environments</strong>
+          <small>Development, test and production configuration</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>03</span>
+          <strong>Reusable Modules</strong>
+          <small>Networking, IAM, security and compute</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>04</span>
+          <strong>Remote State</strong>
+          <small>S3 versioning, encryption and DynamoDB locking</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>05</span>
+          <strong>AWS Infrastructure</strong>
+          <small>Controlled and repeatable cloud resources</small>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Architecture Decisions</p>
+        <h2>Choices made to improve safety and maintainability.</h2>
+      </div>
+
+      <div class="decisions-grid">
+        {
+          decisions.map((item) => (
+            <article>
+              <h3>{item.title}</h3>
+
+              <h4>Decision</h4>
+              <p>{item.decision}</p>
+
+              <h4>Reason</h4>
+              <p>{item.reason}</p>
+
+              <h4>Benefit</h4>
+              <p>{item.benefit}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Project Delivery</p>
+        <h2>Structured management of dependencies and risk.</h2>
+      </div>
+
+      <div class="management-grid">
+        {
+          projectDelivery.map((item, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Challenges</p>
+        <h2>Resolving access, state and delivery dependencies.</h2>
+      </div>
+
+      <div class="challenges-grid">
+        {
+          challenges.map((challenge) => (
+            <article>
+              <h3>{challenge.title}</h3>
+
+              <h4>Problem</h4>
+              <p>{challenge.problem}</p>
+
+              <h4>Response</h4>
+              <p>{challenge.response}</p>
+
+              <h4>Outcome</h4>
+              <p>{challenge.outcome}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Outcomes</p>
+        <h2>A controlled foundation for future cloud development.</h2>
+      </div>
+
+      <div class="outcomes-grid">
+        {
+          outcomes.map((outcome) => (
+            <article>
+              <strong>{outcome.value}</strong>
+              <h3>{outcome.title}</h3>
+              <p>{outcome.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container skills-layout">
+      <div class="section-heading">
+        <p class="eyebrow">Skills Demonstrated</p>
+        <h2>Cloud engineering supported by delivery discipline.</h2>
+      </div>
+
+      <div class="skills-list">
+        {
+          skills.map((skill, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <strong>{skill}</strong>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Lessons Learned</p>
+        <h2>Cloud foundations should be established before expansion.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          Remote state, locking and identity should be considered before
+          deploying wider infrastructure.
+        </p>
+
+        <p>
+          Modular Terraform improves reuse, but module boundaries should be
+          based on clear responsibilities rather than created unnecessarily.
+        </p>
+
+        <p>
+          Dependencies and blockers should be documented so progress can
+          continue even when external access or approvals are delayed.
+        </p>
+
+        <p>
+          Infrastructure as code provides the greatest value when supported by
+          version control, documentation and a controlled delivery process.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container final-panel">
+      <div>
+        <p class="eyebrow">Source and Related Work</p>
+        <h2>Explore the cloud platform and wider engineering environment.</h2>
+      </div>
+
+      <div class="button-column">
+        {
+          project.repositoryUrl && (
+            <a
+              class="button button-primary"
+              href={project.repositoryUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub Repository
+            </a>
+          )
+        }
+
+        <a class="button button-secondary" href="/projects/docker-platform">
+          Docker Platform
+        </a>
+
+        <a class="button button-secondary" href="/projects/kubernetes">
+          Kubernetes Platform
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .project-hero {
+    padding: 7rem 0 5rem;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+    align-items: center;
+    gap: 4rem;
+  }
+
+  h1 {
+    margin: 0 0 1.5rem;
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    letter-spacing: -0.06em;
+    line-height: 0.96;
+  }
+
+  h1 span {
+    display: block;
+    color: var(--primary);
+  }
+
+  .hero-summary {
+    max-width: 760px;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+  }
+
+  .project-facts {
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .project-facts dl {
+    margin: 0;
+  }
+
+  .project-facts dl div {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-facts dl div:last-child {
+    border-bottom: 0;
+  }
+
+  .project-facts dt {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .project-facts dd {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .status-active {
+    color: #8fcaff;
+  }
+
+  .technology-strip {
+    padding: 1.1rem 0;
+    border-block: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  .technology-strip .tag-list {
+    margin: 0;
+  }
+
+  .content-grid,
+  .challenge-panel,
+  .skills-layout {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 5rem;
+  }
+
+  .objectives-grid,
+  .components-grid,
+  .management-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .objectives-grid article,
+  .components-grid article,
+  .management-grid article {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .objectives-grid span,
+  .management-grid span {
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: 850;
+  }
+
+  .objectives-grid p,
+  .management-grid p {
+    color: var(--text-muted);
+  }
+
+  .components-grid article > p {
+    margin: 0;
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .components-grid h3 {
+    margin: 0.4rem 0;
+  }
+
+  .components-grid span {
+    color: var(--text-muted);
+  }
+
+  .delivery-timeline {
+    display: grid;
+    max-width: 950px;
+  }
+
+  .delivery-timeline article {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 1.2rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .delivery-timeline article > span {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    border: 1px solid rgba(93, 184, 255, 0.45);
+    border-radius: 50%;
+    color: var(--primary);
+    background: var(--surface);
+    font-weight: 850;
+  }
+
+  .delivery-timeline h3 {
+    margin: 0;
+  }
+
+  .delivery-timeline p {
+    color: var(--text-muted);
+  }
+
+  .architecture-flow {
+    display: grid;
+    justify-items: center;
+    max-width: 800px;
+    margin-inline: auto;
+  }
+
+  .architecture-flow article {
+    display: grid;
+    width: min(100%, 580px);
+    gap: 0.25rem;
+    padding: 1.2rem 1.4rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+  }
+
+  .architecture-flow article span {
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 850;
+  }
+
+  .architecture-flow article small {
+    color: var(--text-muted);
+  }
+
+  .architecture-flow > div {
+    padding: 0.5rem;
+    color: var(--primary);
+  }
+
+  .decisions-grid,
+  .challenges-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .decisions-grid article,
+  .challenges-grid article {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .decisions-grid h3,
+  .challenges-grid h3 {
+    margin-top: 0;
+    color: var(--primary);
+  }
+
+  .decisions-grid h4,
+  .challenges-grid h4 {
+    margin-bottom: 0.25rem;
+  }
+
+  .decisions-grid p,
+  .challenges-grid p {
+    color: var(--text-muted);
+  }
+
+  .outcomes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .outcomes-grid article {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .outcomes-grid strong {
+    color: var(--primary);
+    font-size: 1.7rem;
+  }
+
+  .outcomes-grid h3 {
+    margin: 0.7rem 0 0.3rem;
+  }
+
+  .outcomes-grid p {
+    color: var(--text-muted);
+  }
+
+  .skills-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+
+  .skills-list article {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.8rem;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: var(--surface);
+  }
+
+  .skills-list span {
+    color: var(--primary);
+    font-weight: 850;
+  }
+
+  .final-panel {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 4rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(93, 184, 255, 0.35);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .button-column {
+    display: grid;
+    gap: 0.75rem;
+    min-width: 230px;
+  }
+
+  @media (max-width: 950px) {
+    .hero-grid,
+    .content-grid,
+    .challenge-panel,
+    .skills-layout {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .objectives-grid,
+    .components-grid,
+    .management-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .outcomes-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 700px) {
+    .objectives-grid,
+    .components-grid,
+    .management-grid,
+    .decisions-grid,
+    .challenges-grid,
+    .outcomes-grid,
+    .skills-list {
+      grid-template-columns: 1fr;
+    }
+
+    .final-panel {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>
