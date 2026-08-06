@@ -1,50 +1,101 @@
 <!--
-  Homepage hero section.
+===============================================================================
+Component: Hero
 
-  This is the first section visitors see. It introduces the portfolio
-  and provides links to the projects and professional profile pages.
+Purpose:
+Creates the main homepage introduction. It presents James Roberts as an
+experienced infrastructure professional with technical leadership and project
+delivery capability.
+
+Edit this file to change the homepage headline, summary, badges or buttons.
+===============================================================================
 -->
 
 <section class="hero">
-  <div class="container">
-    <p class="eyebrow">
-      Infrastructure • Platform • Cloud Engineering
-    </p>
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <p class="eyebrow">
+        Infrastructure • Technical Leadership • Project Delivery
+      </p>
 
-    <h1>
-      Building secure, observable and automated
-      <span>infrastructure platforms.</span>
-    </h1>
+      <h1>
+        Engineering reliable infrastructure through
+        <span>leadership and practical delivery.</span>
+      </h1>
 
-    <p class="hero-summary">
-      Experienced infrastructure and systems engineer specialising in Linux,
-      Docker, Kubernetes, monitoring, cloud technologies, automation and
-      security engineering.
-    </p>
+      <p class="hero-summary">
+        I combine more than 20 years of infrastructure and operational
+        experience with technical leadership, stakeholder coordination,
+        structured delivery and continual development across cloud,
+        containers, monitoring, automation and security.
+      </p>
 
-    <div class="button-row">
-      <a class="button button-primary" href="/projects">
-        Explore Projects
-      </a>
+      <div class="button-row">
+        <a class="button button-primary" href="/leadership">
+          Project Delivery Experience
+        </a>
 
-      <a class="button button-secondary" href="/about">
-        Professional Profile
-      </a>
+        <a class="button button-secondary" href="/projects">
+          Explore Engineering Projects
+        </a>
+      </div>
+
+      <ul class="focus-list" aria-label="Professional focus areas">
+        <li>Linux</li>
+        <li>Infrastructure</li>
+        <li>Project Delivery</li>
+        <li>Cloud</li>
+        <li>Monitoring</li>
+        <li>Security</li>
+      </ul>
     </div>
+
+    <aside class="hero-summary-panel">
+      <p class="eyebrow">Professional Overview</p>
+
+      <div class="summary-metrics">
+        <article>
+          <strong>20+</strong>
+          <span>Years of IT experience</span>
+        </article>
+
+        <article>
+          <strong>Multi-team</strong>
+          <span>Technical delivery experience</span>
+        </article>
+
+        <article>
+          <strong>Live</strong>
+          <span>Operational engineering platform</span>
+        </article>
+
+        <article>
+          <strong>End-to-end</strong>
+          <span>Planning through operational handover</span>
+        </article>
+      </div>
+    </aside>
   </div>
 </section>
 
 <style>
   .hero {
-    padding: 8rem 0 6rem;
+    padding: 7.5rem 0 6rem;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.55fr);
+    align-items: center;
+    gap: 4rem;
   }
 
   h1 {
     max-width: 950px;
     margin: 0 0 1.5rem;
-    font-size: clamp(3.5rem, 8vw, 6.2rem);
-    line-height: 0.95;
-    letter-spacing: -0.05em;
+    font-size: clamp(3.2rem, 7vw, 6rem);
+    line-height: 0.97;
+    letter-spacing: -0.06em;
   }
 
   h1 span {
@@ -53,19 +104,80 @@
   }
 
   .hero-summary {
-    max-width: 720px;
+    max-width: 780px;
     margin-bottom: 2rem;
     color: var(--text-muted);
-    font-size: 1.2rem;
+    font-size: clamp(1.1rem, 2vw, 1.28rem);
   }
 
-  @media (max-width: 700px) {
-    .hero {
-      padding: 5rem 0 4rem;
+  .focus-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin: 2rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .focus-list li {
+    padding: 0.42rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.03);
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .hero-summary-panel {
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at top right,
+        rgba(93, 184, 255, 0.14),
+        transparent 16rem
+      ),
+      var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .summary-metrics {
+    display: grid;
+    margin-top: 1rem;
+  }
+
+  .summary-metrics article {
+    display: grid;
+    gap: 0.2rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-metrics article:last-child {
+    border-bottom: 0;
+  }
+
+  .summary-metrics strong {
+    color: var(--primary);
+    font-size: 1.55rem;
+    line-height: 1.1;
+  }
+
+  .summary-metrics span {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 950px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
     }
 
-    h1 {
-      font-size: clamp(3rem, 14vw, 4.5rem);
+    .hero {
+      padding-top: 5rem;
     }
   }
 </style>

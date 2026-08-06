@@ -1,23 +1,27 @@
 ---
 /*
-|--------------------------------------------------------------------------
-| Portfolio Home Page
-|--------------------------------------------------------------------------
-|
-| Current narrative:
-|
-|   1. Professional introduction
-|   2. Engineering journey
-|   3. Featured projects
-|   4. Engineering Lab
-|   5. Platform architecture
-|   6. Live operational evidence
-|
+===============================================================================
+Page: Portfolio Homepage
+
+Purpose:
+Presents a concise professional narrative for recruiters, hiring managers and
+technical interviewers.
+
+Homepage flow:
+1. Professional introduction
+2. Project-delivery evidence
+3. Engineering journey
+4. Featured projects
+5. Engineering Lab
+6. Platform architecture
+7. Live operational dashboards
+===============================================================================
 */
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 import Hero from '../components/Hero.astro';
+import DeliveryHighlights from '../components/DeliveryHighlights.astro';
 import JourneyPreview from '../components/JourneyPreview.astro';
 import FeaturedProjects from '../components/FeaturedProjects.astro';
 import LabPreview from '../components/LabPreview.astro';
@@ -27,9 +31,11 @@ import LiveDashboards from '../components/LiveDashboards.astro';
 
 <BaseLayout
   title="Home"
-  description="James Roberts engineering portfolio covering Linux, cloud, Docker, Kubernetes, monitoring, automation and technical leadership."
+  description="James Roberts combines more than 20 years of infrastructure experience with technical leadership, project delivery, cloud, platform engineering, monitoring and automation."
 >
   <Hero />
+
+  <DeliveryHighlights />
 
   <JourneyPreview />
 

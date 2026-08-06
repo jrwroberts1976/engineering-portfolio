@@ -1,0 +1,176 @@
+---
+/*
+===============================================================================
+Component: DeliveryHighlights
+
+Purpose:
+Highlights project-management and technical-delivery experience on the
+homepage. Update the array below to change the displayed examples.
+===============================================================================
+*/
+
+const highlights = [
+  {
+    category: 'Service Transition',
+    title: 'Offshore Patching Transition',
+    description:
+      'Planned and led the transfer of routine infrastructure patching to an offshore provider while managing security, knowledge-transfer, cultural and time-zone challenges.',
+    skills: [
+      'Planning',
+      'Supplier management',
+      'Risk management',
+      'Operational handover',
+    ],
+  },
+  {
+    category: 'Infrastructure Change',
+    title: 'IT Environment Separation',
+    description:
+      'Coordinated technical workstreams and third-party suppliers to separate a shared IT environment so two organisations could operate independently.',
+    skills: [
+      'Scope',
+      'Dependencies',
+      'Stakeholders',
+      'Change delivery',
+    ],
+  },
+  {
+    category: 'Technical Delivery',
+    title: 'DrayTek SIM Upgrade Programme',
+    description:
+      'Provided technical leadership and escalation support during a structured upgrade programme affecting deployed network equipment.',
+    skills: [
+      'Technical leadership',
+      'Implementation planning',
+      'Issue management',
+      'Service continuity',
+    ],
+  },
+  {
+    category: 'Service Improvement',
+    title: 'Grafana Monitoring Proof of Concept',
+    description:
+      'Developed and communicated a monitoring proof of concept to improve service visibility, operational understanding and proactive support.',
+    skills: [
+      'Requirements',
+      'Proof of concept',
+      'Stakeholder communication',
+      'Continuous improvement',
+    ],
+  },
+];
+---
+
+<section class="section delivery-section">
+  <div class="container">
+    <div class="section-heading">
+      <p class="eyebrow">Project Delivery Highlights</p>
+
+      <h2>Technical change delivered through planning and coordination.</h2>
+
+      <p>
+        My experience includes defining technical requirements, coordinating
+        teams and suppliers, managing dependencies and risks, supporting
+        implementation and ensuring successful operational handover.
+      </p>
+    </div>
+
+    <div class="delivery-grid">
+      {
+        highlights.map((highlight, index) => (
+          <article class="delivery-card">
+            <div class="delivery-number">
+              {String(index + 1).padStart(2, '0')}
+            </div>
+
+            <p class="delivery-category">{highlight.category}</p>
+            <h3>{highlight.title}</h3>
+            <p class="delivery-description">{highlight.description}</p>
+
+            <ul class="tag-list">
+              {
+                highlight.skills.map((skill) => (
+                  <li>{skill}</li>
+                ))
+              }
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="section-action">
+      <a class="button button-primary" href="/leadership">
+        View Technical Leadership and Delivery
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .delivery-section {
+    border-block: 1px solid var(--border);
+    background:
+      radial-gradient(
+        circle at 10% 20%,
+        rgba(93, 184, 255, 0.07),
+        transparent 24rem
+      ),
+      rgba(255, 255, 255, 0.018);
+  }
+
+  .delivery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .delivery-card {
+    padding: 1.6rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    transition:
+      transform 160ms ease,
+      border-color 160ms ease;
+  }
+
+  .delivery-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(93, 184, 255, 0.45);
+  }
+
+  .delivery-number {
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: 850;
+  }
+
+  .delivery-category {
+    margin: 0.8rem 0 0.25rem;
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .delivery-card h3 {
+    margin: 0;
+    font-size: 1.45rem;
+  }
+
+  .delivery-description {
+    color: var(--text-muted);
+  }
+
+  .section-action {
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 800px) {
+    .delivery-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
