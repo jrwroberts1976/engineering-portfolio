@@ -1,37 +1,1223 @@
 ---
+/*
+===============================================================================
+Page: BirdNET Garden Monitoring
+
+Purpose:
+Documents a light-hearted personal project created so my wife and I could
+discover which birds visit our garden.
+
+The project also demonstrates Linux audio configuration, microphone research,
+Docker hardware access, BirdNET-Go, Prometheus metrics, Grafana monitoring and
+technical troubleshooting.
+===============================================================================
+*/
+
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+import { getProjectById } from '../../../data/projects';
+import { getDashboardById } from '../../../data/dashboards';
+
+const project = getProjectById('birdnet');
+const dashboard = getDashboardById('birdnet');
+
+if (!project) {
+  throw new Error('BirdNET project data could not be found.');
+}
+
+const objectives = [
+  {
+    title: 'Discover our garden visitors',
+    description:
+      'Create a simple way for my wife and me to see which birds visit the garden, including those we hear but do not manage to see.',
+  },
+  {
+    title: 'Choose suitable audio hardware',
+    description:
+      'Research a microphone that offered clear audio capture, Linux compatibility, USB connectivity and good value.',
+  },
+  {
+    title: 'Listen continuously',
+    description:
+      'Use a dedicated microphone and Linux system to monitor bird calls throughout the day.',
+  },
+  {
+    title: 'Make results accessible',
+    description:
+      'Present detections through a straightforward web interface rather than requiring technical commands.',
+  },
+  {
+    title: 'Add operational monitoring',
+    description:
+      'Expose useful metrics so the application and detection pipeline can be monitored through Prometheus and Grafana.',
+  },
+  {
+    title: 'Keep it enjoyable',
+    description:
+      'Ensure the technology continues to support the original purpose: enjoying and learning more about the wildlife around our home.',
+  },
+];
+
+const components = [
+  {
+    category: 'Audio Capture',
+    title: 'FIFINE K669B USB Condenser Microphone',
+    description:
+      'Captures live garden audio and provides plug-and-play USB connectivity to the Linux host.',
+  },
+  {
+    category: 'Host Platform',
+    title: 'Linux System',
+    description:
+      'Provides the audio device, Docker runtime and reliable application host.',
+  },
+  {
+    category: 'Application',
+    title: 'BirdNET-Go',
+    description:
+      'Analyses live audio and uses machine learning to suggest likely bird species.',
+  },
+  {
+    category: 'Container Platform',
+    title: 'Docker Compose',
+    description:
+      'Packages the application configuration, device access and supporting services.',
+  },
+  {
+    category: 'Metrics',
+    title: 'Custom BirdNET Exporter',
+    description:
+      'Exposes detection and application information for collection by Prometheus.',
+  },
+  {
+    category: 'Visualisation',
+    title: 'Grafana',
+    description:
+      'Turns detection and platform metrics into accessible dashboards and trends.',
+  },
+];
+
+const deliveryPhases = [
+  {
+    number: '01',
+    title: 'Start with the question',
+    description:
+      'The project began with a simple request from my wife: can we find out which birds visit the garden?',
+  },
+  {
+    number: '02',
+    title: 'Research the microphone',
+    description:
+      'Compared USB microphone options, considering audio quality, Linux compatibility, reliability, cost and ease of installation.',
+  },
+  {
+    number: '03',
+    title: 'Select the FIFINE K669B',
+    description:
+      'Chose the FIFINE K669B USB Condenser Microphone as a practical balance of clear audio capture, plug-and-play support and affordability.',
+  },
+  {
+    number: '04',
+    title: 'Connect the audio hardware',
+    description:
+      'Configured the USB audio device on Linux and made it available inside the Docker container.',
+  },
+  {
+    number: '05',
+    title: 'Tune the detection pipeline',
+    description:
+      'Adjusted audio-device configuration, sample rate, gain, privacy filters and detection thresholds.',
+  },
+  {
+    number: '06',
+    title: 'Add monitoring',
+    description:
+      'Created a custom exporter and connected the workload to Prometheus and Grafana.',
+  },
+];
+
+const challenges = [
+  {
+    title: 'Choosing the right microphone',
+    problem:
+      'The quality of the detections depended heavily on selecting a microphone capable of capturing birdsong clearly while remaining affordable and compatible with Linux.',
+    response:
+      'I researched several USB microphone options and compared audio quality, connection method, Linux compatibility, reliability and overall cost. I selected the FIFINE K669B USB Condenser Microphone because it offered plug-and-play USB connectivity, cardioid audio capture and good value without requiring specialist audio equipment.',
+    outcome:
+      'The microphone connected directly to the Linux host and provided a suitable audio source for continuous BirdNET monitoring.',
+  },
+  {
+    title: 'Linux audio device selection',
+    problem:
+      'The application initially selected the wrong audio interface and could not reliably access the USB microphone.',
+    response:
+      'Inspected the available ALSA devices on the host and configured BirdNET-Go to use the correct hardware interface.',
+    outcome:
+      'The application could receive live audio from the garden microphone.',
+  },
+  {
+    title: 'ALSA capture errors',
+    problem:
+      'The container reported repeated ALSA errors while attempting to open the capture device.',
+    response:
+      'Tested the microphone directly on the host, reviewed the active audio stream and changed the application configuration to use the appropriate plughw device.',
+    outcome:
+      'The audio pipeline could be investigated methodically rather than through trial and error.',
+  },
+  {
+    title: 'Few or no detections',
+    problem:
+      'The application was receiving audio, but detections were not consistently passing the configured filters.',
+    response:
+      'Reviewed confidence thresholds, privacy filtering, dynamic thresholds, microphone gain and species-processing logs.',
+    outcome:
+      'The project provided practical experience tuning a machine-learning workload rather than simply installing it.',
+  },
+  {
+    title: 'Monitoring a specialist application',
+    problem:
+      'BirdNET-Go did not initially expose every metric required by the wider monitoring platform.',
+    response:
+      'Developed a custom Prometheus exporter for detection and application data.',
+    outcome:
+      'The workload became part of the same observability platform as the wider infrastructure.',
+  },
+];
+
+const microphoneCriteria = [
+  {
+    title: 'USB connectivity',
+    description:
+      'A direct USB connection avoided the need for an additional audio interface.',
+  },
+  {
+    title: 'Linux compatibility',
+    description:
+      'The microphone needed to be recognised through ALSA and work reliably with the Linux host.',
+  },
+  {
+    title: 'Clear directional capture',
+    description:
+      'Cardioid pickup helped focus on useful garden audio while reducing some unwanted surrounding noise.',
+  },
+  {
+    title: 'Good value',
+    description:
+      'The project required suitable audio quality without investing in specialist recording equipment.',
+  },
+];
+
+const personalOutcomes = [
+  {
+    title: 'A shared family project',
+    description:
+      'The project gave my wife and me a new way to notice and discuss the wildlife visiting our garden.',
+  },
+  {
+    title: 'Technology with a purpose',
+    description:
+      'The technical work was driven by a clear personal outcome rather than adding another service for its own sake.',
+  },
+  {
+    title: 'A reason to look outside',
+    description:
+      'A detection on the screen often encourages us to look into the garden and see whether we can spot the bird ourselves.',
+  },
+  {
+    title: 'Continual discovery',
+    description:
+      'The system can reveal visitors that may otherwise go unnoticed, particularly early in the morning.',
+  },
+];
+
+const technicalSkills = [
+  'Requirements research',
+  'Hardware selection',
+  'Linux audio and ALSA',
+  'USB device troubleshooting',
+  'Docker device mapping',
+  'Docker Compose',
+  'BirdNET-Go',
+  'Application configuration',
+  'Prometheus exporters',
+  'Grafana dashboards',
+  'Log investigation',
+  'Machine-learning workload support',
+];
 ---
 
 <BaseLayout
-  title="BirdNET Monitoring"
-  description="A wildlife detection workload integrated with Docker, audio hardware, Prometheus metrics and Grafana dashboards."
+  title="BirdNET Garden Monitoring"
+  description="A light-hearted BirdNET project created so my wife and I could discover which birds visit our garden."
 >
-  <section class="page-intro">
-    <div class="container section-heading">
-      <p class="eyebrow">Specialist Workload</p>
+  <!-- ======================================================= -->
+  <!-- HERO                                                    -->
+  <!-- ======================================================= -->
 
-      <h1>BirdNET Monitoring</h1>
+  <section class="project-hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">A Personal Engineering Project</p>
 
-      <p>
-        A wildlife detection workload integrated with Docker, audio hardware, Prometheus metrics and Grafana dashboards.
-      </p>
+        <h1>
+          Which birds are visiting
+          <span>our garden?</span>
+        </h1>
 
-      <div class="button-row">
-        <a class="button button-secondary" href="/projects">
-          Back to projects
-        </a>
+        <p class="hero-summary">
+          A BirdNET-Go monitoring system created for my wife and me to discover
+          the birds around our home—combining wildlife, Linux, Docker, audio
+          processing and a little engineering curiosity.
+        </p>
+
+        <div class="button-row">
+          {
+            dashboard?.url && (
+              <a
+                class="button button-primary"
+                href={dashboard.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View BirdNET Dashboard
+              </a>
+            )
+          }
+
+          <a class="button button-secondary" href="/lab">
+            Visit the Engineering Lab
+          </a>
+        </div>
+      </div>
+
+      <aside class="project-facts">
+        <p class="eyebrow">Project Summary</p>
+
+        <dl>
+          <div>
+            <dt>Original request</dt>
+            <dd>Identify our garden birds</dd>
+          </div>
+
+          <div>
+            <dt>Created for</dt>
+            <dd>My wife and our garden</dd>
+          </div>
+
+          <div>
+            <dt>Microphone</dt>
+            <dd>FIFINE K669B USB condenser</dd>
+          </div>
+
+          <div>
+            <dt>Workload</dt>
+            <dd>Live audio classification</dd>
+          </div>
+
+          <div>
+            <dt>Status</dt>
+            <dd class="status-listening">Listening</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- TECHNOLOGIES                                            -->
+  <!-- ======================================================= -->
+
+  <section class="technology-strip">
+    <div class="container">
+      <ul class="tag-list">
+        {project.technologies.map((technology) => <li>{technology}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- THE STORY                                               -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">The Story</p>
+
+        <h2>A simple question became a real engineering workload.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          This project started because my wife wanted to know which birds were
+          visiting our garden.
+        </p>
+
+        <p>
+          We can hear plenty of birds, especially early in the morning, but
+          identifying them by sound is not always easy. BirdNET-Go offered a
+          way to listen continuously and suggest likely species from their
+          calls.
+        </p>
+
+        <p>
+          Before installing the application, I investigated which microphone
+          would be suitable. The microphone would determine the quality of the
+          audio supplied to BirdNET-Go, so it needed to capture clear calls,
+          work reliably with Linux and remain reasonably priced.
+        </p>
+
+        <p>
+          After comparing different USB microphone options, I selected the
+          FIFINE K669B USB Condenser Microphone. Its plug-and-play USB
+          connection, cardioid pickup pattern and good balance between price
+          and audio quality made it a practical choice for the project.
+        </p>
+
+        <p>
+          What began as a small and enjoyable home project soon became a useful
+          practical exercise involving Linux audio devices, Docker hardware
+          access, application configuration, troubleshooting, custom metrics
+          and Grafana monitoring.
+        </p>
       </div>
     </div>
   </section>
 
-  <section class="section section-soft">
-    <div class="container prose">
-      <h2>Case study in preparation</h2>
+  <!-- ======================================================= -->
+  <!-- ORIGINAL REQUIREMENT                                    -->
+  <!-- ======================================================= -->
 
-      <p>
-        This project page will document the architecture, implementation,
-        operational approach, technologies used and lessons learned.
-      </p>
+  <section class="section section-soft">
+    <div class="container question-panel">
+      <div class="question-mark" aria-hidden="true">?</div>
+
+      <div>
+        <p class="eyebrow">The Original Requirement</p>
+
+        <h2>“Can we see which birds visit the garden?”</h2>
+
+        <p>
+          The success criterion was intentionally simple: the system should be
+          easy to access, run without constant attention and provide useful
+          bird detections that we could both enjoy.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- OBJECTIVES                                              -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Project Objectives</p>
+
+        <h2>Useful technology without losing the fun.</h2>
+      </div>
+
+      <div class="objectives-grid">
+        {
+          objectives.map((objective, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{objective.title}</h3>
+              <p>{objective.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- MICROPHONE SELECTION                                    -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Hardware Research</p>
+
+        <h2>Choosing the microphone before building the system.</h2>
+
+        <p>
+          The microphone was a key project dependency. Poor audio quality or
+          unreliable Linux support would limit the effectiveness of the entire
+          detection pipeline.
+        </p>
+      </div>
+
+      <div class="microphone-layout">
+        <article class="selected-microphone">
+          <p class="eyebrow">Selected Hardware</p>
+
+          <h3>FIFINE K669B USB Condenser Microphone</h3>
+
+          <p>
+            I chose the FIFINE K669B after comparing several options. It
+            provided the required USB connectivity, useful directional pickup
+            and Linux compatibility while remaining affordable for a garden
+            monitoring project.
+          </p>
+
+          <ul class="tag-list">
+            <li>USB connection</li>
+            <li>Cardioid pickup</li>
+            <li>Linux compatible</li>
+            <li>Good value</li>
+          </ul>
+        </article>
+
+        <div class="criteria-grid">
+          {
+            microphoneCriteria.map((criterion, index) => (
+              <article>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <h3>{criterion.title}</h3>
+                <p>{criterion.description}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- HOW IT WORKS                                            -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">How It Works</p>
+
+        <h2>From garden sounds to species suggestions.</h2>
+      </div>
+
+      <div class="architecture-flow">
+        <article>
+          <span>01</span>
+          <strong>Birds in the garden</strong>
+          <small>The most important part of the architecture</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>02</span>
+          <strong>FIFINE K669B microphone</strong>
+          <small>Captures calls and surrounding garden audio</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>03</span>
+          <strong>Linux and Docker</strong>
+          <small>Provide the host platform and audio-device access</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>04</span>
+          <strong>BirdNET-Go</strong>
+          <small>Analyses audio and suggests likely bird species</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>05</span>
+          <strong>Web interface and Grafana</strong>
+          <small>Present detections, trends and operational health</small>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- COMPONENTS                                              -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Project Components</p>
+
+        <h2>A small system with several interesting layers.</h2>
+      </div>
+
+      <div class="components-grid">
+        {
+          components.map((component) => (
+            <article>
+              <p>{component.category}</p>
+              <h3>{component.title}</h3>
+              <span>{component.description}</span>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- DELIVERY JOURNEY                                        -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Project Journey</p>
+
+        <h2>From a garden idea to a monitored application.</h2>
+      </div>
+
+      <div class="delivery-timeline">
+        {
+          deliveryPhases.map((phase) => (
+            <article>
+              <span>{phase.number}</span>
+
+              <div>
+                <h3>{phase.title}</h3>
+                <p>{phase.description}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- CHALLENGES                                              -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Engineering Challenges</p>
+
+        <h2>The birds were easier to hear than the audio device.</h2>
+
+        <p>
+          The project included genuine troubleshooting challenges,
+          particularly around microphone selection, Linux audio and detection
+          settings.
+        </p>
+      </div>
+
+      <div class="challenges-grid">
+        {
+          challenges.map((challenge) => (
+            <article>
+              <h3>{challenge.title}</h3>
+
+              <h4>Problem</h4>
+              <p>{challenge.problem}</p>
+
+              <h4>Response</h4>
+              <p>{challenge.response}</p>
+
+              <h4>Outcome</h4>
+              <p>{challenge.outcome}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- PERSONAL VALUE                                          -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Why the Project Matters</p>
+
+        <h2>Not every useful project needs a business case.</h2>
+
+        <p>
+          Some projects are valuable because they bring technology into
+          everyday life in a simple and enjoyable way.
+        </p>
+      </div>
+
+      <div class="personal-grid">
+        {
+          personalOutcomes.map((outcome, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{outcome.title}</h3>
+              <p>{outcome.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- TECHNICAL VALUE                                         -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Technical Value</p>
+
+        <h2>A specialist workload within the wider platform.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          BirdNET-Go differs from most other applications in the Engineering
+          Lab because it depends on physical audio hardware and continuous
+          real-time processing.
+        </p>
+
+        <p>
+          This made it a useful test of hardware research, Docker device
+          access, Linux permissions, ALSA configuration, resource management
+          and application-specific monitoring.
+        </p>
+
+        <p>
+          It also demonstrated that the wider observability platform could
+          support a specialist machine-learning workload rather than only
+          standard infrastructure services.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- SKILLS                                                  -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container skills-layout">
+      <div class="section-heading">
+        <p class="eyebrow">Skills Demonstrated</p>
+
+        <h2>Wildlife curiosity supported by technical investigation.</h2>
+      </div>
+
+      <div class="skills-list">
+        {
+          technicalSkills.map((skill, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <strong>{skill}</strong>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- LESSONS                                                 -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Lessons Learned</p>
+
+        <h2>The best projects often begin with a simple question.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          User value can be straightforward. In this case, the goal was helping
+          my wife see which birds visit our garden.
+        </p>
+
+        <p>
+          Hardware selection should be treated as an engineering decision. The
+          microphone needed to meet functional, compatibility and cost
+          requirements before the rest of the system could succeed.
+        </p>
+
+        <p>
+          Hardware integration introduces a different class of troubleshooting
+          from purely software-based containers.
+        </p>
+
+        <p>
+          Machine-learning applications require tuning and interpretation.
+          Receiving audio does not automatically mean useful detections will be
+          produced.
+        </p>
+
+        <p>
+          Most importantly, a project is more enjoyable when the technology
+          remains connected to the reason it was created.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- FINAL PANEL                                             -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container final-panel">
+      <div>
+        <p class="eyebrow">Garden Monitoring</p>
+
+        <h2>Listening for our next visitor.</h2>
+
+        <p>
+          The system continues to provide a small window into the wildlife
+          around our home while contributing a distinctive real-world workload
+          to the Engineering Lab.
+        </p>
+      </div>
+
+      <div class="button-column">
+        {
+          dashboard?.url && (
+            <a
+              class="button button-primary"
+              href={dashboard.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View BirdNET Dashboard
+            </a>
+          )
+        }
+
+        <a class="button button-secondary" href="/projects/monitoring">
+          Monitoring Platform
+        </a>
+
+        <a class="button button-secondary" href="/projects/docker-platform">
+          Docker Platform
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .project-hero {
+    padding: 7rem 0 5rem;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+    align-items: center;
+    gap: 4rem;
+  }
+
+  h1 {
+    margin: 0 0 1.5rem;
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    letter-spacing: -0.06em;
+    line-height: 0.96;
+  }
+
+  h1 span {
+    display: block;
+    color: var(--primary);
+  }
+
+  .hero-summary {
+    max-width: 780px;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+  }
+
+  .project-facts,
+  .selected-microphone {
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at top right,
+        rgba(93, 184, 255, 0.14),
+        transparent 16rem
+      ),
+      var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .project-facts dl {
+    margin: 0;
+  }
+
+  .project-facts dl div {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-facts dl div:last-child {
+    border-bottom: 0;
+  }
+
+  .project-facts dt {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .project-facts dd {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .status-listening {
+    color: #8ff0bc;
+  }
+
+  .technology-strip {
+    padding: 1.1rem 0;
+    border-block: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  .technology-strip .tag-list {
+    margin: 0;
+  }
+
+  .content-grid,
+  .skills-layout {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 5rem;
+  }
+
+  .question-panel {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 2rem;
+    max-width: 1000px;
+  }
+
+  .question-mark {
+    display: grid;
+    width: 110px;
+    height: 110px;
+    place-items: center;
+    border: 1px solid rgba(93, 184, 255, 0.4);
+    border-radius: 50%;
+    color: var(--primary);
+    background: var(--surface);
+    font-size: 4rem;
+    font-weight: 900;
+  }
+
+  .question-panel h2 {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .question-panel p:last-child,
+  .selected-microphone p {
+    color: var(--text-muted);
+  }
+
+  .objectives-grid,
+  .components-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .objectives-grid article,
+  .components-grid article,
+  .criteria-grid article {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .objectives-grid article > span,
+  .criteria-grid article > span {
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: 850;
+  }
+
+  .objectives-grid p,
+  .criteria-grid p {
+    color: var(--text-muted);
+  }
+
+  .microphone-layout {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.75fr) minmax(0, 1.25fr);
+    gap: 1.5rem;
+  }
+
+  .selected-microphone h3 {
+    font-size: 1.65rem;
+  }
+
+  .criteria-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .components-grid article > p {
+    margin: 0;
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .components-grid h3 {
+    margin: 0.4rem 0;
+  }
+
+  .components-grid article > span {
+    color: var(--text-muted);
+  }
+
+  .architecture-flow {
+    display: grid;
+    justify-items: center;
+    max-width: 800px;
+    margin-inline: auto;
+  }
+
+  .architecture-flow article {
+    display: grid;
+    width: min(100%, 580px);
+    gap: 0.25rem;
+    padding: 1.2rem 1.4rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+  }
+
+  .architecture-flow article span {
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 850;
+  }
+
+  .architecture-flow article small {
+    color: var(--text-muted);
+  }
+
+  .architecture-flow > div {
+    padding: 0.5rem;
+    color: var(--primary);
+  }
+
+  .delivery-timeline {
+    display: grid;
+    max-width: 950px;
+  }
+
+  .delivery-timeline article {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 1.2rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .delivery-timeline article > span {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    border: 1px solid rgba(93, 184, 255, 0.45);
+    border-radius: 50%;
+    color: var(--primary);
+    background: var(--surface);
+    font-weight: 850;
+  }
+
+  .delivery-timeline h3 {
+    margin: 0;
+  }
+
+  .delivery-timeline p {
+    color: var(--text-muted);
+  }
+
+  .challenges-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .challenges-grid article {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .challenges-grid h3 {
+    margin-top: 0;
+    color: var(--primary);
+  }
+
+  .challenges-grid h4 {
+    margin-bottom: 0.25rem;
+  }
+
+  .challenges-grid p {
+    color: var(--text-muted);
+  }
+
+  .personal-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .personal-grid article {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at top right,
+        rgba(143, 240, 188, 0.08),
+        transparent 12rem
+      ),
+      var(--surface);
+  }
+
+  .personal-grid span {
+    color: #8ff0bc;
+    font-size: 1.6rem;
+    font-weight: 850;
+  }
+
+  .personal-grid h3 {
+    margin: 0.7rem 0 0.3rem;
+  }
+
+  .personal-grid p {
+    color: var(--text-muted);
+  }
+
+  .skills-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+
+  .skills-list article {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.8rem;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: var(--surface);
+  }
+
+  .skills-list span {
+    color: var(--primary);
+    font-weight: 850;
+  }
+
+  .final-panel {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 4rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(143, 240, 188, 0.3);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at right,
+        rgba(143, 240, 188, 0.1),
+        transparent 24rem
+      ),
+      var(--surface);
+  }
+
+  .button-column {
+    display: grid;
+    gap: 0.75rem;
+    min-width: 230px;
+  }
+
+  @media (max-width: 1000px) {
+    .hero-grid,
+    .content-grid,
+    .skills-layout,
+    .microphone-layout {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .objectives-grid,
+    .components-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .personal-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 700px) {
+    .objectives-grid,
+    .components-grid,
+    .criteria-grid,
+    .challenges-grid,
+    .personal-grid,
+    .skills-list {
+      grid-template-columns: 1fr;
+    }
+
+    .question-panel {
+      grid-template-columns: 1fr;
+    }
+
+    .question-mark {
+      width: 80px;
+      height: 80px;
+      font-size: 3rem;
+    }
+
+    .delivery-timeline article {
+      grid-template-columns: 52px 1fr;
+      gap: 0.8rem;
+    }
+
+    .delivery-timeline article > span {
+      width: 40px;
+      height: 40px;
+    }
+
+    .final-panel {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .button-column {
+      width: 100%;
+    }
+  }
+</style>
