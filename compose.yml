@@ -1,0 +1,29 @@
+services:
+  engineering-portfolio:
+    container_name: engineering-portfolio
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PUBLIC_GRAFANA_SECURITY_DASHBOARD: ${PUBLIC_GRAFANA_SECURITY_DASHBOARD:-}
+        PUBLIC_GRAFANA_PLATFORM_DASHBOARD: ${PUBLIC_GRAFANA_PLATFORM_DASHBOARD:-}
+        PUBLIC_GRAFANA_BIRDNET_DASHBOARD: ${PUBLIC_GRAFANA_BIRDNET_DASHBOARD:-}
+
+    image: james-roberts/engineering-portfolio:latest
+
+    restart: unless-stopped
+
+    ports:
+      - "${PORTFOLIO_PORT:-8095}:80"
+
+    networks:
+      - apps
+
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+
+networks:
+  apps:
+    external: true
+    name: homelab_apps

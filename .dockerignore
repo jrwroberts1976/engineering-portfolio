@@ -1,0 +1,24 @@
+# Git
+.git
+.github
+
+# Local dependencies and build output
+node_modules
+dist
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
+# Editor configuration
+.vscode
+.idea
+
+# Logs and temporary files
+*.log
+npm-debug.log*
+.DS_Store
+
+# Documentation not required in the image
+AGENTS.md

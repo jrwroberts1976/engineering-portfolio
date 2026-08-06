@@ -1,0 +1,400 @@
+---
+/*
+|--------------------------------------------------------------------------
+| Platform Architecture
+|--------------------------------------------------------------------------
+|
+| This page is generated from:
+|
+|   src/data/platform.ts
+|
+| The architecture diagram and component descriptions therefore use
+| the same source of truth.
+|
+*/
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArchitectureNode from '../../components/ArchitectureNode.astro';
+
+import {
+  getPlatformNodesByLayer,
+} from '../../data/platform';
+
+const architectureLayers = [
+  {
+    id: 'edge',
+    number: '01',
+    title: 'Edge and Internet',
+    description:
+      'Public traffic enters through Cloudflare before being routed into the self-hosted environment.',
+  },
+  {
+    id: 'access',
+    number: '02',
+    title: 'Access and Identity',
+    description:
+      'Reverse proxying and authentication control how externally published services are reached.',
+  },
+  {
+    id: 'platform',
+    number: '03',
+    title: 'Engineering Platforms',
+    description:
+      'Docker, Kubernetes and AWS provide the execution environments for applications and engineering workloads.',
+  },
+  {
+    id: 'services',
+    number: '04',
+    title: 'Applications and Workloads',
+    description:
+      'Public applications and specialist workloads run on the underlying engineering platforms.',
+  },
+  {
+    id: 'observability',
+    number: '05',
+    title: 'Observability',
+    description:
+      'Metrics, logs, dashboards and alerts provide operational visibility across the environment.',
+  },
+  {
+    id: 'security',
+    number: '06',
+    title: 'Security Enforcement',
+    description:
+      'Behavioural detection and firewall controls identify and block malicious activity.',
+  },
+] as const;
+---
+
+<BaseLayout
+  title="Platform Architecture"
+  description="Architecture of the James Roberts engineering platform, including Docker, Kubernetes, AWS, monitoring and security."
+>
+  <!-- ======================================================= -->
+  <!-- PAGE INTRODUCTION                                       -->
+  <!-- ======================================================= -->
+
+  <section class="page-intro">
+    <div class="container section-heading">
+      <p class="eyebrow">Engineering Platform</p>
+
+      <h1>A connected platform, not a collection of isolated tools.</h1>
+
+      <p>
+        The environment combines edge protection, identity, container
+        platforms, cloud engineering, observability and automated security
+        controls into one operational system.
+      </p>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- HIGH-LEVEL FLOW                                         -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Architecture Flow</p>
+
+        <h2>From public traffic to monitored workloads</h2>
+
+        <p>
+          The simplified flow below shows how internet traffic reaches the
+          platform and how monitoring and security surround the hosted
+          services.
+        </p>
+      </div>
+
+      <div class="platform-flow" aria-label="Platform architecture flow">
+        <a class="flow-node" href="#layer-edge">
+          <span>01</span>
+          <strong>Internet and Cloudflare</strong>
+          <small>DNS and edge protection</small>
+        </a>
+
+        <div class="flow-arrow" aria-hidden="true">↓</div>
+
+        <a class="flow-node" href="#layer-access">
+          <span>02</span>
+          <strong>Proxy and Identity</strong>
+          <small>Nginx Proxy Manager and Authelia</small>
+        </a>
+
+        <div class="flow-arrow" aria-hidden="true">↓</div>
+
+        <a class="flow-node" href="#layer-platform">
+          <span>03</span>
+          <strong>Engineering Platforms</strong>
+          <small>Docker, Kubernetes and AWS</small>
+        </a>
+
+        <div class="flow-arrow" aria-hidden="true">↓</div>
+
+        <a class="flow-node" href="#layer-services">
+          <span>04</span>
+          <strong>Applications and Workloads</strong>
+          <small>Portfolio and BirdNET</small>
+        </a>
+
+        <div class="supporting-layers">
+          <a class="support-node" href="#layer-observability">
+            <span>05</span>
+            <strong>Observability</strong>
+            <small>Prometheus, Grafana and Loki</small>
+          </a>
+
+          <a class="support-node" href="#layer-security">
+            <span>06</span>
+            <strong>Security</strong>
+            <small>CrowdSec and firewall enforcement</small>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- ARCHITECTURE LAYERS                                     -->
+  <!-- ======================================================= -->
+
+  {
+    architectureLayers.map((layer, index) => {
+      const nodes = getPlatformNodesByLayer(layer.id);
+
+      return (
+        <section
+          id={`layer-${layer.id}`}
+          class:list={[
+            'section',
+            {
+              'section-soft': index % 2 !== 0,
+            },
+          ]}
+        >
+          <div class="container">
+            <div class="layer-heading">
+              <span>{layer.number}</span>
+
+              <div>
+                <p class="eyebrow">Architecture Layer</p>
+                <h2>{layer.title}</h2>
+                <p>{layer.description}</p>
+              </div>
+            </div>
+
+            <div class="nodes-grid">
+              {
+                nodes.map((node) => (
+                  <ArchitectureNode node={node} />
+                ))
+              }
+            </div>
+          </div>
+        </section>
+      );
+    })
+  }
+
+  <!-- ======================================================= -->
+  <!-- DESIGN PRINCIPLES                                       -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Design Principles</p>
+        <h2>How the platform is engineered</h2>
+      </div>
+
+      <div class="principles-grid">
+        <article class="card">
+          <span>01</span>
+          <h3>Layered access</h3>
+          <p>
+            Public exposure is separated from internal workloads through
+            Cloudflare, reverse proxying and identity controls.
+          </p>
+        </article>
+
+        <article class="card">
+          <span>02</span>
+          <h3>Observable by default</h3>
+          <p>
+            Infrastructure and applications are connected to central metrics,
+            logging, dashboards and operational alerts.
+          </p>
+        </article>
+
+        <article class="card">
+          <span>03</span>
+          <h3>Automated protection</h3>
+          <p>
+            CrowdSec detections are translated into Linux firewall actions
+            without requiring manual intervention.
+          </p>
+        </article>
+
+        <article class="card">
+          <span>04</span>
+          <h3>Documented and repeatable</h3>
+          <p>
+            Git repositories, Docker Compose, Terraform and documented
+            procedures make the environment reproducible and supportable.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ==========================================================
+     High-level architecture flow
+     ========================================================== */
+
+  .platform-flow {
+    display: grid;
+    justify-items: center;
+    max-width: 900px;
+    margin-inline: auto;
+  }
+
+  .flow-node,
+  .support-node {
+    display: grid;
+    width: min(100%, 560px);
+    gap: 0.3rem;
+    padding: 1.35rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background:
+      radial-gradient(
+        circle at top right,
+        rgba(93, 184, 255, 0.12),
+        transparent 14rem
+      ),
+      var(--surface);
+    text-decoration: none;
+    transition:
+      transform 160ms ease,
+      border-color 160ms ease;
+  }
+
+  .flow-node:hover,
+  .support-node:hover {
+    transform: translateY(-3px);
+    border-color: rgba(93, 184, 255, 0.5);
+  }
+
+  .flow-node span,
+  .support-node span {
+    color: var(--primary);
+    font-size: 0.78rem;
+    font-weight: 850;
+  }
+
+  .flow-node strong,
+  .support-node strong {
+    font-size: 1.15rem;
+  }
+
+  .flow-node small,
+  .support-node small {
+    color: var(--text-muted);
+  }
+
+  .flow-arrow {
+    padding: 0.55rem;
+    color: var(--primary);
+    font-size: 1.5rem;
+  }
+
+  .supporting-layers {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  .support-node {
+    width: 100%;
+  }
+
+  /* ==========================================================
+     Layer headings and node cards
+     ========================================================== */
+
+  .layer-heading {
+    display: grid;
+    grid-template-columns: auto minmax(0, 760px);
+    align-items: start;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .layer-heading > span {
+    color: var(--primary);
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .layer-heading h2 {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    letter-spacing: -0.04em;
+  }
+
+  .layer-heading p:last-child {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+  }
+
+  .nodes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  /* ==========================================================
+     Design principles
+     ========================================================== */
+
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .principles-grid article > span {
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: 850;
+  }
+
+  /* ==========================================================
+     Responsive design
+     ========================================================== */
+
+  @media (max-width: 950px) {
+    .nodes-grid,
+    .principles-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 700px) {
+    .supporting-layers,
+    .nodes-grid,
+    .principles-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .layer-heading {
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+    }
+  }
+</style>

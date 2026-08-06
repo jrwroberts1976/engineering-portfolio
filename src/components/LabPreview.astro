@@ -1,0 +1,102 @@
+<!--
+|--------------------------------------------------------------------------
+| Engineering Lab Homepage Preview
+|--------------------------------------------------------------------------
+|
+| Introduces the operational environment behind the portfolio.
+|
+-->
+
+<section class="section">
+  <div class="container lab-preview">
+    <div class="section-heading">
+      <p class="eyebrow">Engineering Lab</p>
+
+      <h2>The platform behind the projects.</h2>
+
+      <p>
+        A continuously evolving environment combining Linux, Docker,
+        Kubernetes, cloud engineering, observability, security and
+        automated delivery.
+      </p>
+
+      <a class="button button-primary" href="/lab">
+        Explore the Engineering Lab
+      </a>
+    </div>
+
+    <div class="lab-summary">
+      <article>
+        <span>Platform</span>
+        <strong>Docker and Kubernetes</strong>
+        <p>Containerised application and orchestration environments.</p>
+      </article>
+
+      <article>
+        <span>Observability</span>
+        <strong>Prometheus and Grafana</strong>
+        <p>Metrics, dashboards, logs and operational alerts.</p>
+      </article>
+
+      <article>
+        <span>Security</span>
+        <strong>CrowdSec and Authelia</strong>
+        <p>Threat detection, firewall enforcement and MFA.</p>
+      </article>
+
+      <article>
+        <span>Automation</span>
+        <strong>Git, Terraform and CI/CD</strong>
+        <p>Version-controlled and repeatable engineering workflows.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .lab-preview {
+    display: grid;
+    grid-template-columns: minmax(0, 0.75fr) minmax(430px, 1.25fr);
+    align-items: center;
+    gap: 4rem;
+  }
+
+  .lab-summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .lab-summary article {
+    padding: 1.35rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+  }
+
+  .lab-summary span {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .lab-summary p {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+  }
+
+  @media (max-width: 900px) {
+    .lab-preview,
+    .lab-summary {
+      grid-template-columns: 1fr;
+    }
+
+    .lab-preview {
+      gap: 2rem;
+    }
+  }
+</style>

@@ -1,0 +1,685 @@
+---
+/*
+|--------------------------------------------------------------------------
+| CrowdSec Security Platform Case Study
+|--------------------------------------------------------------------------
+|
+| Project and dashboard summary information comes from the shared
+| portfolio data files.
+|
+*/
+
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+import { getProjectById } from '../../../data/projects';
+import { getDashboardById } from '../../../data/dashboards';
+
+const project = getProjectById('crowdsec');
+const dashboard = getDashboardById('security');
+
+if (!project) {
+  throw new Error('CrowdSec project data could not be found.');
+}
+
+const dashboardUrl = dashboard?.url ?? '';
+const technologies = project.technologies;
+---
+<BaseLayout
+  title="CrowdSec Security Platform"
+  description="Automated threat detection, firewall enforcement and security monitoring using CrowdSec, Prometheus and Grafana."
+>
+  <!-- ======================================================= -->
+  <!-- PROJECT HERO                                            -->
+  <!-- ======================================================= -->
+
+  <section class="project-hero">
+    <div class="container project-hero-grid">
+      <div>
+        <p class="eyebrow">Security Engineering Case Study</p>
+
+        <h1>CrowdSec Security Monitoring Platform</h1>
+
+        <p class="project-summary">
+          A production-style security platform providing automated threat
+          detection, community intelligence, firewall enforcement and
+          operational observability for internet-facing services.
+        </p>
+
+        <div class="button-row">
+          {
+            dashboardUrl && (
+              <a
+                class="button button-primary"
+                href={dashboardUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View live dashboard
+              </a>
+            )
+          }
+
+          <a class="button button-secondary" href="/projects">
+            Back to projects
+          </a>
+        </div>
+      </div>
+
+      <aside class="project-facts">
+        <p class="eyebrow">Project Overview</p>
+
+        <dl>
+          <div>
+            <dt>Project type</dt>
+            <dd>Security monitoring platform</dd>
+          </div>
+
+          <div>
+            <dt>Deployment</dt>
+            <dd>Docker Compose</dd>
+          </div>
+
+          <div>
+            <dt>Monitoring</dt>
+            <dd>Prometheus and Grafana</dd>
+          </div>
+
+          <div>
+            <dt>Response</dt>
+            <dd>Automated firewall blocking</dd>
+          </div>
+
+          <div>
+            <dt>Status</dt>
+            <dd class="live-status">Operational</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- TECHNOLOGY LIST                                         -->
+  <!-- ======================================================= -->
+
+  <section class="technology-strip">
+    <div class="container">
+      <ul class="tag-list">
+        {
+          technologies.map((technology) => (
+            <li>{technology}</li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- PROJECT OVERVIEW                                        -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Overview</p>
+        <h2>The engineering challenge</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          Internet-facing services are continuously scanned by automated bots,
+          vulnerability scanners and exploit frameworks. Traditional firewall
+          rules alone provide limited visibility into the behaviour behind
+          those requests.
+        </p>
+
+        <p>
+          The objective was to implement a platform that could analyse reverse
+          proxy logs, identify malicious behaviour, create security decisions
+          and automatically block offending traffic at the Linux firewall.
+        </p>
+
+        <p>
+          The platform also needed operational dashboards and alerts so that
+          detection activity, firewall enforcement and service health could be
+          monitored in real time.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- ARCHITECTURE                                             -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Architecture</p>
+        <h2>Detection through to automated response</h2>
+
+        <p>
+          The solution connects reverse-proxy logging, behavioural analysis,
+          threat intelligence, firewall enforcement and observability.
+        </p>
+      </div>
+
+      <div class="architecture">
+        <div class="architecture-item">
+          <span>01</span>
+          <strong>Internet Traffic</strong>
+          <p>Requests arrive through Cloudflare.</p>
+        </div>
+
+        <div class="architecture-arrow">→</div>
+
+        <div class="architecture-item">
+          <span>02</span>
+          <strong>Nginx Proxy Manager</strong>
+          <p>Access and error logs record activity.</p>
+        </div>
+
+        <div class="architecture-arrow">→</div>
+
+        <div class="architecture-item">
+          <span>03</span>
+          <strong>CrowdSec</strong>
+          <p>Behavioural scenarios detect malicious requests.</p>
+        </div>
+
+        <div class="architecture-arrow">→</div>
+
+        <div class="architecture-item">
+          <span>04</span>
+          <strong>Firewall Bouncer</strong>
+          <p>Security decisions are enforced automatically.</p>
+        </div>
+
+        <div class="architecture-arrow">→</div>
+
+        <div class="architecture-item">
+          <span>05</span>
+          <strong>Prometheus and Grafana</strong>
+          <p>Metrics, dashboards and alerts provide visibility.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- CAPABILITIES                                             -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Platform Capabilities</p>
+        <h2>Security automation and operational visibility</h2>
+      </div>
+
+      <div class="grid capability-grid">
+        <article class="card">
+          <h3>Behavioural detection</h3>
+          <p>
+            Analyses HTTP activity for probing, brute force behaviour,
+            sensitive-file requests and exploit attempts.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Community intelligence</h3>
+          <p>
+            Receives CrowdSec community decisions covering known malicious
+            infrastructure and common attack categories.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Automated enforcement</h3>
+          <p>
+            The firewall bouncer turns security decisions into packet-filtering
+            rules without manual intervention.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Prometheus metrics</h3>
+          <p>
+            Custom and native metrics expose decision counts, detection rates,
+            dropped packets and blocked traffic.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Grafana dashboards</h3>
+          <p>
+            Dashboards translate raw telemetry into attack categories, trends,
+            platform health and firewall activity.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Operational alerting</h3>
+          <p>
+            Alerts detect exporter failures, CrowdSec outages and unusual
+            firewall blocking activity.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- RESULTS                                                  -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Operational Evidence</p>
+        <h2>Real security activity</h2>
+
+        <p>
+          A recent 24-hour dashboard view demonstrated the following activity.
+        </p>
+      </div>
+
+      <div class="results-grid">
+        <article>
+          <strong>25,900+</strong>
+          <span>active threat-intelligence decisions</span>
+        </article>
+
+        <article>
+          <strong>149</strong>
+          <span>locally detected security alerts</span>
+        </article>
+
+        <article>
+          <strong>4,220+</strong>
+          <span>malicious packets blocked</span>
+        </article>
+
+        <article>
+          <strong>282 KiB</strong>
+          <span>malicious traffic prevented</span>
+        </article>
+      </div>
+
+      <p class="results-note">
+        These values are included as a representative operational snapshot and
+        will naturally change as the live platform continues to process traffic.
+      </p>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- ATTACK TYPES                                             -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Detection Coverage</p>
+        <h2>Observed attack behaviour</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          The platform has identified several common forms of automated
+          internet reconnaissance and exploitation activity:
+        </p>
+
+        <ul>
+          <li>Administrative interface probing</li>
+          <li>Sensitive file discovery</li>
+          <li>HTTP technology fingerprinting</li>
+          <li>WordPress scanning</li>
+          <li>CVE exploitation attempts</li>
+          <li>Bad and automated user agents</li>
+          <li>HTTP crawling and generic probing</li>
+          <li>Jira and other application exploit scans</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- SKILLS DEMONSTRATED                                      -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Skills Demonstrated</p>
+        <h2>Engineering disciplines covered</h2>
+      </div>
+
+      <div class="skills-grid">
+        <article>
+          <h3>Linux</h3>
+          <p>Firewall administration, networking and service troubleshooting.</p>
+        </article>
+
+        <article>
+          <h3>Containers</h3>
+          <p>Docker Compose, networking, volumes and service integration.</p>
+        </article>
+
+        <article>
+          <h3>Observability</h3>
+          <p>Prometheus metrics, exporters, Grafana dashboards and alerts.</p>
+        </article>
+
+        <article>
+          <h3>Security</h3>
+          <p>Threat detection, intelligence, response and attack analysis.</p>
+        </article>
+
+        <article>
+          <h3>Operations</h3>
+          <p>Health monitoring, incident visibility and operational support.</p>
+        </article>
+
+        <article>
+          <h3>Documentation</h3>
+          <p>Architecture, implementation details and public case-study design.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- LESSONS LEARNED                                         -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Lessons Learned</p>
+        <h2>Key engineering outcomes</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          Behaviour-based detection provides context that cannot be achieved
+          through static firewall rules alone.
+        </p>
+
+        <p>
+          Community intelligence significantly reduces exposure to known
+          malicious sources, while local detections reveal activity specific
+          to the hosted environment.
+        </p>
+
+        <p>
+          The project also reinforced that a security control is much more
+          valuable when its health, effectiveness and operational impact can be
+          measured clearly.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- FINAL ACTION                                             -->
+  <!-- ======================================================= -->
+
+  <section class="section project-cta">
+    <div class="container cta-panel">
+      <div>
+        <p class="eyebrow">Live Evidence</p>
+        <h2>Explore the public security dashboard</h2>
+
+        <p>
+          The externally shared Grafana dashboard provides a sanitised,
+          read-only view of live security telemetry.
+        </p>
+      </div>
+
+      {
+        dashboardUrl && (
+          <a
+            class="button button-primary"
+            href={dashboardUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open live dashboard
+          </a>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .project-hero {
+    padding: 7rem 0 4rem;
+  }
+
+  .project-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(290px, 0.6fr);
+    align-items: start;
+    gap: 4rem;
+  }
+
+  h1 {
+    max-width: 900px;
+    margin: 0 0 1.5rem;
+    font-size: clamp(3rem, 7vw, 5.8rem);
+    letter-spacing: -0.055em;
+    line-height: 0.98;
+  }
+
+  .project-summary {
+    max-width: 760px;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+  }
+
+  .project-facts {
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .project-facts dl {
+    margin: 0;
+  }
+
+  .project-facts dl div {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-facts dl div:last-child {
+    border-bottom: 0;
+  }
+
+  .project-facts dt {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+
+  .project-facts dd {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .live-status {
+    color: #8ff0bc;
+  }
+
+  .technology-strip {
+    padding: 1.2rem 0;
+    border-block: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  .technology-strip .tag-list {
+    margin: 0;
+  }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 5rem;
+  }
+
+  .capability-grid,
+  .skills-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .architecture {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1fr) auto
+      minmax(0, 1fr) auto
+      minmax(0, 1fr) auto
+      minmax(0, 1fr) auto
+      minmax(0, 1fr);
+    align-items: stretch;
+    gap: 0.65rem;
+  }
+
+  .architecture-item {
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+  }
+
+  .architecture-item span {
+    display: block;
+    margin-bottom: 1rem;
+    color: var(--primary);
+    font-size: 1.4rem;
+    font-weight: 850;
+  }
+
+  .architecture-item p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .architecture-arrow {
+    display: grid;
+    place-items: center;
+    color: var(--primary);
+    font-size: 1.4rem;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .results-grid article {
+    display: grid;
+    gap: 0.4rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .results-grid strong {
+    color: var(--primary);
+    font-size: 2.2rem;
+    line-height: 1;
+  }
+
+  .results-grid span,
+  .results-note {
+    color: var(--text-muted);
+  }
+
+  .results-note {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .skills-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .skills-grid article {
+    padding: 1.4rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .skills-grid h3 {
+    margin-top: 0;
+  }
+
+  .skills-grid p {
+    color: var(--text-muted);
+  }
+
+  .cta-panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(93, 184, 255, 0.35);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at right,
+        rgba(93, 184, 255, 0.16),
+        transparent 25rem
+      ),
+      var(--surface);
+  }
+
+  .cta-panel h2 {
+    margin: 0;
+  }
+
+  .cta-panel p:last-child {
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 1050px) {
+    .architecture {
+      grid-template-columns: 1fr;
+    }
+
+    .architecture-arrow {
+      transform: rotate(90deg);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .project-hero-grid,
+    .content-grid,
+    .capability-grid,
+    .skills-grid,
+    .results-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .project-hero-grid,
+    .content-grid {
+      gap: 2rem;
+    }
+
+    .cta-panel {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

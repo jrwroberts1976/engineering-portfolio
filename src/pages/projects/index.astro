@@ -1,0 +1,78 @@
+---
+/*
+|--------------------------------------------------------------------------
+| Projects Overview
+|--------------------------------------------------------------------------
+|
+| Project data comes from:
+|
+|   src/data/projects.ts
+|
+| Do not add project definitions directly to this page.
+|
+*/
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+import { projects } from '../../data/projects';
+---
+
+<BaseLayout
+  title="Engineering Projects"
+  description="Infrastructure, cloud, container, monitoring and security engineering case studies by James Roberts."
+>
+  <!-- ======================================================= -->
+  <!-- PAGE INTRODUCTION                                       -->
+  <!-- ======================================================= -->
+
+  <section class="page-intro">
+    <div class="container section-heading">
+      <p class="eyebrow">Engineering Portfolio</p>
+
+      <h1>Projects built to be operated, not just demonstrated.</h1>
+
+      <p>
+        These case studies show how I approach architecture, implementation,
+        monitoring, security, documentation and ongoing operational support.
+      </p>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- PROJECT LIST                                            -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="projects-grid">
+        {
+          projects.map((project) => (
+            <ProjectCard
+              category={project.category}
+              title={project.title}
+              description={project.description}
+              href={project.href}
+              status={project.status}
+              technologies={project.technologies}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 850px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

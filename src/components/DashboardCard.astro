@@ -1,0 +1,155 @@
+---
+interface Props {
+  category: string;
+  title: string;
+  description: string;
+  status?: string;
+  dashboardUrl?: string;
+  projectUrl?: string;
+}
+
+const {
+  category,
+  title,
+  description,
+  status = 'Live',
+  dashboardUrl,
+  projectUrl,
+} = Astro.props;
+
+const available = Boolean(dashboardUrl);
+---
+
+<article class:list={['dashboard-card', { unavailable: !available }]}>
+  <div class="dashboard-topline">
+    <p class="eyebrow">{category}</p>
+
+    <span class:list={['status', { pending: !available }]}>
+      <span class="status-dot"></span>
+      {available ? status : 'Preparing'}
+    </span>
+  </div>
+
+  <h3>{title}</h3>
+  <p>{description}</p>
+
+  <div class="dashboard-actions">
+    {
+      available ? (
+        <a
+          class="button button-primary"
+          href={dashboardUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View live dashboard
+        </a>
+      ) : (
+        <span class="button disabled-button">
+          Dashboard coming soon
+        </span>
+      )
+    }
+
+    {
+      projectUrl && (
+        <a class="project-link" href={projectUrl}>
+          View project →
+        </a>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .dashboard-card {
+    display: flex;
+    min-height: 330px;
+    flex-direction: column;
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at top right,
+        rgba(93, 184, 255, 0.13),
+        transparent 15rem
+      ),
+      linear-gradient(
+        145deg,
+        rgba(23, 43, 69, 0.96),
+        rgba(13, 26, 43, 0.96)
+      );
+    box-shadow: var(--shadow);
+  }
+
+  .dashboard-card.unavailable {
+    opacity: 0.72;
+  }
+
+  .dashboard-topline {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.65rem;
+    border: 1px solid rgba(103, 232, 165, 0.25);
+    border-radius: 999px;
+    color: #8ff0bc;
+    background: rgba(34, 197, 94, 0.08);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .status.pending {
+    border-color: var(--border);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-muted);
+  }
+
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 10px currentColor;
+  }
+
+  h3 {
+    margin: 1.3rem 0 0.75rem;
+    font-size: 1.55rem;
+  }
+
+  p {
+    color: var(--text-muted);
+  }
+
+  .dashboard-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-top: auto;
+    padding-top: 1.5rem;
+  }
+
+  .project-link {
+    color: var(--primary);
+    font-weight: 750;
+    text-decoration: none;
+  }
+
+  .disabled-button {
+    cursor: default;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.035);
+  }
+</style>

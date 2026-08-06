@@ -1,0 +1,72 @@
+---
+/*
+|--------------------------------------------------------------------------
+| Live Grafana Dashboards
+|--------------------------------------------------------------------------
+|
+| Dashboard information is loaded from:
+|
+|   src/data/dashboards.ts
+|
+| Related project information is loaded from:
+|
+|   src/data/projects.ts
+|
+| An empty dashboard URL automatically produces a "Preparing" card.
+|
+*/
+
+import DashboardCard from './DashboardCard.astro';
+
+import { dashboards } from '../data/dashboards';
+import { getProjectById } from '../data/projects';
+---
+
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <p class="eyebrow">Live Engineering Telemetry</p>
+
+      <h2>Real platforms. Real operational data.</h2>
+
+      <p>
+        These read-only Grafana dashboards provide live operational evidence
+        from my engineering platform. Sensitive infrastructure information has
+        been removed from the public views.
+      </p>
+    </div>
+
+    <div class="dashboard-grid">
+      {
+        dashboards.map((dashboard) => {
+          const project = getProjectById(dashboard.projectId);
+
+          return (
+            <DashboardCard
+              category={dashboard.category}
+              title={dashboard.title}
+              description={dashboard.description}
+              status={dashboard.status}
+              dashboardUrl={dashboard.url}
+              projectUrl={project?.href}
+            />
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 950px) {
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,372 @@
+---
+/*
+|--------------------------------------------------------------------------
+| Technical Leadership Page
+|--------------------------------------------------------------------------
+|
+| Leadership examples are loaded from:
+|
+|   src/data/profile.ts
+|
+*/
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+import {
+  leadershipExamples,
+} from '../data/profile';
+---
+
+<BaseLayout
+  title="Technical Leadership"
+  description="Examples of technical leadership, mentoring, delivery and operational improvement by James Roberts."
+>
+  <!-- ======================================================= -->
+  <!-- HERO                                                    -->
+  <!-- ======================================================= -->
+
+  <section class="leadership-hero">
+    <div class="container leadership-hero-grid">
+      <div>
+        <p class="eyebrow">Technical Leadership</p>
+
+        <h1>
+          Leadership through delivery,
+          <span>support and knowledge sharing.</span>
+        </h1>
+
+        <p class="hero-summary">
+          My leadership approach is practical and collaborative: helping teams
+          understand technical problems, supporting delivery and enabling
+          colleagues to develop greater confidence and ownership.
+        </p>
+      </div>
+
+      <aside class="leadership-panel">
+        <p class="eyebrow">Leadership Approach</p>
+
+        <ul>
+          <li>Provide clear technical direction.</li>
+          <li>Support engineers during complex investigations.</li>
+          <li>Translate between technical and operational teams.</li>
+          <li>Document knowledge and reduce individual dependency.</li>
+          <li>Maintain focus on service continuity and risk.</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- PRINCIPLES                                              -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Leadership Principles</p>
+
+        <h2>Creating confidence, clarity and momentum.</h2>
+
+        <p>
+          Technical leadership is not only about having the answer. It is also
+          about helping others understand the problem and move forward safely.
+        </p>
+      </div>
+
+      <div class="principles-grid">
+        <article class="card">
+          <span>01</span>
+          <h3>Clarity</h3>
+          <p>
+            Break complex issues into understandable technical and operational
+            steps.
+          </p>
+        </article>
+
+        <article class="card">
+          <span>02</span>
+          <h3>Ownership</h3>
+          <p>
+            Encourage engineers to participate actively rather than becoming
+            dependent on escalation.
+          </p>
+        </article>
+
+        <article class="card">
+          <span>03</span>
+          <h3>Collaboration</h3>
+          <p>
+            Bring development, infrastructure and support perspectives together.
+          </p>
+        </article>
+
+        <article class="card">
+          <span>04</span>
+          <h3>Operational focus</h3>
+          <p>
+            Keep reliability, customer impact, risk and supportability central
+            to delivery.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- LEADERSHIP EXAMPLES                                     -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Practical Examples</p>
+
+        <h2>Leadership demonstrated through real work.</h2>
+
+        <p>
+          These examples cover technical delivery, mentoring, operational
+          improvement and cross-team collaboration.
+        </p>
+      </div>
+
+      <div class="examples-grid">
+        {
+          leadershipExamples.map((example) => (
+            <article class="example-card">
+              <p class="example-category">{example.category}</p>
+
+              <h3>{example.title}</h3>
+
+              <p class="example-description">
+                {example.description}
+              </p>
+
+              <h4>Outcomes</h4>
+
+              <ul>
+                {
+                  example.outcomes.map((outcome) => (
+                    <li>{outcome}</li>
+                  ))
+                }
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- MENTORING                                               -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container mentoring-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Mentoring</p>
+
+        <h2>Helping engineers build technical confidence.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          I encourage engineers to become involved in more complex issues by
+          explaining the reasoning behind technical decisions rather than only
+          providing instructions.
+        </p>
+
+        <p>
+          This helps develop troubleshooting capability, improves confidence
+          and creates a stronger technical team.
+        </p>
+
+        <p>
+          The separate Engineering Training Platform supports this approach by
+          providing structured learning material across Linux, Docker,
+          Kubernetes, cloud, monitoring and security.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- FINAL ACTION                                            -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container final-panel">
+      <div>
+        <p class="eyebrow">Leadership in Practice</p>
+
+        <h2>Explore the projects and platforms I have built.</h2>
+
+        <p>
+          The portfolio demonstrates the technical delivery, operational
+          thinking and documentation practices supporting this leadership
+          approach.
+        </p>
+      </div>
+
+      <div class="button-row">
+        <a class="button button-primary" href="/projects">
+          Engineering projects
+        </a>
+
+        <a class="button button-secondary" href="/lab">
+          Engineering Lab
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .leadership-hero {
+    padding: 7rem 0 5rem;
+  }
+
+  .leadership-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+    align-items: center;
+    gap: 4rem;
+  }
+
+  h1 {
+    max-width: 900px;
+    margin: 0 0 1.5rem;
+    font-size: clamp(3rem, 7vw, 5.8rem);
+    letter-spacing: -0.055em;
+    line-height: 0.98;
+  }
+
+  h1 span {
+    display: block;
+    color: var(--primary);
+  }
+
+  .hero-summary {
+    max-width: 760px;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+  }
+
+  .leadership-panel {
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .leadership-panel ul {
+    display: grid;
+    gap: 0.8rem;
+    padding-left: 1.2rem;
+    color: var(--text-muted);
+  }
+
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .principles-grid article > span {
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: 850;
+  }
+
+  .examples-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .example-card {
+    padding: 1.6rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at top right,
+        rgba(93, 184, 255, 0.1),
+        transparent 14rem
+      ),
+      var(--surface);
+  }
+
+  .example-category {
+    margin: 0 0 0.4rem;
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .example-card h3 {
+    margin-top: 0;
+  }
+
+  .example-description,
+  .example-card li {
+    color: var(--text-muted);
+  }
+
+  .example-card h4 {
+    margin-bottom: 0.5rem;
+  }
+
+  .mentoring-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 5rem;
+  }
+
+  .final-panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(93, 184, 255, 0.35);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .final-panel h2 {
+    margin: 0;
+  }
+
+  .final-panel p:last-child {
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 950px) {
+    .leadership-hero-grid,
+    .mentoring-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .principles-grid,
+    .examples-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 700px) {
+    .principles-grid,
+    .examples-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .final-panel {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

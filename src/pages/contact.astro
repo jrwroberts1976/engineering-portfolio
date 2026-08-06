@@ -1,0 +1,187 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const contactMethods = [
+  {
+    title: 'GitHub',
+    description:
+      'View my engineering repositories, infrastructure projects and technical documentation.',
+    label: 'Visit GitHub',
+    href: 'https://github.com/jrwroberts1976',
+    external: true,
+  },
+  {
+    title: 'Engineering Projects',
+    description:
+      'Explore detailed case studies covering security, containers, Kubernetes, cloud and monitoring.',
+    label: 'View projects',
+    href: '/projects',
+    external: false,
+  },
+  {
+    title: 'Engineering Lab',
+    description:
+      'Review the operational platform behind the projects and live dashboards.',
+    label: 'Explore the lab',
+    href: '/lab',
+    external: false,
+  },
+];
+---
+
+<BaseLayout
+  title="Contact"
+  description="Contact and professional links for James Roberts."
+>
+  <section class="contact-hero">
+    <div class="container">
+      <p class="eyebrow">Contact</p>
+
+      <h1>
+        Interested in my work?
+        <span>Let’s connect.</span>
+      </h1>
+
+      <p class="hero-summary">
+        My portfolio and GitHub repositories provide detailed evidence of my
+        infrastructure, platform, cloud, monitoring and security engineering
+        work.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="contact-grid">
+        {
+          contactMethods.map((method) => (
+            <article class="contact-card">
+              <h2>{method.title}</h2>
+
+              <p>{method.description}</p>
+
+              <a
+                class="card-link"
+                href={method.href}
+                target={method.external ? '_blank' : undefined}
+                rel={method.external ? 'noopener noreferrer' : undefined}
+              >
+                {method.label} {method.external ? '↗' : '→'}
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container availability-panel">
+      <div>
+        <p class="eyebrow">Career Interests</p>
+
+        <h2>Infrastructure, platform, cloud and technical delivery roles.</h2>
+
+        <p>
+          I am particularly interested in opportunities that combine Linux,
+          infrastructure operations, cloud platforms, automation, monitoring
+          and technical leadership.
+        </p>
+      </div>
+
+      <a class="button button-primary" href="/about">
+        View professional profile
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-hero {
+    padding: 7rem 0 5rem;
+  }
+
+  h1 {
+    max-width: 950px;
+    margin: 0 0 1.5rem;
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    letter-spacing: -0.055em;
+    line-height: 0.98;
+  }
+
+  h1 span {
+    display: block;
+    color: var(--primary);
+  }
+
+  .hero-summary {
+    max-width: 760px;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .contact-card {
+    display: flex;
+    min-height: 260px;
+    flex-direction: column;
+    padding: 1.6rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .contact-card h2 {
+    margin-top: 0;
+  }
+
+  .contact-card p {
+    color: var(--text-muted);
+  }
+
+  .contact-card .card-link {
+    margin-top: auto;
+  }
+
+  .availability-panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(93, 184, 255, 0.35);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at right,
+        rgba(93, 184, 255, 0.14),
+        transparent 24rem
+      ),
+      var(--surface);
+  }
+
+  .availability-panel h2 {
+    margin: 0;
+  }
+
+  .availability-panel p:last-child {
+    max-width: 760px;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 850px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .availability-panel {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

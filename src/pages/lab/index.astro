@@ -1,0 +1,878 @@
+---
+/*
+|--------------------------------------------------------------------------
+| Engineering Lab
+|--------------------------------------------------------------------------
+|
+| This page describes the operational environment behind the portfolio.
+|
+| Most displayed information comes from:
+|
+|   src/data/lab.ts
+|
+| Architecture relationships come from:
+|
+|   src/data/platform.ts
+|
+*/
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+import {
+  labStatistics,
+  labSystems,
+  labCapabilities,
+  currentFocus,
+} from '../../data/lab';
+
+import { dashboards } from '../../data/dashboards';
+
+const liveDashboardCount = dashboards.filter(
+  (dashboard) => Boolean(dashboard.url),
+).length;
+---
+
+<BaseLayout
+  title="Engineering Lab"
+  description="The self-hosted engineering environment used by James Roberts to develop practical infrastructure, cloud, container, monitoring and security skills."
+>
+  <!-- ======================================================= -->
+  <!-- HERO                                                    -->
+  <!-- ======================================================= -->
+
+  <section class="lab-hero">
+    <div class="container lab-hero-grid">
+      <div>
+        <p class="eyebrow">Engineering Environment</p>
+
+        <h1>
+          A practical platform for building and operating
+          <span>modern infrastructure.</span>
+        </h1>
+
+        <p class="hero-summary">
+          My Engineering Lab is a continuously evolving environment used to
+          design, deploy, secure, monitor and document production-style
+          infrastructure solutions.
+        </p>
+
+        <div class="button-row">
+          <a class="button button-primary" href="/architecture">
+            Explore architecture
+          </a>
+
+          <a class="button button-secondary" href="/projects">
+            View projects
+          </a>
+        </div>
+      </div>
+
+      <aside class="status-panel">
+        <div class="status-heading">
+          <div>
+            <p class="eyebrow">Lab Status</p>
+            <h2>Operational</h2>
+          </div>
+
+          <span class="live-indicator">
+            <span></span>
+            Live
+          </span>
+        </div>
+
+        <dl>
+          <div>
+            <dt>Docker platform</dt>
+            <dd>Operational</dd>
+          </div>
+
+          <div>
+            <dt>Kubernetes</dt>
+            <dd>Active</dd>
+          </div>
+
+          <div>
+            <dt>Monitoring</dt>
+            <dd>Healthy</dd>
+          </div>
+
+          <div>
+            <dt>Security</dt>
+            <dd>Protected</dd>
+          </div>
+
+          <div>
+            <dt>Public dashboards</dt>
+            <dd>{liveDashboardCount} live</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- WHY THE LAB EXISTS                                      -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container purpose-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Purpose</p>
+
+        <h2>Learning through operational engineering.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          The environment exists to provide practical engineering experience
+          beyond isolated tutorials and theoretical exercises.
+        </p>
+
+        <p>
+          Each platform is designed with operational requirements in mind,
+          including monitoring, security, resilience, documentation and
+          maintainability.
+        </p>
+
+        <p>
+          Changes are version controlled, applications are containerised,
+          infrastructure is monitored and important technical decisions are
+          documented.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- LAB STATISTICS                                          -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Platform Overview</p>
+
+        <h2>Infrastructure built for practical experience.</h2>
+
+        <p>
+          The lab combines physical systems, container platforms, cloud
+          environments and centralised operational tooling.
+        </p>
+      </div>
+
+      <div class="statistics-grid">
+        {
+          labStatistics.map((statistic) => (
+            <article class="statistic-card">
+              <strong>{statistic.value}</strong>
+              <h3>{statistic.label}</h3>
+              <p>{statistic.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- CORE SYSTEMS                                            -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Core Systems</p>
+
+        <h2>Separate platforms with clear responsibilities.</h2>
+
+        <p>
+          Workloads are distributed across systems according to their
+          operational purpose and hardware requirements.
+        </p>
+      </div>
+
+      <div class="systems-grid">
+        {
+          labSystems.map((system) => (
+            <article class="system-card">
+              <div class="system-header">
+                <div>
+                  <p class="system-role">{system.role}</p>
+                  <h3>{system.title}</h3>
+                </div>
+
+                <span class:list={[
+                  'system-status',
+                  {
+                    development:
+                      system.status === 'In development',
+                  },
+                ]}>
+                  <span></span>
+                  {system.status}
+                </span>
+              </div>
+
+              <p class="system-description">
+                {system.description}
+              </p>
+
+              <ul
+                class="tag-list"
+                aria-label={`${system.title} technologies`}
+              >
+                {
+                  system.technologies.map((technology) => (
+                    <li>{technology}</li>
+                  ))
+                }
+              </ul>
+
+              {
+                system.projectHref && (
+                  <a
+                    class="card-link"
+                    href={system.projectHref}
+                  >
+                    View related project →
+                  </a>
+                )
+              }
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- PLATFORM FLOW                                           -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Platform Flow</p>
+
+        <h2>From the internet to monitored applications.</h2>
+
+        <p>
+          Public traffic passes through multiple layers before reaching
+          application workloads, while observability and security operate
+          across the environment.
+        </p>
+      </div>
+
+      <div class="lab-flow">
+        <a class="flow-card" href="/architecture#layer-edge">
+          <span>01</span>
+          <strong>Cloudflare</strong>
+          <small>DNS, TLS and edge protection</small>
+        </a>
+
+        <div class="flow-arrow">↓</div>
+
+        <a class="flow-card" href="/architecture#layer-access">
+          <span>02</span>
+          <strong>Reverse Proxy and Identity</strong>
+          <small>Nginx Proxy Manager and Authelia</small>
+        </a>
+
+        <div class="flow-arrow">↓</div>
+
+        <a class="flow-card" href="/architecture#layer-platform">
+          <span>03</span>
+          <strong>Container Platforms</strong>
+          <small>Docker Compose and Kubernetes</small>
+        </a>
+
+        <div class="flow-arrow">↓</div>
+
+        <a class="flow-card" href="/architecture#layer-services">
+          <span>04</span>
+          <strong>Applications and Workloads</strong>
+          <small>Portfolio, monitoring and BirdNET</small>
+        </a>
+
+        <div class="support-grid">
+          <a class="support-card" href="/architecture#layer-observability">
+            <span>05</span>
+            <strong>Observability</strong>
+            <small>Prometheus, Grafana and Loki</small>
+          </a>
+
+          <a class="support-card" href="/architecture#layer-security">
+            <span>06</span>
+            <strong>Security</strong>
+            <small>CrowdSec and firewall enforcement</small>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- CAPABILITIES                                            -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Engineering Capabilities</p>
+
+        <h2>Technology applied as part of a complete system.</h2>
+
+        <p>
+          Each capability supports a specific engineering or operational
+          requirement rather than existing as an isolated demonstration.
+        </p>
+      </div>
+
+      <div class="capabilities-grid">
+        {
+          labCapabilities.map((capability, index) => (
+            <article class="capability-card">
+              <span class="capability-number">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+
+              <h3>{capability.title}</h3>
+
+              <p>{capability.description}</p>
+
+              <ul class="tag-list">
+                {
+                  capability.technologies.map((technology) => (
+                    <li>{technology}</li>
+                  ))
+                }
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- OPERATIONAL PRINCIPLES                                  -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Operational Approach</p>
+
+        <h2>Designed beyond initial deployment.</h2>
+      </div>
+
+      <div class="principles-grid">
+        <article class="card">
+          <span>01</span>
+          <h3>Version controlled</h3>
+          <p>
+            Application code, deployment definitions, infrastructure and
+            documentation are managed through Git.
+          </p>
+        </article>
+
+        <article class="card">
+          <span>02</span>
+          <h3>Observable</h3>
+          <p>
+            Services expose health and performance data through metrics,
+            dashboards, logs and alerts.
+          </p>
+        </article>
+
+        <article class="card">
+          <span>03</span>
+          <h3>Secure by design</h3>
+          <p>
+            External exposure is controlled through Cloudflare, HTTPS,
+            authentication, MFA and automated threat response.
+          </p>
+        </article>
+
+        <article class="card">
+          <span>04</span>
+          <h3>Documented</h3>
+          <p>
+            Architecture, implementation decisions and operating procedures
+            are maintained alongside the platforms.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- CURRENT DEVELOPMENT                                     -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Currently Developing</p>
+
+        <h2>The lab continues to evolve.</h2>
+
+        <p>
+          Current work expands the environment into cloud engineering,
+          Kubernetes, public observability and dedicated technical training.
+        </p>
+      </div>
+
+      <div class="focus-grid">
+        {
+          currentFocus.map((item) => (
+            <article class="focus-card">
+              <div class="focus-header">
+                <h3>{item.title}</h3>
+
+                <span class:list={[
+                  'focus-status',
+                  {
+                    planned: item.status === 'Planned',
+                    developing: item.status === 'Developing',
+                  },
+                ]}>
+                  {item.status}
+                </span>
+              </div>
+
+              <p>{item.description}</p>
+
+              {
+                item.href && (
+                  <a class="card-link" href={item.href}>
+                    View related work →
+                  </a>
+                )
+              }
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- FINAL ACTION                                            -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container final-panel">
+      <div>
+        <p class="eyebrow">Explore the Platform</p>
+
+        <h2>See the systems behind the portfolio.</h2>
+
+        <p>
+          Explore the complete architecture, project case studies and public
+          operational dashboards.
+        </p>
+      </div>
+
+      <div class="button-row">
+        <a class="button button-primary" href="/architecture">
+          Platform architecture
+        </a>
+
+        <a class="button button-secondary" href="/projects">
+          Engineering projects
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ==========================================================
+     Hero
+     ========================================================== */
+
+  .lab-hero {
+    padding: 7rem 0 5rem;
+  }
+
+  .lab-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+    align-items: center;
+    gap: 4rem;
+  }
+
+  h1 {
+    max-width: 920px;
+    margin: 0 0 1.5rem;
+    font-size: clamp(3rem, 7vw, 5.8rem);
+    letter-spacing: -0.055em;
+    line-height: 0.98;
+  }
+
+  h1 span {
+    display: block;
+    color: var(--primary);
+  }
+
+  .hero-summary {
+    max-width: 750px;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+  }
+
+  /* ==========================================================
+     Status panel
+     ========================================================== */
+
+  .status-panel {
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at top right,
+        rgba(93, 184, 255, 0.14),
+        transparent 16rem
+      ),
+      var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .status-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .status-heading h2 {
+    margin: 0;
+  }
+
+  .live-indicator,
+  .system-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #8ff0bc;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .live-indicator > span,
+  .system-status > span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 9px currentColor;
+  }
+
+  .status-panel dl {
+    margin: 1.3rem 0 0;
+  }
+
+  .status-panel dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .status-panel dl div:last-child {
+    border-bottom: 0;
+  }
+
+  .status-panel dt {
+    color: var(--text-muted);
+  }
+
+  .status-panel dd {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  /* ==========================================================
+     Page layouts
+     ========================================================== */
+
+  .purpose-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 5rem;
+  }
+
+  .statistics-grid,
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .systems-grid,
+  .focus-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  /* ==========================================================
+     Statistics
+     ========================================================== */
+
+  .statistic-card {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .statistic-card strong {
+    display: block;
+    color: var(--primary);
+    font-size: 2.5rem;
+    line-height: 1;
+  }
+
+  .statistic-card h3 {
+    margin: 0.9rem 0 0.4rem;
+  }
+
+  .statistic-card p {
+    color: var(--text-muted);
+  }
+
+  /* ==========================================================
+     System cards
+     ========================================================== */
+
+  .system-card,
+  .focus-card,
+  .capability-card {
+    display: flex;
+    min-height: 310px;
+    flex-direction: column;
+    padding: 1.6rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at top right,
+        rgba(93, 184, 255, 0.1),
+        transparent 14rem
+      ),
+      var(--surface);
+  }
+
+  .system-header,
+  .focus-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .system-role {
+    margin: 0 0 0.35rem;
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .system-card h3,
+  .focus-card h3 {
+    margin: 0;
+  }
+
+  .system-description,
+  .focus-card p,
+  .capability-card p {
+    color: var(--text-muted);
+  }
+
+  .system-status.development {
+    color: #ffd78a;
+  }
+
+  .system-card .card-link,
+  .focus-card .card-link {
+    margin-top: auto;
+    padding-top: 1rem;
+  }
+
+  /* ==========================================================
+     Platform flow
+     ========================================================== */
+
+  .lab-flow {
+    display: grid;
+    justify-items: center;
+    max-width: 850px;
+    margin-inline: auto;
+  }
+
+  .flow-card,
+  .support-card {
+    display: grid;
+    width: min(100%, 570px);
+    gap: 0.25rem;
+    padding: 1.25rem 1.4rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+    text-decoration: none;
+    transition:
+      transform 160ms ease,
+      border-color 160ms ease;
+  }
+
+  .flow-card:hover,
+  .support-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(93, 184, 255, 0.5);
+  }
+
+  .flow-card span,
+  .support-card span,
+  .capability-number,
+  .principles-grid article > span {
+    color: var(--primary);
+    font-size: 0.8rem;
+    font-weight: 850;
+  }
+
+  .flow-card small,
+  .support-card small {
+    color: var(--text-muted);
+  }
+
+  .flow-arrow {
+    padding: 0.6rem;
+    color: var(--primary);
+    font-size: 1.4rem;
+  }
+
+  .support-grid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .support-card {
+    width: 100%;
+  }
+
+  /* ==========================================================
+     Capabilities and focus
+     ========================================================== */
+
+  .capability-number {
+    font-size: 1.8rem;
+  }
+
+  .capability-card h3 {
+    margin: 0.8rem 0 0.3rem;
+  }
+
+  .principles-grid article > span {
+    font-size: 1.8rem;
+  }
+
+  .focus-status {
+    color: #8ff0bc;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .focus-status.developing {
+    color: #8fcaff;
+  }
+
+  .focus-status.planned {
+    color: var(--text-muted);
+  }
+
+  /* ==========================================================
+     Final panel
+     ========================================================== */
+
+  .final-panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(93, 184, 255, 0.35);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at right,
+        rgba(93, 184, 255, 0.15),
+        transparent 25rem
+      ),
+      var(--surface);
+  }
+
+  .final-panel h2 {
+    margin: 0;
+  }
+
+  .final-panel p:last-child {
+    color: var(--text-muted);
+  }
+
+  /* ==========================================================
+     Responsive
+     ========================================================== */
+
+  @media (max-width: 1000px) {
+    .lab-hero-grid,
+    .purpose-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .statistics-grid,
+    .principles-grid,
+    .capabilities-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 720px) {
+    .systems-grid,
+    .focus-grid,
+    .statistics-grid,
+    .principles-grid,
+    .capabilities-grid,
+    .support-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .lab-hero {
+      padding-top: 5rem;
+    }
+
+    .final-panel {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

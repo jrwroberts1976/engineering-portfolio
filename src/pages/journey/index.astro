@@ -1,0 +1,838 @@
+---
+/*
+|--------------------------------------------------------------------------
+| Engineering Journey
+|--------------------------------------------------------------------------
+|
+| The timeline and supporting content are loaded from:
+|
+|   src/data/journey.ts
+|
+| Update that data file rather than duplicating career information here.
+|
+*/
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+import {
+  journeyMilestones,
+  journeyThemes,
+  journeyPrinciples,
+} from '../../data/journey';
+
+const milestoneCount = journeyMilestones.length;
+
+const technologySet = new Set(
+  journeyMilestones.flatMap(
+    (milestone) => milestone.technologies ?? [],
+  ),
+);
+
+const technologyCount = technologySet.size;
+
+const leadershipMilestones = journeyMilestones.filter(
+  (milestone) => milestone.category === 'Leadership',
+).length;
+
+const modernEngineeringMilestones = journeyMilestones.filter(
+  (milestone) =>
+    milestone.category === 'Cloud' ||
+    milestone.category === 'Platform Engineering' ||
+    milestone.category === 'Current Development',
+).length;
+---
+
+<BaseLayout
+  title="Engineering Journey"
+  description="The engineering journey of James Roberts, from first-line support and enterprise infrastructure through Linux, cloud, containers, observability and technical delivery leadership."
+>
+  <!-- ======================================================= -->
+  <!-- HERO                                                    -->
+  <!-- ======================================================= -->
+
+  <section class="journey-hero">
+    <div class="container journey-hero-grid">
+      <div>
+        <p class="eyebrow">Engineering Journey</p>
+
+        <h1>
+          From first-line support to
+          <span>modern platform engineering.</span>
+        </h1>
+
+        <p class="hero-summary">
+          More than two decades of infrastructure operations, technical
+          leadership, continual learning and adaptation to changing
+          technology.
+        </p>
+
+        <div class="button-row">
+          <a class="button button-primary" href="#timeline">
+            Explore the timeline
+          </a>
+
+          <a class="button button-secondary" href="/projects">
+            View engineering projects
+          </a>
+        </div>
+      </div>
+
+      <aside class="journey-summary">
+        <p class="eyebrow">Journey Overview</p>
+
+        <div class="summary-stat">
+          <strong>20+</strong>
+          <span>years of IT and infrastructure experience</span>
+        </div>
+
+        <div class="summary-stat">
+          <strong>{milestoneCount}</strong>
+          <span>key journey milestones</span>
+        </div>
+
+        <div class="summary-stat">
+          <strong>{technologyCount}+</strong>
+          <span>technologies and disciplines represented</span>
+        </div>
+
+        <div class="summary-stat">
+          <strong>{leadershipMilestones}</strong>
+          <span>major leadership and transition examples</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- JOURNEY INTRODUCTION                                    -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container introduction-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Continuous Development</p>
+
+        <h2>Experience that evolves with technology.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          My career began in technical support and developed through
+          enterprise infrastructure, UNIX, Linux, infrastructure management,
+          governance and technical leadership.
+        </p>
+
+        <p>
+          As infrastructure delivery evolved from local server rooms to
+          hosted data centres, cloud services and container platforms, I
+          continued developing my skills and applying existing operational
+          experience to new technologies.
+        </p>
+
+        <p>
+          The current stage of that journey brings together Linux,
+          infrastructure operations, cloud platforms, automation,
+          observability, security and structured technical delivery.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- JOURNEY THEMES                                          -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Development Themes</p>
+
+        <h2>Three connected areas of growth.</h2>
+
+        <p>
+          The journey is not only a sequence of technologies. It reflects
+          changes in infrastructure, operational practice and leadership
+          responsibility.
+        </p>
+      </div>
+
+      <div class="themes-grid">
+        {
+          journeyThemes.map((theme, themeIndex) => (
+            <article class="theme-card">
+              <span class="theme-number">
+                {String(themeIndex + 1).padStart(2, '0')}
+              </span>
+
+              <h3>{theme.title}</h3>
+
+              <p>{theme.description}</p>
+
+              <ol>
+                {
+                  theme.stages.map((stage, stageIndex) => (
+                    <li>
+                      <span>
+                        {String(stageIndex + 1).padStart(2, '0')}
+                      </span>
+
+                      {stage}
+                    </li>
+                  ))
+                }
+              </ol>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- MAIN TIMELINE                                           -->
+  <!-- ======================================================= -->
+
+  <section id="timeline" class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Career and Engineering Timeline</p>
+
+        <h2>Building on each stage of experience.</h2>
+
+        <p>
+          Each milestone contributed technical knowledge, operational
+          judgement or delivery experience that supports my current
+          engineering direction.
+        </p>
+      </div>
+
+      <div class="timeline">
+        {
+          journeyMilestones.map((milestone, index) => (
+            <article
+              id={milestone.id}
+              class="timeline-item"
+            >
+              <div class="timeline-track" aria-hidden="true">
+                <span>
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+              </div>
+
+              <div class="milestone-card">
+                <div class="milestone-header">
+                  <div>
+                    <p class="milestone-period">
+                      {milestone.period}
+                    </p>
+
+                    <h3>{milestone.title}</h3>
+                  </div>
+
+                  <span class="milestone-category">
+                    {milestone.category}
+                  </span>
+                </div>
+
+                <p class="milestone-summary">
+                  {milestone.summary}
+                </p>
+
+                <div class="milestone-content">
+                  <div>
+                    <h4>Experience and outcomes</h4>
+
+                    <ul class="detail-list">
+                      {
+                        milestone.details.map((detail) => (
+                          <li>{detail}</li>
+                        ))
+                      }
+                    </ul>
+                  </div>
+
+                  {
+                    milestone.technologies &&
+                    milestone.technologies.length > 0 && (
+                      <div>
+                        <h4>Skills and technologies</h4>
+
+                        <ul class="tag-list">
+                          {
+                            milestone.technologies.map(
+                              (technology) => (
+                                <li>{technology}</li>
+                              ),
+                            )
+                          }
+                        </ul>
+                      </div>
+                    )
+                  }
+                </div>
+
+                {
+                  milestone.relatedLinks &&
+                  milestone.relatedLinks.length > 0 && (
+                    <div class="milestone-links">
+                      {
+                        milestone.relatedLinks.map((link) => (
+                          <a href={link.href}>
+                            {link.label} →
+                          </a>
+                        ))
+                      }
+                    </div>
+                  )
+                }
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- MODERN ENGINEERING                                      -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container modern-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Current Engineering Direction</p>
+
+        <h2>
+          Long-term operational experience applied to modern platforms.
+        </h2>
+      </div>
+
+      <div>
+        <p class="modern-introduction">
+          The most recent {modernEngineeringMilestones} milestones demonstrate
+          my continuing development across cloud infrastructure, containers,
+          observability, security, automation and platform engineering.
+        </p>
+
+        <div class="modern-cards">
+          <article class="card">
+            <h3>Cloud</h3>
+            <p>
+              AWS, Azure, Terraform, remote state, IAM and reusable
+              infrastructure components.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Platforms</h3>
+            <p>
+              Docker Compose, Kubernetes, K3s, ingress, networking and
+              operational platform design.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Observability</h3>
+            <p>
+              Prometheus, Grafana, Loki, exporters, dashboards and alerting.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Security</h3>
+            <p>
+              Cloudflare, Authelia, MFA, CrowdSec, threat detection and
+              automated firewall response.
+            </p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- ENGINEERING PRINCIPLES                                  -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Engineering Philosophy</p>
+
+        <h2>Good engineering is more than making something work.</h2>
+
+        <p>
+          Throughout my career, I have aimed to leave systems more stable,
+          understandable and supportable than I found them.
+        </p>
+      </div>
+
+      <div class="principles-grid">
+        {
+          journeyPrinciples.map((principle, index) => (
+            <article class="principle-card">
+              <span>
+                {String(index + 1).padStart(2, '0')}
+              </span>
+
+              <h3>{principle.title}</h3>
+
+              <p>{principle.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- CURRENT AND NEXT                                        -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container future-panel">
+      <div>
+        <p class="eyebrow">The Journey Continues</p>
+
+        <h2>
+          Developing the next stage of my engineering career.
+        </h2>
+
+        <p>
+          My current direction combines infrastructure engineering,
+          cloud platforms, technical leadership and structured project
+          delivery.
+        </p>
+
+        <ul>
+          <li>Platform and cloud engineering</li>
+          <li>Microsoft Azure</li>
+          <li>Terraform and infrastructure automation</li>
+          <li>Kubernetes and container orchestration</li>
+          <li>CI/CD and Git-based delivery</li>
+          <li>Technical project and service delivery</li>
+        </ul>
+      </div>
+
+      <div class="button-column">
+        <a class="button button-primary" href="/about">
+          Professional profile
+        </a>
+
+        <a class="button button-secondary" href="/leadership">
+          Technical leadership
+        </a>
+
+        <a class="button button-secondary" href="/lab">
+          Engineering Lab
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ==========================================================
+     Hero
+     ========================================================== */
+
+  .journey-hero {
+    padding: 7rem 0 5rem;
+  }
+
+  .journey-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+    align-items: center;
+    gap: 4rem;
+  }
+
+  h1 {
+    max-width: 920px;
+    margin: 0 0 1.5rem;
+    font-size: clamp(3rem, 7vw, 5.8rem);
+    letter-spacing: -0.055em;
+    line-height: 0.98;
+  }
+
+  h1 span {
+    display: block;
+    color: var(--primary);
+  }
+
+  .hero-summary {
+    max-width: 760px;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+  }
+
+  .journey-summary {
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at top right,
+        rgba(93, 184, 255, 0.14),
+        transparent 16rem
+      ),
+      var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .summary-stat {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-stat:last-child {
+    border-bottom: 0;
+  }
+
+  .summary-stat strong {
+    color: var(--primary);
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .summary-stat span {
+    color: var(--text-muted);
+  }
+
+  /* ==========================================================
+     General layouts
+     ========================================================== */
+
+  .introduction-grid,
+  .modern-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 5rem;
+  }
+
+  .themes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  /* ==========================================================
+     Themes
+     ========================================================== */
+
+  .theme-card,
+  .principle-card {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .theme-number,
+  .principle-card > span {
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: 850;
+  }
+
+  .theme-card h3,
+  .principle-card h3 {
+    margin: 0.7rem 0 0.4rem;
+  }
+
+  .theme-card > p,
+  .principle-card p {
+    color: var(--text-muted);
+  }
+
+  .theme-card ol {
+    display: grid;
+    gap: 0;
+    margin: 1.3rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .theme-card li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.65rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  .theme-card li:last-child {
+    border-bottom: 0;
+  }
+
+  .theme-card li span {
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+
+  /* ==========================================================
+     Timeline
+     ========================================================== */
+
+  .timeline {
+    display: grid;
+    max-width: 1050px;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 1.4rem;
+  }
+
+  .timeline-track {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  .timeline-track::after {
+    position: absolute;
+    top: 54px;
+    bottom: 0;
+    width: 1px;
+    background:
+      linear-gradient(
+        var(--primary),
+        rgba(93, 184, 255, 0.12)
+      );
+    content: "";
+  }
+
+  .timeline-item:last-child .timeline-track::after {
+    display: none;
+  }
+
+  .timeline-track span {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border: 1px solid rgba(93, 184, 255, 0.48);
+    border-radius: 50%;
+    background: var(--background-soft);
+    color: var(--primary);
+    font-weight: 850;
+    box-shadow: 0 0 20px rgba(93, 184, 255, 0.1);
+  }
+
+  .milestone-card {
+    margin-bottom: 2rem;
+    padding: 1.7rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at top right,
+        rgba(93, 184, 255, 0.1),
+        transparent 17rem
+      ),
+      var(--surface);
+    transition:
+      transform 160ms ease,
+      border-color 160ms ease;
+  }
+
+  .milestone-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(93, 184, 255, 0.45);
+  }
+
+  .milestone-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .milestone-period {
+    margin: 0 0 0.3rem;
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .milestone-card h3 {
+    margin: 0;
+    font-size: 1.55rem;
+  }
+
+  .milestone-category {
+    padding: 0.35rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    font-weight: 750;
+    white-space: nowrap;
+  }
+
+  .milestone-summary {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+  }
+
+  .milestone-content {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  .milestone-content h4 {
+    margin: 0 0 0.7rem;
+  }
+
+  .detail-list {
+    display: grid;
+    gap: 0.6rem;
+    padding-left: 1.2rem;
+    color: var(--text-muted);
+  }
+
+  .milestone-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.4rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .milestone-links a {
+    color: var(--primary);
+    font-weight: 750;
+    text-decoration: none;
+  }
+
+  /* ==========================================================
+     Modern engineering
+     ========================================================== */
+
+  .modern-introduction {
+    margin-top: 0;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+  }
+
+  .modern-cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  /* ==========================================================
+     Future panel
+     ========================================================== */
+
+  .future-panel {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 4rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(93, 184, 255, 0.35);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at right,
+        rgba(93, 184, 255, 0.15),
+        transparent 26rem
+      ),
+      var(--surface);
+  }
+
+  .future-panel h2 {
+    margin: 0;
+  }
+
+  .future-panel p,
+  .future-panel li {
+    color: var(--text-muted);
+  }
+
+  .button-column {
+    display: grid;
+    gap: 0.75rem;
+    min-width: 220px;
+  }
+
+  /* ==========================================================
+     Responsive
+     ========================================================== */
+
+  @media (max-width: 1000px) {
+    .journey-hero-grid,
+    .introduction-grid,
+    .modern-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .themes-grid,
+    .principles-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .milestone-content {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .themes-grid,
+    .principles-grid,
+    .modern-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .timeline-item {
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: 0.8rem;
+    }
+
+    .timeline-track span {
+      width: 40px;
+      height: 40px;
+      font-size: 0.78rem;
+    }
+
+    .timeline-track::after {
+      top: 46px;
+    }
+
+    .milestone-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .future-panel {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .button-column {
+      width: 100%;
+    }
+  }
+</style>

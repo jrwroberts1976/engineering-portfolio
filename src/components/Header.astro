@@ -1,0 +1,168 @@
+---
+/*
+|--------------------------------------------------------------------------
+| Main Site Navigation
+|--------------------------------------------------------------------------
+|
+| Add or remove top-level navigation entries in the links array.
+|
+*/
+
+const currentPath = Astro.url.pathname;
+
+const links = [
+  {
+    href: '/about',
+    label: 'About',
+  },
+  {
+    href: '/journey',
+    label: 'Journey',
+  },
+  {
+    href: '/projects',
+    label: 'Projects',
+  },
+  {
+    href: '/lab',
+    label: 'Engineering Lab',
+  },
+  {
+    href: '/architecture',
+    label: 'Architecture',
+  },
+  {
+    href: '/leadership',
+    label: 'Leadership',
+  },
+  {
+    href: '/contact',
+    label: 'Contact',
+  },
+];
+
+const isActive = (href: string) =>
+  currentPath === href ||
+  currentPath.startsWith(`${href}/`);
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="James Roberts home">
+      <span class="brand-mark">JR</span>
+
+      <span class="brand-copy">
+        <strong>James Roberts</strong>
+        <small>Engineering Portfolio</small>
+      </span>
+    </a>
+
+    <nav aria-label="Primary navigation">
+      {
+        links.map((link) => (
+          <a
+            class:list={{
+              active: isActive(link.href),
+            }}
+            href={link.href}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+    background: rgba(7, 17, 31, 0.88);
+    backdrop-filter: blur(18px);
+  }
+
+  .header-inner {
+    display: flex;
+    min-height: 76px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .brand {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0.8rem;
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border-radius: 11px;
+    background: var(--primary);
+    color: #06111d;
+    font-weight: 900;
+  }
+
+  .brand-copy {
+    display: grid;
+    line-height: 1.2;
+  }
+
+  .brand-copy small {
+    color: var(--text-muted);
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  nav a {
+    position: relative;
+    color: var(--text-muted);
+    font-size: 0.86rem;
+    font-weight: 650;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  nav a:hover,
+  nav a.active {
+    color: var(--text);
+  }
+
+  nav a.active::after {
+    position: absolute;
+    right: 0;
+    bottom: -0.55rem;
+    left: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--primary);
+    content: "";
+  }
+
+  @media (max-width: 1050px) {
+    .header-inner {
+      align-items: flex-start;
+      flex-direction: column;
+      padding-block: 1rem;
+    }
+
+    nav {
+      width: 100%;
+      gap: 0.9rem;
+      overflow-x: auto;
+      padding-bottom: 0.35rem;
+    }
+  }
+</style>

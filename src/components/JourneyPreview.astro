@@ -1,0 +1,109 @@
+<!--
+|--------------------------------------------------------------------------
+| Engineering Journey Homepage Preview
+|--------------------------------------------------------------------------
+|
+| Introduces the relationship between long-term infrastructure experience
+| and current platform-engineering development.
+|
+-->
+
+<section class="section section-soft">
+  <div class="container journey-preview">
+    <div class="section-heading">
+      <p class="eyebrow">Engineering Journey</p>
+
+      <h2>
+        Two decades of infrastructure experience and continual development.
+      </h2>
+
+      <p>
+        From first-line support and enterprise UNIX systems through technical
+        leadership, cloud platforms, containers, observability and security.
+      </p>
+
+      <a class="button button-primary" href="/journey">
+        Explore my Engineering Journey
+      </a>
+    </div>
+
+    <div class="journey-path" aria-label="Engineering journey summary">
+      <article>
+        <span>Foundation</span>
+        <strong>Support and Enterprise IT</strong>
+      </article>
+
+      <div>↓</div>
+
+      <article>
+        <span>Specialism</span>
+        <strong>UNIX and Red Hat Linux</strong>
+      </article>
+
+      <div>↓</div>
+
+      <article>
+        <span>Leadership</span>
+        <strong>Infrastructure and Technical Delivery</strong>
+      </article>
+
+      <div>↓</div>
+
+      <article>
+        <span>Modern Engineering</span>
+        <strong>Cloud, Containers and Automation</strong>
+      </article>
+
+      <div>↓</div>
+
+      <article>
+        <span>Current Direction</span>
+        <strong>Platform and Cloud Engineering</strong>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .journey-preview {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(400px, 1.15fr);
+    align-items: center;
+    gap: 4rem;
+  }
+
+  .journey-path {
+    display: grid;
+    justify-items: stretch;
+  }
+
+  .journey-path article {
+    display: grid;
+    gap: 0.2rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: var(--surface);
+  }
+
+  .journey-path span {
+    color: var(--primary);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .journey-path > div {
+    padding: 0.35rem;
+    color: var(--primary);
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .journey-preview {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

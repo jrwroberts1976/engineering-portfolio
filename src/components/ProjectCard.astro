@@ -1,0 +1,145 @@
+---
+/*
+|--------------------------------------------------------------------------
+| Project Card
+|--------------------------------------------------------------------------
+|
+| Reusable card used on the Projects overview page.
+|
+| Required properties:
+|   category
+|   title
+|   description
+|   href
+|
+| Optional properties:
+|   status
+|   technologies
+|
+*/
+
+interface Props {
+  category: string;
+  title: string;
+  description: string;
+  href: string;
+  status?: string;
+  technologies?: string[];
+}
+
+const {
+  category,
+  title,
+  description,
+  href,
+  status = 'Active project',
+  technologies = [],
+} = Astro.props;
+---
+
+<article class="project-card">
+  <div class="card-header">
+    <p class="eyebrow">{category}</p>
+
+    <span class="status">
+      <span class="status-dot"></span>
+      {status}
+    </span>
+  </div>
+
+  <h2>{title}</h2>
+
+  <p class="description">{description}</p>
+
+  {
+    technologies.length > 0 && (
+      <ul class="tag-list">
+        {
+          technologies.map((technology) => (
+            <li>{technology}</li>
+          ))
+        }
+      </ul>
+    )
+  }
+
+  <a class="card-link" href={href}>
+    View case study →
+  </a>
+</article>
+
+<style>
+  .project-card {
+    display: flex;
+    min-height: 350px;
+    flex-direction: column;
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at top right,
+        rgba(93, 184, 255, 0.11),
+        transparent 14rem
+      ),
+      linear-gradient(
+        145deg,
+        rgba(23, 43, 69, 0.96),
+        rgba(13, 26, 43, 0.96)
+      );
+    box-shadow: var(--shadow);
+    transition:
+      transform 160ms ease,
+      border-color 160ms ease;
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(93, 184, 255, 0.45);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+    color: #8ff0bc;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 10px currentColor;
+  }
+
+  h2 {
+    margin: 1rem 0 0.8rem;
+    font-size: 1.65rem;
+    line-height: 1.2;
+  }
+
+  .description {
+    color: var(--text-muted);
+  }
+
+  .card-link {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    color: var(--primary);
+    font-weight: 750;
+    text-decoration: none;
+  }
+</style>
