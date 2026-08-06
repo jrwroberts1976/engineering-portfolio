@@ -281,6 +281,163 @@ const skills = [
   'Architecture decisions',
   'Project documentation',
 ];
+
+const platformFacts = [
+  {
+    label: 'Operating system',
+    value: 'Debian 12',
+    description:
+      'A stable Linux foundation running on dedicated ARM64 hardware.',
+  },
+  {
+    label: 'Kubernetes distribution',
+    value: 'K3s',
+    description:
+      'A lightweight Kubernetes distribution suitable for the available hardware.',
+  },
+  {
+    label: 'Container runtime',
+    value: 'containerd',
+    description:
+      'The runtime responsible for pulling images and running container workloads.',
+  },
+  {
+    label: 'Ingress controller',
+    value: 'Traefik',
+    description:
+      'Routes inbound HTTP traffic to Kubernetes services.',
+  },
+  {
+    label: 'Load balancer',
+    value: 'MetalLB',
+    description:
+      'Provides local Layer 2 LoadBalancer addresses for services.',
+  },
+  {
+    label: 'Storage',
+    value: 'NVMe',
+    description:
+      'Provides local capacity for container images, workloads and future persistent volumes.',
+  },
+];
+
+const namespaces = [
+  {
+    name: 'applications',
+    purpose:
+      'Application workloads intended to run independently from platform services.',
+  },
+  {
+    name: 'argocd',
+    purpose:
+      'Reserved for GitOps deployment and continuous reconciliation.',
+  },
+  {
+    name: 'monitoring',
+    purpose:
+      'Monitoring components, dashboards and metrics collection.',
+  },
+  {
+    name: 'logging',
+    purpose:
+      'Central logging components and log-processing workloads.',
+  },
+  {
+    name: 'metallb-system',
+    purpose:
+      'MetalLB controllers, speakers and address-pool configuration.',
+  },
+  {
+    name: 'demo',
+    purpose:
+      'Safe namespace for testing workloads and Kubernetes resources.',
+  },
+];
+
+const firstWorkload = {
+  title: 'Whoami demonstration application',
+  description:
+    'The first workload was deliberately small so the focus remained on understanding Kubernetes resources and network flow rather than application complexity.',
+  resources: [
+    'A dedicated demo namespace',
+    'A Kubernetes Deployment',
+    'A ClusterIP Service',
+    'A Traefik Ingress resource',
+    'A MetalLB-backed external address',
+  ],
+  lessons: [
+    'Namespaces must exist before namespaced resources are applied.',
+    'Services provide stable access even when pods are recreated.',
+    'Ingress rules separate external routing from application configuration.',
+    'Testing with a simple workload makes networking issues easier to isolate.',
+  ],
+};
+
+const operationalPractices = [
+  {
+    title: 'Cluster health checks',
+    description:
+      'Regularly verify node readiness, pod state, services, ingress resources and system namespaces.',
+  },
+  {
+    title: 'Version-controlled manifests',
+    description:
+      'Store scripts, YAML resources and documentation in Git so changes remain reviewable and repeatable.',
+  },
+  {
+    title: 'Resource awareness',
+    description:
+      'Monitor memory, storage and workload requirements before introducing additional applications.',
+  },
+  {
+    title: 'Network planning',
+    description:
+      'Reserve LoadBalancer addresses carefully to avoid conflicts with existing LAN devices.',
+  },
+  {
+    title: 'Troubleshooting',
+    description:
+      'Use kubectl, logs, events and Linux network tools to investigate failed deployments and routing problems.',
+  },
+  {
+    title: 'Documentation',
+    description:
+      'Maintain deployment, operations, security, architecture and troubleshooting guidance alongside the project.',
+  },
+];
+
+const futureRoadmap = [
+  {
+    title: 'GitOps with Argo CD',
+    description:
+      'Use Git as the desired-state source and automatically reconcile approved Kubernetes changes.',
+  },
+  {
+    title: 'Platform monitoring',
+    description:
+      'Add Kubernetes metrics, node monitoring, pod health and workload dashboards.',
+  },
+  {
+    title: 'Persistent storage',
+    description:
+      'Introduce a documented storage approach for applications requiring persistent data.',
+  },
+  {
+    title: 'Additional nodes',
+    description:
+      'Expand from the single-node foundation when greater resilience or workload capacity is needed.',
+  },
+  {
+    title: 'Secrets management',
+    description:
+      'Improve handling of application credentials and sensitive configuration.',
+  },
+  {
+    title: 'Application migration',
+    description:
+      'Evaluate suitable Docker workloads for controlled migration into Kubernetes.',
+  },
+];
 ---
 
 <BaseLayout
@@ -529,6 +686,107 @@ const skills = [
     </div>
   </section>
 
+  <!-- ======================================================= -->
+  <!-- PLATFORM ENVIRONMENT                                    -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Platform Environment</p>
+
+        <h2>A dedicated Linux host for practical orchestration.</h2>
+
+        <p>
+          The cluster runs on dedicated ARM64 hardware with sufficient memory
+          and NVMe storage to support the control plane, platform services and
+          continued workload development.
+        </p>
+      </div>
+
+      <div class="facts-grid">
+        {
+          platformFacts.map((fact) => (
+            <article>
+              <p>{fact.label}</p>
+              <h3>{fact.value}</h3>
+              <span>{fact.description}</span>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- NAMESPACE DESIGN                                        -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Namespace Design</p>
+
+        <h2>Separating applications from platform responsibilities.</h2>
+
+        <p>
+          Namespaces provide logical separation between application workloads,
+          monitoring, logging, networking and future GitOps services.
+        </p>
+      </div>
+
+      <div class="namespaces-grid">
+        {
+          namespaces.map((namespace) => (
+            <article>
+              <code>{namespace.name}</code>
+              <p>{namespace.purpose}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- FIRST WORKLOAD                                          -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container workload-panel">
+      <div>
+        <p class="eyebrow">First Application Deployment</p>
+
+        <h2>{firstWorkload.title}</h2>
+
+        <p>{firstWorkload.description}</p>
+
+        <h3>Resources created</h3>
+
+        <ul>
+          {
+            firstWorkload.resources.map((resource) => (
+              <li>{resource}</li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="workload-lessons">
+        <p class="eyebrow">What It Demonstrated</p>
+
+        {
+          firstWorkload.lessons.map((lesson, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <p>{lesson}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container">
       <div class="section-heading">
@@ -640,6 +898,70 @@ const skills = [
             <article>
               <span>{String(index + 1).padStart(2, '0')}</span>
               <strong>{skill}</strong>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- OPERATIONS                                              -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Operational Practices</p>
+
+        <h2>Building a cluster that can be understood and supported.</h2>
+
+        <p>
+          The project is not considered complete when an application starts.
+          Ongoing operation, troubleshooting and documentation are treated as
+          part of the platform design.
+        </p>
+      </div>
+
+      <div class="operations-grid">
+        {
+          operationalPractices.map((practice, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{practice.title}</h3>
+              <p>{practice.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- FUTURE ROADMAP                                          -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Platform Roadmap</p>
+
+        <h2>Expanding capability in controlled stages.</h2>
+
+        <p>
+          The current cluster provides a stable learning foundation. Future
+          improvements will be introduced only when they add clear operational
+          or learning value.
+        </p>
+      </div>
+
+      <div class="roadmap-grid">
+        {
+          futureRoadmap.map((item, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
             </article>
           ))
         }
@@ -1002,6 +1324,119 @@ const skills = [
     min-width: 230px;
   }
 
+  .facts-grid,
+  .operations-grid,
+  .roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .facts-grid article,
+  .operations-grid article,
+  .roadmap-grid article {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .facts-grid article > p {
+    margin: 0;
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .facts-grid h3 {
+    margin: 0.4rem 0;
+    font-size: 1.5rem;
+  }
+
+  .facts-grid span,
+  .operations-grid p,
+  .roadmap-grid p {
+    color: var(--text-muted);
+  }
+
+  .operations-grid > article > span,
+  .roadmap-grid > article > span {
+    color: var(--primary);
+    font-size: 1.7rem;
+    font-weight: 850;
+  }
+
+  .namespaces-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .namespaces-grid article {
+    padding: 1.4rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+  }
+
+  .namespaces-grid code {
+    color: var(--primary);
+    font-size: 1rem;
+    font-weight: 800;
+  }
+
+  .namespaces-grid p {
+    color: var(--text-muted);
+  }
+
+  .workload-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    padding: 2rem;
+    border: 1px solid rgba(93, 184, 255, 0.35);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(
+        circle at top right,
+        rgba(93, 184, 255, 0.1),
+        transparent 22rem
+      ),
+      var(--surface);
+  }
+
+  .workload-panel > div > p,
+  .workload-panel li {
+    color: var(--text-muted);
+  }
+
+  .workload-lessons {
+    display: grid;
+    align-content: start;
+    gap: 0.8rem;
+  }
+
+  .workload-lessons article {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.8rem;
+    padding: 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .workload-lessons article span {
+    color: var(--primary);
+    font-weight: 850;
+  }
+
+  .workload-lessons article p {
+    margin: 0;
+  }
+
   @media (max-width: 950px) {
     .hero-grid,
     .content-grid,
@@ -1013,8 +1448,16 @@ const skills = [
 
     .objectives-grid,
     .components-grid,
-    .management-grid {
+    .management-grid,
+    .facts-grid,
+    .operations-grid,
+    .roadmap-grid,
+    .namespaces-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .workload-panel {
+      grid-template-columns: 1fr;
     }
 
     .outcomes-grid {
@@ -1029,7 +1472,11 @@ const skills = [
     .decisions-grid,
     .challenges-grid,
     .outcomes-grid,
-    .skills-list {
+    .skills-list,
+    .facts-grid,
+    .operations-grid,
+    .roadmap-grid,
+    .namespaces-grid {
       grid-template-columns: 1fr;
     }
 
