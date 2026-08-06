@@ -1,37 +1,1100 @@
 ---
+/*
+===============================================================================
+Page: Docker Engineering Platform
+
+Purpose:
+Documents the design, delivery and operation of the Docker platform supporting
+the portfolio, monitoring, security and self-hosted engineering services.
+===============================================================================
+*/
+
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+import { getProjectById } from '../../../data/projects';
+import { getDashboardById } from '../../../data/dashboards';
+
+const project = getProjectById('docker-platform');
+const platformDashboard = getDashboardById('platform');
+const securityDashboard = getDashboardById('security');
+
+if (!project) {
+  throw new Error('Docker platform project data could not be found.');
+}
+
+const objectives = [
+  {
+    title: 'Secure external access',
+    description:
+      'Publish selected applications through Cloudflare and Nginx Proxy Manager while protecting administrative services with authentication and MFA.',
+  },
+  {
+    title: 'Central observability',
+    description:
+      'Collect metrics and logs centrally so infrastructure, containers and applications can be monitored from one platform.',
+  },
+  {
+    title: 'Repeatable deployment',
+    description:
+      'Use Docker Compose, Git and documented configuration to make deployments understandable and reproducible.',
+  },
+  {
+    title: 'Operational resilience',
+    description:
+      'Design the platform so failures can be detected, investigated and resolved without relying on undocumented knowledge.',
+  },
+  {
+    title: 'Security automation',
+    description:
+      'Integrate behavioural threat detection and automated firewall enforcement into the public-service architecture.',
+  },
+  {
+    title: 'Practical learning',
+    description:
+      'Create a safe environment for developing modern infrastructure, cloud, container and automation skills.',
+  },
+];
+
+const components = [
+  {
+    category: 'Container Platform',
+    title: 'Docker and Docker Compose',
+    description:
+      'Provides application packaging, service definitions, networking, persistent volumes and repeatable lifecycle management.',
+  },
+  {
+    category: 'Public Access',
+    title: 'Cloudflare and Nginx Proxy Manager',
+    description:
+      'Provide DNS, HTTPS, certificate management and reverse-proxy routing for externally published services.',
+  },
+  {
+    category: 'Identity',
+    title: 'Authelia',
+    description:
+      'Protects selected applications with central authentication, access policies and multi-factor authentication.',
+  },
+  {
+    category: 'Metrics',
+    title: 'Prometheus and Exporters',
+    description:
+      'Collect infrastructure, container, security and application metrics from across the platform.',
+  },
+  {
+    category: 'Visualisation',
+    title: 'Grafana',
+    description:
+      'Turns operational telemetry into dashboards, alerts and sanitised public evidence for the portfolio.',
+  },
+  {
+    category: 'Logging',
+    title: 'Loki and Promtail',
+    description:
+      'Centralise container, host and reverse-proxy logs for investigation and troubleshooting.',
+  },
+  {
+    category: 'Security',
+    title: 'CrowdSec',
+    description:
+      'Analyses proxy activity, creates security decisions and works with a firewall bouncer to block malicious traffic.',
+  },
+  {
+    category: 'Operations',
+    title: 'Uptime Kuma, Dozzle and Portainer',
+    description:
+      'Provide service-health monitoring, container-log access and operational container management.',
+  },
+];
+
+const deliveryPhases = [
+  {
+    phase: '01',
+    title: 'Define the platform purpose',
+    description:
+      'Established the environment as an operational engineering platform rather than a collection of unrelated containers.',
+  },
+  {
+    phase: '02',
+    title: 'Create the foundation',
+    description:
+      'Implemented Docker Compose structures, shared networks, persistent storage and service-management conventions.',
+  },
+  {
+    phase: '03',
+    title: 'Publish services securely',
+    description:
+      'Introduced Cloudflare, Nginx Proxy Manager, TLS certificates and controlled external access.',
+  },
+  {
+    phase: '04',
+    title: 'Add identity and protection',
+    description:
+      'Integrated Authelia, MFA, CrowdSec and automated firewall enforcement.',
+  },
+  {
+    phase: '05',
+    title: 'Build observability',
+    description:
+      'Added Prometheus, Grafana, Loki, exporters, dashboards and operational alerts.',
+  },
+  {
+    phase: '06',
+    title: 'Document and improve',
+    description:
+      'Moved configuration into Git, documented architecture and continually refined platform operation.',
+  },
+];
+
+const challenges = [
+  {
+    title: 'Container networking',
+    problem:
+      'Services spread across separate Compose stacks could not always resolve or communicate with one another.',
+    response:
+      'Introduced shared external Docker networks and verified communication from the consuming container.',
+    outcome:
+      'Nginx Proxy Manager, Grafana, Prometheus and application services can communicate without unnecessary host-port exposure.',
+  },
+  {
+    title: 'Secure public publishing',
+    problem:
+      'Administrative applications required external access without exposing them directly or weakening authentication.',
+    response:
+      'Combined Cloudflare, Nginx Proxy Manager, Authelia and MFA with path-specific access policies.',
+    outcome:
+      'Protected services require authentication while selected public pages and dashboards remain accessible.',
+  },
+  {
+    title: 'Security visibility',
+    problem:
+      'Firewall activity and CrowdSec decisions were difficult to explain using raw logs and command output.',
+    response:
+      'Built a custom firewall exporter, Prometheus metrics and Grafana security dashboards.',
+    outcome:
+      'Security activity is now measurable, alertable and understandable through live operational views.',
+  },
+  {
+    title: 'Service consistency',
+    problem:
+      'Independent stacks can become difficult to maintain when naming, networks, labels and deployment methods differ.',
+    response:
+      'Standardised Compose conventions, directory structures, labels and deployment practices.',
+    outcome:
+      'The environment is easier to understand, troubleshoot and extend.',
+  },
+];
+
+const operationalPractices = [
+  {
+    title: 'Monitoring',
+    description:
+      'Prometheus and Grafana provide infrastructure, container, application and security visibility.',
+  },
+  {
+    title: 'Alerting',
+    description:
+      'Grafana alerts identify unavailable exporters, failed monitoring targets and unusual firewall activity.',
+  },
+  {
+    title: 'Logging',
+    description:
+      'Loki, Promtail and Dozzle support central investigation of application and reverse-proxy behaviour.',
+  },
+  {
+    title: 'Security',
+    description:
+      'Cloudflare, TLS, Authelia, MFA, CrowdSec and Linux firewall controls protect public services.',
+  },
+  {
+    title: 'Change management',
+    description:
+      'Configuration changes are version controlled and validated before services are recreated.',
+  },
+  {
+    title: 'Documentation',
+    description:
+      'Architecture, implementation decisions and troubleshooting steps are documented alongside the platform.',
+  },
+];
+
+const skills = [
+  'Linux systems administration',
+  'Docker and Docker Compose',
+  'Container networking',
+  'Reverse proxying',
+  'DNS and TLS',
+  'Identity and MFA',
+  'Monitoring and observability',
+  'Security engineering',
+  'Operational troubleshooting',
+  'Git-based change management',
+  'Technical documentation',
+  'Continual service improvement',
+];
 ---
 
 <BaseLayout
-  title="Docker Engineering Platform"
-  description="A self-hosted Docker platform providing reverse proxying, authentication, monitoring, security and automated deployment."
+  title={project.title}
+  description="A secure, observable and automated Docker platform supporting engineering projects, monitoring, authentication and public services."
 >
-  <section class="page-intro">
-    <div class="container section-heading">
-      <p class="eyebrow">Container Platforms</p>
+  <!-- ======================================================= -->
+  <!-- HERO                                                    -->
+  <!-- ======================================================= -->
 
-      <h1>Docker Engineering Platform</h1>
+  <section class="project-hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Container Platform Case Study</p>
 
-      <p>
-        A self-hosted Docker platform providing reverse proxying, authentication, monitoring, security and automated deployment.
-      </p>
+        <h1>
+          Docker Engineering
+          <span>Platform</span>
+        </h1>
 
-      <div class="button-row">
-        <a class="button button-secondary" href="/projects">
-          Back to projects
+        <p class="hero-summary">
+          A secure, observable and maintainable container platform supporting
+          public applications, monitoring, identity, security and practical
+          engineering development.
+        </p>
+
+        <div class="button-row">
+          <a class="button button-primary" href="/architecture">
+            View Platform Architecture
+          </a>
+
+          {
+            securityDashboard?.url && (
+              <a
+                class="button button-secondary"
+                href={securityDashboard.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Live Security Dashboard
+              </a>
+            )
+          }
+        </div>
+      </div>
+
+      <aside class="project-facts">
+        <p class="eyebrow">Project Summary</p>
+
+        <dl>
+          <div>
+            <dt>Role</dt>
+            <dd>Platform designer and operator</dd>
+          </div>
+
+          <div>
+            <dt>Environment</dt>
+            <dd>Self-hosted Linux platform</dd>
+          </div>
+
+          <div>
+            <dt>Delivery model</dt>
+            <dd>Docker Compose and Git</dd>
+          </div>
+
+          <div>
+            <dt>Operational status</dt>
+            <dd class="status-live">Live</dd>
+          </div>
+
+          <div>
+            <dt>Development</dt>
+            <dd>Continuous improvement</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- TECHNOLOGIES                                            -->
+  <!-- ======================================================= -->
+
+  <section class="technology-strip">
+    <div class="container">
+      <ul class="tag-list">
+        {project.technologies.map((technology) => <li>{technology}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- EXECUTIVE SUMMARY                                       -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Executive Summary</p>
+
+        <h2>The operational foundation of the portfolio.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          The Docker Engineering Platform provides the foundation for the
+          applications and services demonstrated throughout this portfolio.
+        </p>
+
+        <p>
+          Rather than running individual containers only to learn their basic
+          commands, I developed a connected environment where applications can
+          be securely published, authenticated, monitored, logged, protected
+          and maintained over time.
+        </p>
+
+        <p>
+          The platform hosts the portfolio, monitoring services, security
+          tooling, authentication, operational utilities and specialist
+          workloads. This provides practical experience of the full service
+          lifecycle—from initial planning and deployment through monitoring,
+          troubleshooting, change and continual improvement.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- CHALLENGE                                               -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container challenge-panel">
+      <div>
+        <p class="eyebrow">The Challenge</p>
+
+        <h2>Build more than a collection of containers.</h2>
+      </div>
+
+      <div>
+        <p>
+          Running isolated containers does not demonstrate how a platform will
+          behave under real operational requirements.
+        </p>
+
+        <p>
+          The challenge was to create an environment incorporating secure
+          external access, identity, networking, persistent data, monitoring,
+          logging, alerting, security response, documentation and repeatable
+          change.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- OBJECTIVES                                              -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Project Objectives</p>
+
+        <h2>Designed around operational outcomes.</h2>
+      </div>
+
+      <div class="objectives-grid">
+        {
+          objectives.map((objective, index) => (
+            <article class="objective-card">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{objective.title}</h3>
+              <p>{objective.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- DELIVERY APPROACH                                       -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Delivery Approach</p>
+
+        <h2>Developed through structured, incremental change.</h2>
+
+        <p>
+          The platform evolved in controlled stages, with each phase adding a
+          specific capability while preserving the existing operational
+          environment.
+        </p>
+      </div>
+
+      <div class="delivery-timeline">
+        {
+          deliveryPhases.map((item) => (
+            <article>
+              <span>{item.phase}</span>
+
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- PLATFORM COMPONENTS                                     -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Core Components</p>
+
+        <h2>Services with clear operational responsibilities.</h2>
+      </div>
+
+      <div class="components-grid">
+        {
+          components.map((component) => (
+            <article class="component-card">
+              <p>{component.category}</p>
+              <h3>{component.title}</h3>
+              <span>{component.description}</span>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- ARCHITECTURE                                            -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Platform Architecture</p>
+
+        <h2>Layered access, applications, observability and security.</h2>
+      </div>
+
+      <div class="architecture-flow">
+        <article>
+          <span>01</span>
+          <strong>Cloudflare</strong>
+          <small>DNS, HTTPS and edge protection</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>02</span>
+          <strong>Nginx Proxy Manager</strong>
+          <small>Reverse proxy and certificate management</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>03</span>
+          <strong>Authelia</strong>
+          <small>Authentication and MFA policies</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>04</span>
+          <strong>Docker Applications</strong>
+          <small>Portfolio, monitoring and engineering services</small>
+        </article>
+
+        <div class="architecture-support">
+          <article>
+            <span>05</span>
+            <strong>Observability</strong>
+            <small>Prometheus, Grafana and Loki</small>
+          </article>
+
+          <article>
+            <span>06</span>
+            <strong>Security</strong>
+            <small>CrowdSec and firewall enforcement</small>
+          </article>
+        </div>
+      </div>
+
+      <div class="architecture-action">
+        <a class="button button-primary" href="/architecture">
+          Explore Complete Architecture
         </a>
       </div>
     </div>
   </section>
 
-  <section class="section section-soft">
-    <div class="container prose">
-      <h2>Case study in preparation</h2>
+  <!-- ======================================================= -->
+  <!-- ENGINEERING CHALLENGES                                  -->
+  <!-- ======================================================= -->
 
-      <p>
-        This project page will document the architecture, implementation,
-        operational approach, technologies used and lessons learned.
-      </p>
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Engineering Challenges</p>
+
+        <h2>Problems resolved through investigation and design.</h2>
+      </div>
+
+      <div class="challenges-grid">
+        {
+          challenges.map((challenge) => (
+            <article class="challenge-card">
+              <h3>{challenge.title}</h3>
+
+              <div>
+                <h4>Problem</h4>
+                <p>{challenge.problem}</p>
+              </div>
+
+              <div>
+                <h4>Response</h4>
+                <p>{challenge.response}</p>
+              </div>
+
+              <div>
+                <h4>Outcome</h4>
+                <p>{challenge.outcome}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- OPERATIONS                                              -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Operational Practices</p>
+
+        <h2>Designed to remain supportable after deployment.</h2>
+      </div>
+
+      <div class="operations-grid">
+        {
+          operationalPractices.map((practice, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{practice.title}</h3>
+              <p>{practice.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- RESULTS                                                 -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Operational Outcomes</p>
+
+        <h2>A functioning platform supporting real services.</h2>
+      </div>
+
+      <div class="results-grid">
+        <article>
+          <strong>Secure</strong>
+          <span>HTTPS, MFA and automated threat response</span>
+        </article>
+
+        <article>
+          <strong>Observable</strong>
+          <span>Central metrics, dashboards, logs and alerts</span>
+        </article>
+
+        <article>
+          <strong>Repeatable</strong>
+          <span>Docker Compose, Git and documented configuration</span>
+        </article>
+
+        <article>
+          <strong>Expandable</strong>
+          <span>New applications can join shared platform services</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- SKILLS                                                  -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container skills-layout">
+      <div class="section-heading">
+        <p class="eyebrow">Skills Demonstrated</p>
+
+        <h2>Technical depth combined with operational thinking.</h2>
+      </div>
+
+      <div class="skills-list">
+        {
+          skills.map((skill, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <strong>{skill}</strong>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- LESSONS                                                 -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Lessons Learned</p>
+
+        <h2>Operating the platform created the greatest value.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          Monitoring and security are most effective when considered during
+          platform design rather than added after deployment.
+        </p>
+
+        <p>
+          Shared conventions for networks, volumes, names and deployment
+          processes greatly reduce troubleshooting time.
+        </p>
+
+        <p>
+          Documentation and version control make infrastructure changes safer,
+          easier to review and less dependent on individual memory.
+        </p>
+
+        <p>
+          Most importantly, operating a platform over time exposes integration,
+          support and maintenance challenges that cannot be learned from an
+          isolated technical demonstration.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- LIVE EVIDENCE                                           -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container final-panel">
+      <div>
+        <p class="eyebrow">Live Evidence</p>
+
+        <h2>Explore the operational platform.</h2>
+
+        <p>
+          Public dashboards and related case studies provide live and
+          documented evidence of the platform in operation.
+        </p>
+      </div>
+
+      <div class="button-column">
+        {
+          securityDashboard?.url && (
+            <a
+              class="button button-primary"
+              href={securityDashboard.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Security Dashboard
+            </a>
+          )
+        }
+
+        {
+          platformDashboard?.url && (
+            <a
+              class="button button-secondary"
+              href={platformDashboard.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Platform Dashboard
+            </a>
+          )
+        }
+
+        <a class="button button-secondary" href="/projects/crowdsec">
+          CrowdSec Case Study
+        </a>
+
+        <a class="button button-secondary" href="/lab">
+          Engineering Lab
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .project-hero {
+    padding: 7rem 0 5rem;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+    align-items: center;
+    gap: 4rem;
+  }
+
+  h1 {
+    margin: 0 0 1.5rem;
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    letter-spacing: -0.06em;
+    line-height: 0.96;
+  }
+
+  h1 span {
+    display: block;
+    color: var(--primary);
+  }
+
+  .hero-summary {
+    max-width: 760px;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+  }
+
+  .project-facts {
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .project-facts dl {
+    margin: 0;
+  }
+
+  .project-facts dl div {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-facts dl div:last-child {
+    border-bottom: 0;
+  }
+
+  .project-facts dt {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .project-facts dd {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .status-live {
+    color: #8ff0bc;
+  }
+
+  .technology-strip {
+    padding: 1.1rem 0;
+    border-block: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  .technology-strip .tag-list {
+    margin: 0;
+  }
+
+  .content-grid,
+  .challenge-panel,
+  .skills-layout {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 5rem;
+  }
+
+  .objectives-grid,
+  .operations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .objective-card,
+  .operations-grid article {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .objective-card > span,
+  .operations-grid article > span {
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: 850;
+  }
+
+  .objective-card p,
+  .operations-grid p {
+    color: var(--text-muted);
+  }
+
+  .delivery-timeline {
+    display: grid;
+    gap: 0;
+    max-width: 950px;
+  }
+
+  .delivery-timeline article {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 1.2rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .delivery-timeline article > span {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    border: 1px solid rgba(93, 184, 255, 0.45);
+    border-radius: 50%;
+    color: var(--primary);
+    background: var(--surface);
+    font-weight: 850;
+  }
+
+  .delivery-timeline h3 {
+    margin: 0;
+  }
+
+  .delivery-timeline p {
+    color: var(--text-muted);
+  }
+
+  .components-grid,
+  .challenges-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .component-card,
+  .challenge-card {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .component-card > p {
+    margin: 0;
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .component-card h3 {
+    margin: 0.35rem 0;
+  }
+
+  .component-card span,
+  .challenge-card p {
+    color: var(--text-muted);
+  }
+
+  .architecture-flow {
+    display: grid;
+    justify-items: center;
+    max-width: 850px;
+    margin-inline: auto;
+  }
+
+  .architecture-flow > article,
+  .architecture-support article {
+    display: grid;
+    width: min(100%, 570px);
+    gap: 0.25rem;
+    padding: 1.2rem 1.4rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+  }
+
+  .architecture-flow article span {
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 850;
+  }
+
+  .architecture-flow article small {
+    color: var(--text-muted);
+  }
+
+  .architecture-flow > div:not(.architecture-support) {
+    padding: 0.5rem;
+    color: var(--primary);
+  }
+
+  .architecture-support {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1.3rem;
+  }
+
+  .architecture-support article {
+    width: 100%;
+  }
+
+  .architecture-action {
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .challenge-card h3 {
+    margin-top: 0;
+    color: var(--primary);
+  }
+
+  .challenge-card h4 {
+    margin-bottom: 0.25rem;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .results-grid article {
+    display: grid;
+    gap: 0.4rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .results-grid strong {
+    color: var(--primary);
+    font-size: 1.5rem;
+  }
+
+  .results-grid span {
+    color: var(--text-muted);
+  }
+
+  .skills-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+
+  .skills-list article {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.8rem;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: var(--surface);
+  }
+
+  .skills-list span {
+    color: var(--primary);
+    font-weight: 850;
+  }
+
+  .final-panel {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 4rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(93, 184, 255, 0.35);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .button-column {
+    display: grid;
+    gap: 0.75rem;
+    min-width: 230px;
+  }
+
+  @media (max-width: 950px) {
+    .hero-grid,
+    .content-grid,
+    .challenge-panel,
+    .skills-layout {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .objectives-grid,
+    .operations-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .results-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 700px) {
+    .objectives-grid,
+    .operations-grid,
+    .components-grid,
+    .challenges-grid,
+    .results-grid,
+    .skills-list,
+    .architecture-support {
+      grid-template-columns: 1fr;
+    }
+
+    .final-panel {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .button-column {
+      width: 100%;
+    }
+  }
+</style>
