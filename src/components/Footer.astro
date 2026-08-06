@@ -1,80 +1,230 @@
+---
+/*
+===============================================================================
+Component: Footer
+
+Purpose:
+Provides site-wide navigation, professional links and downloadable CV access.
+===============================================================================
+*/
+
+const currentYear = new Date().getFullYear();
+
+const footerLinks = [
+  {
+    href: '/about',
+    label: 'Professional Profile',
+  },
+  {
+    href: '/projects',
+    label: 'Projects',
+  },
+  {
+    href: '/leadership',
+    label: 'Delivery & Leadership',
+  },
+  {
+    href: '/beyond-engineering',
+    label: 'Beyond Engineering',
+  },
+  {
+    href: '/contact',
+    label: 'Contact',
+  },
+];
+
+const professionalLinks = [
+  {
+    href: '/files/James_Roberts_CV.pdf',
+    label: 'Download CV',
+    external: true,
+  },
+  {
+    href: '/files/James_Roberts_Profile.pdf',
+    label: 'One Page Profile',
+    external: true,
+  },
+  {
+    href: 'https://www.linkedin.com/in/james-roberts-007752393/',
+    label: 'LinkedIn',
+    external: true,
+  },
+  {
+    href: 'https://github.com/jrwroberts1976',
+    label: 'GitHub',
+    external: true,
+  },
+];
+---
+
 <footer class="site-footer">
   <div class="container footer-grid">
-    <div>
-      <strong>James Roberts</strong>
+    <section class="footer-introduction">
+      <p class="eyebrow">James Roberts</p>
+
+      <h2>
+        Infrastructure, platform engineering,
+        technical leadership and project delivery.
+      </h2>
 
       <p>
-        Infrastructure, Linux, cloud, platform engineering,
-        observability and security.
+        This portfolio presents practical engineering projects, operational
+        platforms and examples of technical change delivered across enterprise
+        and self-hosted environments.
       </p>
-    </div>
+    </section>
 
-    <div class="footer-links">
-      <a href="https://github.com/jrwroberts1976">GitHub</a>
-      <a href="/projects">Projects</a>
-      <a href="/contact">Contact</a>
-    </div>
+    <nav class="footer-navigation" aria-label="Footer navigation">
+      <h3>Explore</h3>
+
+      <ul>
+        {
+          footerLinks.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <section class="footer-professional">
+      <h3>Professional Links</h3>
+
+      <ul>
+        {
+          professionalLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noopener noreferrer' : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
   </div>
 
   <div class="container footer-bottom">
-    <span>© {new Date().getFullYear()} James Roberts</span>
-    <span>Built with Astro and deployed using Docker</span>
+    <p>
+      © {currentYear} James Roberts. Built with Astro and deployed using Docker.
+    </p>
+
+    <a href="#top">Back to top ↑</a>
   </div>
 </footer>
 
 <style>
   .site-footer {
+    padding: 4rem 0 1.5rem;
     border-top: 1px solid var(--border);
-    background: rgba(0, 0, 0, 0.12);
+    background:
+      radial-gradient(
+        circle at top left,
+        rgba(93, 184, 255, 0.08),
+        transparent 24rem
+      ),
+      var(--surface);
   }
 
   .footer-grid {
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 3rem;
-    padding-block: 3.5rem 2rem;
+    grid-template-columns: minmax(0, 1.4fr) minmax(180px, 0.6fr) minmax(220px, 0.7fr);
+    gap: 4rem;
   }
 
-  .footer-grid p {
-    max-width: 500px;
+  .footer-introduction h2 {
+    max-width: 680px;
+    margin: 0 0 1rem;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    letter-spacing: -0.035em;
+    line-height: 1.08;
+  }
+
+  .footer-introduction p:last-child {
+    max-width: 680px;
     color: var(--text-muted);
   }
 
-  .footer-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    align-content: start;
+  .footer-navigation h3,
+  .footer-professional h3 {
+    margin-top: 0;
+    font-size: 1rem;
   }
 
-  .footer-links a {
+  .footer-navigation ul,
+  .footer-professional ul {
+    display: grid;
+    gap: 0.7rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer-navigation a,
+  .footer-professional a {
     color: var(--text-muted);
     text-decoration: none;
+    transition: color 160ms ease;
   }
 
-  .footer-links a:hover {
+  .footer-navigation a:hover,
+  .footer-professional a:hover {
     color: var(--primary);
   }
 
   .footer-bottom {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     gap: 2rem;
-    padding-block: 1.25rem;
+    margin-top: 3rem;
+    padding-top: 1.4rem;
     border-top: 1px solid var(--border);
     color: var(--text-muted);
-    font-size: 0.85rem;
+    font-size: 0.86rem;
   }
 
-  @media (max-width: 700px) {
-    .footer-grid,
-    .footer-bottom {
+  .footer-bottom p {
+    margin: 0;
+  }
+
+  .footer-bottom a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .footer-bottom a:hover {
+    color: var(--primary);
+  }
+
+  @media (max-width: 900px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    .footer-introduction {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .footer-grid {
       grid-template-columns: 1fr;
     }
 
+    .footer-introduction {
+      grid-column: auto;
+    }
+
     .footer-bottom {
+      align-items: flex-start;
       flex-direction: column;
-      gap: 0.4rem;
     }
   }
 </style>
