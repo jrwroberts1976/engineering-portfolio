@@ -1,37 +1,1161 @@
 ---
+/*
+===============================================================================
+Page: Monitoring and Observability Platform
+
+Purpose:
+Documents the planning, implementation and operational value of the monitoring
+platform built using Prometheus, Grafana, Loki, exporters and alerting.
+===============================================================================
+*/
+
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+import { getProjectById } from '../../../data/projects';
+import { getDashboardById } from '../../../data/dashboards';
+
+const project = getProjectById('monitoring');
+const platformDashboard = getDashboardById('platform');
+const securityDashboard = getDashboardById('security');
+
+if (!project) {
+  throw new Error('Monitoring project data could not be found.');
+}
+
+const objectives = [
+  {
+    title: 'Create central visibility',
+    description:
+      'Bring infrastructure, containers, applications and security telemetry into a consistent operational view.',
+  },
+  {
+    title: 'Move beyond reactive support',
+    description:
+      'Identify service-health issues and trends before they become significant incidents.',
+  },
+  {
+    title: 'Support technical decisions',
+    description:
+      'Provide reliable data that can be used during troubleshooting, capacity planning and service improvement.',
+  },
+  {
+    title: 'Standardise monitoring',
+    description:
+      'Use common metrics, dashboards and alerting patterns across multiple services.',
+  },
+  {
+    title: 'Improve communication',
+    description:
+      'Translate complex technical data into views that are understandable to support teams and stakeholders.',
+  },
+  {
+    title: 'Provide live evidence',
+    description:
+      'Publish sanitised dashboards demonstrating that the platform is actively monitored and operated.',
+  },
+];
+
+const dataSources = [
+  {
+    title: 'Node Exporter',
+    category: 'Host Metrics',
+    description:
+      'Provides CPU, memory, disk, filesystem, network and operating-system telemetry.',
+  },
+  {
+    title: 'cAdvisor',
+    category: 'Container Metrics',
+    description:
+      'Provides container resource usage, lifecycle and performance information.',
+  },
+  {
+    title: 'CrowdSec Exporters',
+    category: 'Security Metrics',
+    description:
+      'Expose CrowdSec decisions, alerts and Linux firewall blocking activity.',
+  },
+  {
+    title: 'BirdNET Exporter',
+    category: 'Application Metrics',
+    description:
+      'Provides detection and operational data from the BirdNET specialist workload.',
+  },
+  {
+    title: 'Prometheus',
+    category: 'Metrics Platform',
+    description:
+      'Scrapes, stores and queries time-series metrics across the engineering environment.',
+  },
+  {
+    title: 'Loki and Promtail',
+    category: 'Log Platform',
+    description:
+      'Collect and centralise host, application, container and reverse-proxy logs.',
+  },
+];
+
+const deliveryPhases = [
+  {
+    number: '01',
+    title: 'Identify the visibility gap',
+    description:
+      'Recognised that operational teams required clearer, centralised visibility of service behaviour and infrastructure health.',
+  },
+  {
+    number: '02',
+    title: 'Build the proof of concept',
+    description:
+      'Used Grafana to demonstrate how technical data could be translated into useful operational dashboards.',
+  },
+  {
+    number: '03',
+    title: 'Introduce metrics collection',
+    description:
+      'Deployed Prometheus and exporters to collect consistent infrastructure, container and application metrics.',
+  },
+  {
+    number: '04',
+    title: 'Develop dashboards',
+    description:
+      'Built focused dashboards for platform health, security activity, container resources and specialist workloads.',
+  },
+  {
+    number: '05',
+    title: 'Add operational alerting',
+    description:
+      'Configured alerts for failed targets, exporter outages and unusual operational conditions.',
+  },
+  {
+    number: '06',
+    title: 'Publish selected evidence',
+    description:
+      'Created sanitised, read-only Grafana dashboards for inclusion in the public portfolio.',
+  },
+];
+
+const dashboards = [
+  {
+    title: 'Security Monitoring',
+    purpose:
+      'Shows threat-intelligence decisions, local detections, blocked packets and malicious traffic.',
+    audience:
+      'Security, infrastructure and operational support.',
+  },
+  {
+    title: 'Platform Health',
+    purpose:
+      'Provides visibility of host availability, CPU, memory, storage, containers and monitoring targets.',
+    audience:
+      'Infrastructure and platform operations.',
+  },
+  {
+    title: 'BirdNET Activity',
+    purpose:
+      'Demonstrates application-specific monitoring for a real audio-processing workload.',
+    audience:
+      'Application support and technical demonstration.',
+  },
+  {
+    title: 'Service Availability',
+    purpose:
+      'Tracks the health and responsiveness of key applications and supporting services.',
+    audience:
+      'Operational support and service management.',
+  },
+];
+
+const challenges = [
+  {
+    title: 'Selecting useful metrics',
+    problem:
+      'Collecting every available metric would create noise without improving operational understanding.',
+    response:
+      'Focused dashboards on service health, failure conditions, resource trends and security activity.',
+    outcome:
+      'Dashboards remain useful during troubleshooting and operational review.',
+  },
+  {
+    title: 'Exporter integration',
+    problem:
+      'Different services expose metrics in different formats, and some security information was not directly available.',
+    response:
+      'Used native exporters where possible and developed custom exporters for CrowdSec firewall activity and BirdNET.',
+    outcome:
+      'Prometheus now collects consistent telemetry across infrastructure, containers, applications and security controls.',
+  },
+  {
+    title: 'Alert noise',
+    problem:
+      'Poorly designed alerts can create repeated notifications without providing actionable information.',
+    response:
+      'Used reduction and threshold expressions, sensible evaluation periods and focused failure conditions.',
+    outcome:
+      'Alerts identify meaningful service-health conditions while reducing unnecessary noise.',
+  },
+  {
+    title: 'Public dashboard security',
+    problem:
+      'Live dashboards needed to demonstrate operational evidence without exposing internal addresses, paths or administrative access.',
+    response:
+      'Created sanitised dashboard copies, used read-only external sharing and configured path-specific authentication bypass rules.',
+    outcome:
+      'Visitors can view selected telemetry while the main Grafana environment remains protected by MFA.',
+  },
+];
+
+const projectManagement = [
+  {
+    title: 'Requirements definition',
+    description:
+      'Identified the operational questions dashboards needed to answer before selecting panels and metrics.',
+  },
+  {
+    title: 'Stakeholder communication',
+    description:
+      'Presented monitoring information in a format that could be understood by engineers, support teams and non-specialists.',
+  },
+  {
+    title: 'Incremental delivery',
+    description:
+      'Started with a proof of concept and added metrics, dashboards and alerts in controlled phases.',
+  },
+  {
+    title: 'Risk management',
+    description:
+      'Considered alert fatigue, public-data exposure, target failure and monitoring-platform availability.',
+  },
+  {
+    title: 'Operational handover',
+    description:
+      'Documented dashboards, data sources, alert logic and troubleshooting procedures.',
+  },
+  {
+    title: 'Continuous improvement',
+    description:
+      'Refined queries and dashboards based on actual platform behaviour and support requirements.',
+  },
+];
+
+const outcomes = [
+  {
+    value: '24/7',
+    title: 'Operational visibility',
+    description:
+      'Continuous collection and visualisation of platform telemetry.',
+  },
+  {
+    value: 'Multi-source',
+    title: 'Central monitoring',
+    description:
+      'Infrastructure, container, security and application metrics in one system.',
+  },
+  {
+    value: 'Proactive',
+    title: 'Alerting',
+    description:
+      'Notification of failures and unusual conditions before manual discovery.',
+  },
+  {
+    value: 'Public',
+    title: 'Live evidence',
+    description:
+      'Sanitised dashboards demonstrating a real operating environment.',
+  },
+];
+
+const skills = [
+  'Monitoring strategy',
+  'Requirements analysis',
+  'Prometheus',
+  'Grafana',
+  'Loki and Promtail',
+  'Metrics and exporters',
+  'Dashboard design',
+  'Alert engineering',
+  'Operational support',
+  'Stakeholder communication',
+  'Risk management',
+  'Service improvement',
+];
 ---
 
 <BaseLayout
-  title="Monitoring and Observability Platform"
-  description="Centralised monitoring, dashboards, metrics, logs and alerting using Prometheus, Grafana and Loki."
+  title={project.title}
+  description="A centralised monitoring and observability platform using Prometheus, Grafana, Loki, exporters, dashboards and operational alerting."
 >
-  <section class="page-intro">
-    <div class="container section-heading">
-      <p class="eyebrow">Observability</p>
+  <!-- ======================================================= -->
+  <!-- HERO                                                    -->
+  <!-- ======================================================= -->
 
-      <h1>Monitoring and Observability Platform</h1>
+  <section class="project-hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Observability Case Study</p>
 
-      <p>
-        Centralised monitoring, dashboards, metrics, logs and alerting using Prometheus, Grafana and Loki.
-      </p>
+        <h1>
+          Monitoring and
+          <span>Observability Platform</span>
+        </h1>
 
-      <div class="button-row">
-        <a class="button button-secondary" href="/projects">
-          Back to projects
-        </a>
+        <p class="hero-summary">
+          A central platform providing infrastructure, container, application
+          and security visibility through metrics, logs, dashboards and
+          operational alerting.
+        </p>
+
+        <div class="button-row">
+          {
+            platformDashboard?.url && (
+              <a
+                class="button button-primary"
+                href={platformDashboard.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Live Platform Dashboard
+              </a>
+            )
+          }
+
+          {
+            securityDashboard?.url && (
+              <a
+                class="button button-secondary"
+                href={securityDashboard.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Security Dashboard
+              </a>
+            )
+          }
+
+          <a class="button button-secondary" href="/architecture">
+            View Architecture
+          </a>
+        </div>
+      </div>
+
+      <aside class="project-facts">
+        <p class="eyebrow">Project Summary</p>
+
+        <dl>
+          <div>
+            <dt>Role</dt>
+            <dd>Monitoring designer and operator</dd>
+          </div>
+
+          <div>
+            <dt>Delivery approach</dt>
+            <dd>Proof of concept to live service</dd>
+          </div>
+
+          <div>
+            <dt>Metrics platform</dt>
+            <dd>Prometheus</dd>
+          </div>
+
+          <div>
+            <dt>Visualisation</dt>
+            <dd>Grafana</dd>
+          </div>
+
+          <div>
+            <dt>Status</dt>
+            <dd class="status-live">Operational</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- TECHNOLOGY STRIP                                        -->
+  <!-- ======================================================= -->
+
+  <section class="technology-strip">
+    <div class="container">
+      <ul class="tag-list">
+        {project.technologies.map((technology) => <li>{technology}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- EXECUTIVE SUMMARY                                       -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Executive Summary</p>
+
+        <h2>Turning technical telemetry into operational understanding.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          The Monitoring and Observability Platform provides a central view of
+          the engineering environment, including Linux hosts, Docker
+          containers, security services and specialist applications.
+        </p>
+
+        <p>
+          The project began with a Grafana proof of concept intended to
+          demonstrate how improved visibility could support technical teams.
+          It developed into a broader platform using Prometheus, exporters,
+          Loki, dashboards and alerting.
+        </p>
+
+        <p>
+          The platform is now used to understand performance, identify
+          failures, investigate incidents, observe attack activity and provide
+          live evidence of the environment in operation.
+        </p>
       </div>
     </div>
   </section>
 
-  <section class="section section-soft">
-    <div class="container prose">
-      <h2>Case study in preparation</h2>
+  <!-- ======================================================= -->
+  <!-- CHALLENGE                                               -->
+  <!-- ======================================================= -->
 
-      <p>
-        This project page will document the architecture, implementation,
-        operational approach, technologies used and lessons learned.
-      </p>
+  <section class="section section-soft">
+    <div class="container challenge-panel">
+      <div>
+        <p class="eyebrow">The Challenge</p>
+
+        <h2>Move from reactive support to proactive visibility.</h2>
+      </div>
+
+      <div>
+        <p>
+          Without centralised monitoring, technical teams often discover
+          service problems through user reports, manual checks or isolated
+          application logs.
+        </p>
+
+        <p>
+          The challenge was to create monitoring that answered useful
+          operational questions, supported troubleshooting and communicated
+          service conditions clearly without overwhelming users with data.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- OBJECTIVES                                              -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Project Objectives</p>
+
+        <h2>Monitoring designed around decisions and outcomes.</h2>
+      </div>
+
+      <div class="objectives-grid">
+        {
+          objectives.map((objective, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{objective.title}</h3>
+              <p>{objective.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- DELIVERY PHASES                                         -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Delivery Approach</p>
+
+        <h2>From proof of concept to operational platform.</h2>
+
+        <p>
+          The solution was developed incrementally so that each stage
+          demonstrated value before the next capability was introduced.
+        </p>
+      </div>
+
+      <div class="delivery-timeline">
+        {
+          deliveryPhases.map((phase) => (
+            <article>
+              <span>{phase.number}</span>
+
+              <div>
+                <h3>{phase.title}</h3>
+                <p>{phase.description}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- DATA SOURCES                                            -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Data Sources</p>
+
+        <h2>Telemetry from across the engineering platform.</h2>
+      </div>
+
+      <div class="sources-grid">
+        {
+          dataSources.map((source) => (
+            <article>
+              <p>{source.category}</p>
+              <h3>{source.title}</h3>
+              <span>{source.description}</span>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- ARCHITECTURE                                            -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Monitoring Architecture</p>
+
+        <h2>Collection, storage, visualisation and response.</h2>
+      </div>
+
+      <div class="architecture-flow">
+        <article>
+          <span>01</span>
+          <strong>Infrastructure and Applications</strong>
+          <small>Hosts, containers, security tools and workloads</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>02</span>
+          <strong>Exporters and Promtail</strong>
+          <small>Expose metrics and forward logs</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>03</span>
+          <strong>Prometheus and Loki</strong>
+          <small>Store time-series metrics and logs</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>04</span>
+          <strong>Grafana</strong>
+          <small>Dashboards, queries and operational views</small>
+        </article>
+
+        <div>↓</div>
+
+        <article>
+          <span>05</span>
+          <strong>Alerts and Response</strong>
+          <small>Notification, investigation and corrective action</small>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- DASHBOARDS                                              -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Operational Dashboards</p>
+
+        <h2>Views designed for different operational questions.</h2>
+      </div>
+
+      <div class="dashboards-grid">
+        {
+          dashboards.map((dashboard) => (
+            <article>
+              <h3>{dashboard.title}</h3>
+
+              <h4>Purpose</h4>
+              <p>{dashboard.purpose}</p>
+
+              <h4>Audience</h4>
+              <p>{dashboard.audience}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- PROJECT MANAGEMENT                                      -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Project Delivery</p>
+
+        <h2>Management principles applied to technical improvement.</h2>
+
+        <p>
+          The project demonstrates responsibilities aligned with project
+          management as well as monitoring engineering.
+        </p>
+      </div>
+
+      <div class="management-grid">
+        {
+          projectManagement.map((item, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- CHALLENGES                                              -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Engineering Challenges</p>
+
+        <h2>Balancing visibility, reliability and usability.</h2>
+      </div>
+
+      <div class="challenges-grid">
+        {
+          challenges.map((challenge) => (
+            <article>
+              <h3>{challenge.title}</h3>
+
+              <div>
+                <h4>Problem</h4>
+                <p>{challenge.problem}</p>
+              </div>
+
+              <div>
+                <h4>Response</h4>
+                <p>{challenge.response}</p>
+              </div>
+
+              <div>
+                <h4>Outcome</h4>
+                <p>{challenge.outcome}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- OUTCOMES                                                -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Operational Outcomes</p>
+
+        <h2>Monitoring that supports real platform operation.</h2>
+      </div>
+
+      <div class="outcomes-grid">
+        {
+          outcomes.map((outcome) => (
+            <article>
+              <strong>{outcome.value}</strong>
+              <h3>{outcome.title}</h3>
+              <p>{outcome.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- SKILLS                                                  -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container skills-layout">
+      <div class="section-heading">
+        <p class="eyebrow">Skills Demonstrated</p>
+
+        <h2>Technical monitoring and structured service improvement.</h2>
+      </div>
+
+      <div class="skills-list">
+        {
+          skills.map((skill, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <strong>{skill}</strong>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- LESSONS                                                 -->
+  <!-- ======================================================= -->
+
+  <section class="section section-soft">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Lessons Learned</p>
+
+        <h2>Useful monitoring starts with the questions being asked.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          Monitoring platforms should be designed around operational decisions
+          rather than the number of metrics available.
+        </p>
+
+        <p>
+          A successful proof of concept needs to communicate value clearly,
+          not only demonstrate technical capability.
+        </p>
+
+        <p>
+          Alerts must be actionable. Repeated or unclear notifications reduce
+          confidence in the monitoring platform.
+        </p>
+
+        <p>
+          Public visibility can be provided safely when dashboards are
+          deliberately sanitised and access rules are narrowly scoped.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- LIVE EVIDENCE                                           -->
+  <!-- ======================================================= -->
+
+  <section class="section">
+    <div class="container final-panel">
+      <div>
+        <p class="eyebrow">Live Evidence</p>
+
+        <h2>Explore the monitoring platform in operation.</h2>
+
+        <p>
+          Public dashboards provide read-only operational evidence while
+          sensitive infrastructure details remain protected.
+        </p>
+      </div>
+
+      <div class="button-column">
+        {
+          platformDashboard?.url && (
+            <a
+              class="button button-primary"
+              href={platformDashboard.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Platform Dashboard
+            </a>
+          )
+        }
+
+        {
+          securityDashboard?.url && (
+            <a
+              class="button button-secondary"
+              href={securityDashboard.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Security Dashboard
+            </a>
+          )
+        }
+
+        <a class="button button-secondary" href="/projects/docker-platform">
+          Docker Platform
+        </a>
+
+        <a class="button button-secondary" href="/lab">
+          Engineering Lab
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .project-hero {
+    padding: 7rem 0 5rem;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+    align-items: center;
+    gap: 4rem;
+  }
+
+  h1 {
+    margin: 0 0 1.5rem;
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    letter-spacing: -0.06em;
+    line-height: 0.96;
+  }
+
+  h1 span {
+    display: block;
+    color: var(--primary);
+  }
+
+  .hero-summary {
+    max-width: 760px;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+  }
+
+  .project-facts {
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .project-facts dl {
+    margin: 0;
+  }
+
+  .project-facts dl div {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-facts dl div:last-child {
+    border-bottom: 0;
+  }
+
+  .project-facts dt {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .project-facts dd {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .status-live {
+    color: #8ff0bc;
+  }
+
+  .technology-strip {
+    padding: 1.1rem 0;
+    border-block: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  .technology-strip .tag-list {
+    margin: 0;
+  }
+
+  .content-grid,
+  .challenge-panel,
+  .skills-layout {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 5rem;
+  }
+
+  .objectives-grid,
+  .sources-grid,
+  .management-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .objectives-grid article,
+  .sources-grid article,
+  .management-grid article {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .objectives-grid span,
+  .management-grid span {
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: 850;
+  }
+
+  .objectives-grid p,
+  .management-grid p {
+    color: var(--text-muted);
+  }
+
+  .sources-grid article > p {
+    margin: 0;
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .sources-grid article h3 {
+    margin: 0.35rem 0;
+  }
+
+  .sources-grid article span {
+    color: var(--text-muted);
+  }
+
+  .delivery-timeline {
+    display: grid;
+    max-width: 950px;
+  }
+
+  .delivery-timeline article {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 1.2rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .delivery-timeline article > span {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    border: 1px solid rgba(93, 184, 255, 0.45);
+    border-radius: 50%;
+    color: var(--primary);
+    background: var(--surface);
+    font-weight: 850;
+  }
+
+  .delivery-timeline h3 {
+    margin: 0;
+  }
+
+  .delivery-timeline p {
+    color: var(--text-muted);
+  }
+
+  .architecture-flow {
+    display: grid;
+    justify-items: center;
+    max-width: 800px;
+    margin-inline: auto;
+  }
+
+  .architecture-flow article {
+    display: grid;
+    width: min(100%, 570px);
+    gap: 0.25rem;
+    padding: 1.2rem 1.4rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+  }
+
+  .architecture-flow article span {
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 850;
+  }
+
+  .architecture-flow article small {
+    color: var(--text-muted);
+  }
+
+  .architecture-flow > div {
+    padding: 0.5rem;
+    color: var(--primary);
+  }
+
+  .dashboards-grid,
+  .challenges-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .dashboards-grid article,
+  .challenges-grid article {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .dashboards-grid h3,
+  .challenges-grid h3 {
+    margin-top: 0;
+    color: var(--primary);
+  }
+
+  .dashboards-grid h4,
+  .challenges-grid h4 {
+    margin-bottom: 0.25rem;
+  }
+
+  .dashboards-grid p,
+  .challenges-grid p {
+    color: var(--text-muted);
+  }
+
+  .outcomes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .outcomes-grid article {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .outcomes-grid strong {
+    color: var(--primary);
+    font-size: 1.8rem;
+  }
+
+  .outcomes-grid h3 {
+    margin: 0.7rem 0 0.3rem;
+  }
+
+  .outcomes-grid p {
+    color: var(--text-muted);
+  }
+
+  .skills-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+
+  .skills-list article {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.8rem;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: var(--surface);
+  }
+
+  .skills-list span {
+    color: var(--primary);
+    font-weight: 850;
+  }
+
+  .final-panel {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 4rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(93, 184, 255, 0.35);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .button-column {
+    display: grid;
+    gap: 0.75rem;
+    min-width: 230px;
+  }
+
+  @media (max-width: 950px) {
+    .hero-grid,
+    .content-grid,
+    .challenge-panel,
+    .skills-layout {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .objectives-grid,
+    .sources-grid,
+    .management-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .outcomes-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 700px) {
+    .objectives-grid,
+    .sources-grid,
+    .management-grid,
+    .dashboards-grid,
+    .challenges-grid,
+    .outcomes-grid,
+    .skills-list {
+      grid-template-columns: 1fr;
+    }
+
+    .final-panel {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .button-column {
+      width: 100%;
+    }
+  }
+</style>
