@@ -1,44 +1,36 @@
 ---
 /*
 |--------------------------------------------------------------------------
-| Live Grafana Dashboards
+| Live Grafana Dashboards + Historical BirdNET Telemetry
 |--------------------------------------------------------------------------
-|
-| Dashboard information is loaded from:
-|
-|   src/data/dashboards.ts
-|
-| Related project information is loaded from:
-|
-|   src/data/projects.ts
-|
-| An empty dashboard URL automatically produces a "Preparing" card.
-|
 */
 
 import DashboardCard from './DashboardCard.astro';
+import BirdActivityHeatmap from './BirdActivityHeatmap.astro';
 
 import { dashboards } from '../data/dashboards';
 import { getProjectById } from '../data/projects';
+
+const liveDashboards = dashboards.filter((dashboard) => dashboard.id !== 'birdnet');
 ---
 
 <section id="live-dashboards" class="section">
   <div class="container">
     <div class="section-heading">
-      <p class="eyebrow">Live Engineering Telemetry</p>
+      <p class="eyebrow">Engineering Telemetry</p>
 
       <h2>Real platforms. Real operational data.</h2>
 
       <p>
-        These read-only Grafana dashboards provide live operational evidence
-        from my engineering platform. Sensitive infrastructure information has
-        been removed from the public views.
+        Read-only Grafana dashboards provide live operational evidence from my
+        engineering platform. The BirdNET panel currently presents a historical
+        detection sample while that specialist workload is offline.
       </p>
     </div>
 
     <div class="dashboard-grid">
       {
-        dashboards.map((dashboard) => {
+        liveDashboards.map((dashboard) => {
           const project = getProjectById(dashboard.projectId);
 
           return (
@@ -53,6 +45,8 @@ import { getProjectById } from '../data/projects';
           );
         })
       }
+
+      <BirdActivityHeatmap />
     </div>
   </div>
 </section>
@@ -60,7 +54,7 @@ import { getProjectById } from '../data/projects';
 <style>
   .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.5rem;
   }
 
