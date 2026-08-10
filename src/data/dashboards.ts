@@ -3,17 +3,13 @@
 | Public Grafana Dashboards
 |--------------------------------------------------------------------------
 |
-| Dashboard URLs are loaded from public Astro environment variables.
-|
-| These URLs are deliberately public and are compiled into the static site.
+| Public dashboards are deliberately linked from the static portfolio as
+| operational evidence.
 |
 | Variables:
 |
 |   PUBLIC_GRAFANA_SECURITY_DASHBOARD
-|   PUBLIC_GRAFANA_PLATFORM_DASHBOARD
 |   PUBLIC_GRAFANA_BIRDNET_DASHBOARD
-|
-| When a URL is empty, the dashboard card displays "Preparing".
 |
 */
 
@@ -35,21 +31,20 @@ export const dashboards: Dashboard[] = [
   {
     id: 'platform',
     category: 'Platform Operations',
-    title: 'Engineering Platform Health',
+    title: 'Homelab Operations Centre',
     description:
-      'Infrastructure health, container availability, resource utilisation and monitoring coverage.',
+      'Live multi-host Linux operations view covering service availability, infrastructure capacity, monitoring health and security services.',
     projectId: 'monitoring',
-    url:
-      import.meta.env.PUBLIC_GRAFANA_PLATFORM_DASHBOARD ?? '',
+    url: 'https://grafana.jrwroberts.co.uk/public-dashboards/9f2c1f2f843741c6bcb402b676ebf20c',
     status: 'Live',
   },
 
   {
     id: 'birdnet',
     category: 'Specialist Workload',
-    title: 'BirdNET Activity',
+    title: 'BirdNET Garden Wildlife Monitor',
     description:
-      'Live wildlife detections and operational monitoring of an audio-processing workload.',
+      'Wildlife detection telemetry demonstrating a specialist audio-processing workload and custom Prometheus monitoring.',
     projectId: 'birdnet',
     url:
       import.meta.env.PUBLIC_GRAFANA_BIRDNET_DASHBOARD ?? '',
