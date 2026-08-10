@@ -61,6 +61,7 @@ export const projects: Project[] = [
       'Cloudflare',
     ],
     featured: true,
+    dashboardKey: 'docker-platform',
   },
 
   {
