@@ -40,6 +40,17 @@ export const dashboards: Dashboard[] = [
   },
 
   {
+    id: 'docker-platform',
+    category: 'Container Platform',
+    title: 'Docker Engineering Platform',
+    description:
+      'Live multi-host Docker operations view covering container health, workload utilisation, cAdvisor coverage and platform telemetry.',
+    projectId: 'docker-platform',
+    url: 'https://grafana.jrwroberts.co.uk/public-dashboards/92a1055e3e4a44218a10f9e49bb8fc1c',
+    status: 'Live',
+  },
+
+  {
     id: 'birdnet',
     category: 'Specialist Workload',
     title: 'BirdNET Garden Wildlife Monitor',
