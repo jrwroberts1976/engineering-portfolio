@@ -1,17 +1,14 @@
 ---
 /*
 |--------------------------------------------------------------------------
-| Live Grafana Dashboards + Historical BirdNET Telemetry
+| Public Grafana Dashboards
 |--------------------------------------------------------------------------
 */
 
 import DashboardCard from './DashboardCard.astro';
-import BirdActivityHeatmap from './BirdActivityHeatmap.astro';
 
 import { dashboards } from '../data/dashboards';
 import { getProjectById } from '../data/projects';
-
-const liveDashboards = dashboards.filter((dashboard) => dashboard.id !== 'birdnet');
 ---
 
 <section id="live-dashboards" class="section">
@@ -22,15 +19,15 @@ const liveDashboards = dashboards.filter((dashboard) => dashboard.id !== 'birdne
       <h2>Real platforms. Real operational data.</h2>
 
       <p>
-        Read-only Grafana dashboards provide live operational evidence from my
-        engineering platform. The BirdNET panel currently presents a historical
-        detection sample while that specialist workload is offline.
+        Read-only Grafana dashboards provide operational evidence from my
+        engineering platform, including infrastructure monitoring, security
+        telemetry and BirdNET wildlife detection data.
       </p>
     </div>
 
     <div class="dashboard-grid">
       {
-        liveDashboards.map((dashboard) => {
+        dashboards.map((dashboard) => {
           const project = getProjectById(dashboard.projectId);
 
           return (
@@ -45,8 +42,6 @@ const liveDashboards = dashboards.filter((dashboard) => dashboard.id !== 'birdne
           );
         })
       }
-
-      <BirdActivityHeatmap />
     </div>
   </div>
 </section>
@@ -54,7 +49,7 @@ const liveDashboards = dashboards.filter((dashboard) => dashboard.id !== 'birdne
 <style>
   .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.5rem;
   }
 
