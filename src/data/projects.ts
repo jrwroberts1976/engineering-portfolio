@@ -133,7 +133,7 @@ export const projects: Project[] = [
     description:
       'A wildlife detection workload integrated with Docker, audio hardware, custom metrics and Grafana visualisation.',
     href: '/projects/birdnet',
-    status: 'Active project',
+    status: 'Historical Dataset',
     technologies: [
       'BirdNET-Go',
       'Docker',
