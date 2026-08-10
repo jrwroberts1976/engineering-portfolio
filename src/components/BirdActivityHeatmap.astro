@@ -1,0 +1,189 @@
+---
+import { birdActivity, birdActivityDate } from '../data/birdActivity';
+
+const hours = Array.from({ length: 24 }, (_, hour) => hour);
+const maxCount = Math.max(...birdActivity.flatMap((species) => species.counts));
+
+function intensity(count: number): number {
+  if (!count) return 0;
+  return Math.max(0.18, Math.min(1, count / maxCount));
+}
+---
+
+<article class="bird-activity">
+  <div class="activity-header">
+    <div>
+      <p class="eyebrow">Specialist Workload · Historical telemetry</p>
+      <h3>BirdNET Daily Activity</h3>
+      <p class="intro">
+        Acoustic species detections recorded by my BirdNET-Go monitoring workload.
+        This historical sample remains available while the live service is offline.
+      </p>
+    </div>
+    <div class="date-badge">{birdActivityDate}</div>
+  </div>
+
+  <div class="activity-scroll" aria-label={`BirdNET detections for ${birdActivityDate}`}>
+    <div class="heatmap">
+      <div class="species-heading">Species</div>
+      {
+        hours.map((hour) => (
+          <div class="hour">{String(hour).padStart(2, '0')}</div>
+        ))
+      }
+
+      {
+        birdActivity.map((species) => (
+          <>
+            <div class="species">
+              <span class="species-code">{species.code}</span>
+              <span>{species.name}</span>
+            </div>
+            {species.counts.map((count, hour) => (
+              <div
+                class:list={['cell', { active: count > 0 }]}
+                style={count ? `--intensity:${intensity(count)}` : undefined}
+                title={`${species.name}, ${String(hour).padStart(2, '0')}:00 — ${count} detection${count === 1 ? '' : 's'}`}
+              >
+                {count || ''}
+              </div>
+            ))}
+          </>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="activity-footer">
+    <span>Historical sample · not live</span>
+    <span>3 August 2026</span>
+  </div>
+</article>
+
+<style>
+  .bird-activity {
+    grid-column: 1 / -1;
+    padding: 1.75rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: linear-gradient(145deg, rgba(23, 43, 69, 0.96), rgba(13, 26, 43, 0.96));
+    box-shadow: var(--shadow);
+  }
+
+  .activity-header,
+  .activity-footer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  h3 {
+    margin: 0.35rem 0 0.65rem;
+    font-size: 1.55rem;
+  }
+
+  .intro {
+    max-width: 760px;
+    margin: 0;
+    color: var(--text-muted);
+  }
+
+  .date-badge {
+    flex: 0 0 auto;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 0.7rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .activity-scroll {
+    margin-top: 1.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  .heatmap {
+    display: grid;
+    grid-template-columns: 210px repeat(24, minmax(34px, 1fr));
+    gap: 5px;
+    min-width: 1100px;
+  }
+
+  .species-heading,
+  .hour {
+    display: flex;
+    align-items: center;
+    min-height: 28px;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .hour {
+    justify-content: center;
+  }
+
+  .species {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 34px;
+    white-space: nowrap;
+    font-size: 0.82rem;
+  }
+
+  .species-code {
+    display: inline-flex;
+    width: 32px;
+    height: 25px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.45rem;
+    background: rgba(93, 184, 255, 0.16);
+    color: var(--primary);
+    font-size: 0.68rem;
+    font-weight: 850;
+  }
+
+  .cell {
+    display: flex;
+    min-height: 34px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.025);
+    border-radius: 0.35rem;
+    background: rgba(255, 255, 255, 0.055);
+    color: transparent;
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+
+  .cell.active {
+    background: rgba(93, 184, 255, var(--intensity));
+    color: #fff;
+  }
+
+  .activity-footer {
+    margin-top: 1rem;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: 700px) {
+    .bird-activity {
+      padding: 1.25rem;
+    }
+
+    .activity-header {
+      flex-direction: column;
+    }
+
+    .date-badge {
+      align-self: flex-start;
+    }
+  }
+</style>
