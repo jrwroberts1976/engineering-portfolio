@@ -25,6 +25,25 @@ import type { Project } from './types';
 
 export const projects: Project[] = [
   {
+    id: 'greenbone',
+    category: 'Vulnerability Management',
+    title: 'Greenbone Vulnerability Management',
+    shortTitle: 'Greenbone Vulnerability Management',
+    description:
+      'A managed vulnerability-management workflow that turns Greenbone scan evidence into prioritised, reviewable remediation for the Linux homelab.',
+    href: '/projects/greenbone',
+    status: 'Live',
+    technologies: [
+      'Greenbone',
+      'OpenVAS',
+      'Docker Compose',
+      'Prometheus',
+      'Linux',
+    ],
+    featured: true,
+  },
+
+  {
     id: 'crowdsec',
     category: 'Security Engineering',
     title: 'CrowdSec Security Platform',
