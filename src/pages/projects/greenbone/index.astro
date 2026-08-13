@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getProjectById } from '../../../data/projects';
+
+const project = getProjectById('greenbone');
+
+if (!project) {
+  throw new Error('Greenbone project data could not be found.');
+}
+---
+
+<BaseLayout
+  title="Greenbone Vulnerability Management"
+  description="A practical vulnerability-management workflow using Greenbone, OpenVAS, Prometheus and approval-based Linux remediation."
+>
+  <section class="project-hero">
+    <div class="container project-hero-grid">
+      <div>
+        <p class="eyebrow">Security Engineering Case Study</p>
+        <h1>Vulnerability management built for safe remediation.</h1>
+        <p class="project-summary">
+          Greenbone provides repeatable evidence of known weaknesses across the
+          homelab. The workflow compares daily reports, prioritises meaningful
+          changes and keeps remediation deterministic and approval-led.
+        </p>
+        <div class="button-row">
+          <a class="button button-primary" href="/lab">Explore the engineering lab</a>
+          <a class="button button-secondary" href="/projects">Back to projects</a>
+        </div>
+      </div>
+
+      <aside class="project-facts">
+        <p class="eyebrow">Project Overview</p>
+        <dl>
+          <div><dt>Project type</dt><dd>Vulnerability management</dd></div>
+          <div><dt>Scanner</dt><dd>Greenbone / OpenVAS</dd></div>
+          <div><dt>Coverage</dt><dd>Managed Linux homelab</dd></div>
+          <div><dt>Remediation</dt><dd>Approved playbooks only</dd></div>
+          <div><dt>Status</dt><dd class="live-status">Operational</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="technology-strip"><div class="container"><ul class="tag-list">{project.technologies.map((technology) => <li>{technology}</li>)}</ul></div></section>
+
+  <section class="section">
+    <div class="container content-grid">
+      <div class="section-heading"><p class="eyebrow">The Challenge</p><h2>Find the issues that deserve attention.</h2></div>
+      <div class="prose"><p>Regular scanning is useful only when its findings can be assessed, prioritised and acted on without creating unnecessary change risk. This project turns scan output into a deliberate operational review rather than a list of alerts.</p><p>It covers ids-01, TestServer, k3s-node-01 and DietPi, with a focus on new or worsened findings that have a quality of detection of 70% or above.</p></div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading"><p class="eyebrow">Workflow</p><h2>Evidence through to controlled change</h2><p>The platform connects scanning, comparison, observability and human approval.</p></div>
+      <div class="architecture">
+        <div class="architecture-item"><span>01</span><strong>Greenbone scans</strong><p>Scheduled scans assess managed hosts.</p></div><div class="architecture-arrow">→</div>
+        <div class="architecture-item"><span>02</span><strong>Daily comparison</strong><p>Reports identify new and worsened findings.</p></div><div class="architecture-arrow">→</div>
+        <div class="architecture-item"><span>03</span><strong>Review brief</strong><p>Findings are explained and prioritised.</p></div><div class="architecture-arrow">→</div>
+        <div class="architecture-item"><span>04</span><strong>Approved playbook</strong><p>Only deterministic remediation is applied.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section"><div class="container"><div class="section-heading"><p class="eyebrow">Capabilities</p><h2>Security visibility with operational guardrails</h2></div><div class="grid capability-grid">
+    <article class="card"><h3>Prioritised findings</h3><p>Review concentrates on material changes and credible evidence rather than every informational result.</p></article>
+    <article class="card"><h3>Prometheus metrics</h3><p>Scan health, report recency and finding trends are exposed to the monitoring platform.</p></article>
+    <article class="card"><h3>AI review briefs</h3><p>Reports are translated into concise remediation context for informed operator review.</p></article>
+    <article class="card"><h3>Controlled remediation</h3><p>Approved playbooks cover APT security updates, Docker production mode, HTTP cookie hardening and unnecessary managed services.</p></article>
+  </div></div></section>
+
+  <section class="section section-soft"><div class="container content-grid"><div class="section-heading"><p class="eyebrow">Engineering Outcome</p><h2>Automation that preserves accountability.</h2></div><div class="prose"><p>Greenbone supplies the evidence; automation helps make it actionable. Changes are never made simply because a scanner suggested them: approved deterministic playbooks keep the response safe, auditable and repeatable.</p></div></div></section>
+</BaseLayout>
+
+<style>
+  .project-hero { padding: 7rem 0 4rem; }
+  .project-hero-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(290px, .6fr); align-items: start; gap: 4rem; }
+  h1 { max-width: 900px; margin: 0 0 1.5rem; font-size: clamp(3rem, 7vw, 5.8rem); letter-spacing: -.055em; line-height: .98; }
+  .project-summary { max-width: 760px; color: var(--text-muted); font-size: 1.2rem; }
+  .project-facts { padding: 1.75rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+  .project-facts dl { margin: 0; } .project-facts dl div { display: grid; gap: .15rem; padding: .8rem 0; border-bottom: 1px solid var(--border); } .project-facts dl div:last-child { border-bottom: 0; }
+  .project-facts dt { color: var(--text-muted); font-size: .8rem; text-transform: uppercase; } .project-facts dd { margin: 0; font-weight: 700; } .live-status { color: #8ff0bc; }
+  .technology-strip { padding: 1.5rem 0; border-block: 1px solid var(--border); background: var(--surface); }
+  .architecture { display: flex; align-items: stretch; gap: .75rem; } .architecture-item { flex: 1; padding: 1.25rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); } .architecture-item span { color: var(--primary); font-weight: 800; } .architecture-item p { color: var(--text-muted); } .architecture-arrow { display: grid; place-items: center; color: var(--primary); font-size: 1.5rem; }
+  @media (max-width: 850px) { .project-hero-grid { grid-template-columns: 1fr; gap: 2rem; } .architecture { flex-direction: column; } .architecture-arrow { transform: rotate(90deg); } }
+</style>
