@@ -23,8 +23,7 @@ export const dashboards: Dashboard[] = [
     description:
       'Live CrowdSec detections, firewall activity and community threat intelligence.',
     projectId: 'crowdsec',
-    url:
-      import.meta.env.PUBLIC_GRAFANA_SECURITY_DASHBOARD ?? '',
+    url: 'https://grafana.jrwroberts.co.uk/public-dashboards/cff751c416f940d38d75d68cba0e9129',
     status: 'Live',
   },
 
