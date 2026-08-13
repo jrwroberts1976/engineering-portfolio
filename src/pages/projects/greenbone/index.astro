@@ -1,4 +1,3 @@
----
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getProjectById } from '../../../data/projects';
 
@@ -24,7 +23,14 @@ if (!project) {
           changes and keeps remediation deterministic and approval-led.
         </p>
         <div class="button-row">
-          <a class="button button-primary" href="/lab">Explore the engineering lab</a>
+          <a
+            class="button button-primary"
+            href="https://grafana.jrwroberts.co.uk/public-dashboards/6f1ecaee735a4add9d69824ef1b48d2b"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View vulnerability dashboard
+          </a>
           <a class="button button-secondary" href="/projects">Back to projects</a>
         </div>
       </div>
