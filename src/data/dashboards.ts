@@ -56,8 +56,7 @@ export const dashboards: Dashboard[] = [
     description:
       'Wildlife detection telemetry demonstrating a specialist audio-processing workload and custom Prometheus monitoring.',
     projectId: 'birdnet',
-    url:
-      import.meta.env.PUBLIC_GRAFANA_BIRDNET_DASHBOARD ?? '',
+    url: 'https://grafana.jrwroberts.co.uk/public-dashboards/6f1ecaee735a4add9d69824ef1b48d2b',
     status: 'Live',
   },
 ];
