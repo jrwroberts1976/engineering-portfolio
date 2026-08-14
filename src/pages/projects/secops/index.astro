@@ -1,0 +1,145 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getProjectById } from '../../../data/projects';
+
+const project = getProjectById('secops');
+
+if (!project) {
+  throw new Error('SecOps project data could not be found.');
+}
+---
+
+<BaseLayout
+  title="SecOps — Security Operations"
+  description="A practical security operations capability covering threat detection, vulnerability management, DNS filtering and evidence-led remediation."
+>
+  <section class="project-hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Security Operations</p>
+        <h1>SecOps built around visibility, control and safe response.</h1>
+        <p class="summary">
+          A joined-up set of homelab security controls that turns telemetry,
+          scan results and protective services into actions that can be reviewed
+          and operated with confidence.
+        </p>
+        <div class="button-row">
+          <a class="button button-primary" href="/projects/crowdsec">
+            Explore CrowdSec
+          </a>
+          <a class="button button-secondary" href="/projects/greenbone">
+            Explore Greenbone
+          </a>
+        </div>
+      </div>
+
+      <aside class="facts">
+        <p class="eyebrow">Scope</p>
+        <dl>
+          <div><dt>Detection</dt><dd>Suricata and CrowdSec</dd></div>
+          <div><dt>Prevention</dt><dd>Firewall enforcement and DNS filtering</dd></div>
+          <div><dt>Assurance</dt><dd>Greenbone vulnerability management</dd></div>
+          <div><dt>Evidence</dt><dd>Prometheus, Grafana and fixed snapshots</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="technology-strip">
+    <div class="container">
+      <ul class="tag-list">
+        {project.technologies.map((technology) => <li>{technology}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="heading">
+        <p class="eyebrow">Operating Model</p>
+        <h2>From signal to controlled response.</h2>
+        <p>Security controls are useful only when they are visible, maintained and understood.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <span>01</span>
+          <h3>Detect</h3>
+          <p>Suricata and CrowdSec identify suspicious activity from network and reverse-proxy telemetry.</p>
+        </article>
+        <article class="card">
+          <span>02</span>
+          <h3>Protect</h3>
+          <p>Firewall enforcement and Pi-hole DNS filtering reduce exposure and block unwanted activity.</p>
+        </article>
+        <article class="card">
+          <span>03</span>
+          <h3>Assess</h3>
+          <p>Greenbone scans surface credible weaknesses and prioritise new or worsened findings.</p>
+        </article>
+        <article class="card">
+          <span>04</span>
+          <h3>Improve</h3>
+          <p>Observability and review-led playbooks support measured, repeatable remediation.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="heading">
+        <p class="eyebrow">Security Capabilities</p>
+        <h2>Controls with clear ownership.</h2>
+      </div>
+
+      <div class="capabilities">
+        <article>
+          <h3>Threat detection and response</h3>
+          <p>CrowdSec combines behavioural detection, community intelligence and automated firewall decisions for internet-facing services.</p>
+          <a href="/projects/crowdsec">View CrowdSec case study →</a>
+        </article>
+        <article>
+          <h3>Vulnerability management</h3>
+          <p>Greenbone provides scheduled evidence of weaknesses across managed Linux systems, with remediation kept approval-led and deterministic.</p>
+          <a href="/projects/greenbone">View Greenbone case study →</a>
+        </article>
+        <article>
+          <h3>DNS filtering and privacy</h3>
+          <p>Pi-hole provides network-wide DNS filtering as a supporting protective control, monitored alongside the wider platform.</p>
+          <span class="muted">Dashboard snapshot to be added</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container outcome">
+      <p class="eyebrow">Engineering Outcome</p>
+      <h2>Security work presented as an operational capability.</h2>
+      <p>
+        SecOps ties together prevention, detection, assessment and remediation
+        so the individual tools form one understandable, supportable service.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .project-hero { padding: 7rem 0 4rem; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, .6fr); gap: 4rem; align-items: start; }
+  h1 { max-width: 920px; margin: 0 0 1.5rem; font-size: clamp(3rem, 7vw, 5.8rem); letter-spacing: -.055em; line-height: .98; }
+  .summary, .heading > p:last-child, .outcome > p:last-child { max-width: 760px; color: var(--text-muted); font-size: 1.15rem; }
+  .facts { padding: 1.75rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+  .facts dl { margin: 0; } .facts dl div { padding: .8rem 0; border-bottom: 1px solid var(--border); } .facts dl div:last-child { border: 0; }
+  .facts dt { color: var(--text-muted); font-size: .8rem; text-transform: uppercase; } .facts dd { margin: .15rem 0 0; font-weight: 700; }
+  .technology-strip { padding: 1.4rem 0; border-block: 1px solid var(--border); background: var(--surface); }
+  .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+  .card { padding: 1.4rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+  .card span { color: var(--primary); font-weight: 800; } .card p, .capabilities p { color: var(--text-muted); }
+  .capabilities { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+  .capabilities article { padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+  .capabilities a { color: var(--primary); font-weight: 700; text-decoration: none; } .muted { color: var(--text-muted); font-size: .9rem; }
+  .outcome { max-width: 900px; }
+  @media (max-width: 850px) { .hero-grid, .grid, .capabilities { grid-template-columns: 1fr; } }
+</style>
