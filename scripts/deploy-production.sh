@@ -1,33 +1,40 @@
 #!/usr/bin/env bash
+set -Eeuo pipefail
 
 # =============================================================================
 # Engineering Portfolio – Production Deployment
 # =============================================================================
 #
+# Remote repository:
+#   https://github.com/jrwroberts1976/engineering-portfolio
+#
 # Source:
-#   /home/james/projects/engineering-portfolio
+#   /home/james/docker/stacks/engineering-portfolio-git
 #
 # Production:
 #   /home/james/docker/stacks/engineering-portfolio
 #
+# Maintenance:
+#   /home/james/docker/stacks/maintenance-page
+#
 # Usage:
-#   ./scripts/deploy-production.sh
+#   ./deploy-production.sh
 #
 # Clean image rebuild:
-#   ./scripts/deploy-production.sh --no-cache
+#   ./deploy-production.sh --no-cache
 #
 # =============================================================================
 
-set -Eeuo pipefail
-
-SOURCE_DIR="/home/james/projects/engineering-portfolio"
+SOURCE_DIR="/home/james/docker/stacks/engineering-portfolio-git"
 PRODUCTION_DIR="/home/james/docker/stacks/engineering-portfolio"
+MAINTENANCE_DIR="/home/james/docker/stacks/maintenance-page"
 
 CONTAINER_NAME="engineering-portfolio"
 PROXY_CONTAINER="npm"
 PROXY_URL="http://engineering-portfolio:80"
 
 NO_CACHE=false
+MAINTENANCE_ENABLED=false
 
 if [[ "${1:-}" == "--no-cache" ]]; then
     NO_CACHE=true
@@ -51,34 +58,55 @@ fail() {
 
 cleanup_on_error() {
     echo
-    echo "Deployment failed."
+    echo "=============================================="
+    echo "DEPLOYMENT FAILED"
+    echo "=============================================="
+    echo
+    echo "Maintenance mode will remain ENABLED."
+    echo
     echo "Current container status:"
     docker ps -a --filter "name=${CONTAINER_NAME}" || true
 
     echo
     echo "Recent container logs:"
     docker logs "${CONTAINER_NAME}" --tail 50 2>/dev/null || true
+
+    echo
+    echo "To restore the previous live site after investigation:"
+    echo "  ${MAINTENANCE_DIR}/disable-maintenance.sh"
 }
 
 trap cleanup_on_error ERR
 
-# -----------------------------------------------------------------------------
-# Pre-flight checks
-# -----------------------------------------------------------------------------
+# =============================================================================
+# Pre-flight
+# =============================================================================
 
 log "Running pre-flight checks"
 
 [[ -d "${SOURCE_DIR}" ]] ||
-    fail "Development directory not found: ${SOURCE_DIR}"
+    fail "Source repository not found: ${SOURCE_DIR}"
+
+[[ -d "${SOURCE_DIR}/.git" ]] ||
+    fail "Source directory is not a Git repository"
 
 [[ -f "${SOURCE_DIR}/package.json" ]] ||
-    fail "package.json not found in development repository"
+    fail "package.json not found"
 
 [[ -f "${SOURCE_DIR}/Dockerfile" ]] ||
-    fail "Dockerfile not found in development repository"
+    fail "Dockerfile not found"
 
 [[ -f "${SOURCE_DIR}/compose.yml" ]] ||
-    fail "compose.yml not found in development repository"
+    fail "compose.yml not found"
+
+[[ -x "${MAINTENANCE_DIR}/enable-maintenance.sh" ]] ||
+    fail "Maintenance enable script not found or not executable"
+
+[[ -x "${MAINTENANCE_DIR}/disable-maintenance.sh" ]] ||
+    fail "Maintenance disable script not found or not executable"
+
+command -v git >/dev/null 2>&1 ||
+    fail "Git is not installed"
 
 command -v npm >/dev/null 2>&1 ||
     fail "npm is not installed"
@@ -94,25 +122,59 @@ docker info >/dev/null 2>&1 ||
 
 success "Pre-flight checks passed"
 
-# -----------------------------------------------------------------------------
-# Show source status
-# -----------------------------------------------------------------------------
+# =============================================================================
+# Update source from GitHub
+# =============================================================================
 
-log "Checking Git status"
+log "Updating source repository from GitHub"
 
 cd "${SOURCE_DIR}"
 
-git status --short || true
+git fetch origin
 
-if ! git diff --quiet || ! git diff --cached --quiet; then
-    echo
-    echo "Warning: the development repository contains uncommitted changes."
-    echo "These changes will still be deployed."
-fi
+git checkout main
 
-# -----------------------------------------------------------------------------
+git pull --ff-only origin main
+
+success "Source repository updated"
+
+echo
+echo "Current commit:"
+git log -1 --oneline
+
+# =============================================================================
+# Enable maintenance
+# =============================================================================
+
+log "Enabling maintenance mode"
+
+"${MAINTENANCE_DIR}/enable-maintenance.sh"
+
+MAINTENANCE_ENABLED=true
+
+success "Maintenance mode enabled"
+
+# =============================================================================
+# Validate source
+# =============================================================================
+
+log "Checking source Git status"
+
+git status --short
+
+# =============================================================================
+# Install dependencies
+# =============================================================================
+
+log "Installing production dependencies"
+
+npm ci
+
+success "Dependencies installed"
+
+# =============================================================================
 # Validate Astro build
-# -----------------------------------------------------------------------------
+# =============================================================================
 
 log "Validating Astro production build"
 
@@ -120,25 +182,23 @@ npm run build
 
 success "Astro build completed successfully"
 
-# -----------------------------------------------------------------------------
+# =============================================================================
 # Prepare production directory
-# -----------------------------------------------------------------------------
+# =============================================================================
 
 log "Preparing production directory"
 
 mkdir -p "${PRODUCTION_DIR}"
 
-# Preserve the production environment file. It is excluded from rsync below.
 if [[ ! -f "${PRODUCTION_DIR}/.env" ]]; then
     echo "Warning: ${PRODUCTION_DIR}/.env does not exist."
-    echo "Dashboard URLs and other production variables may be unavailable."
 fi
 
-# -----------------------------------------------------------------------------
-# Synchronise source into production
-# -----------------------------------------------------------------------------
+# =============================================================================
+# Synchronise source to production
+# =============================================================================
 
-log "Synchronising development files to production"
+log "Synchronising source to production"
 
 rsync -av --delete \
     --exclude='.git/' \
@@ -152,9 +212,9 @@ rsync -av --delete \
 
 success "Production files synchronised"
 
-# -----------------------------------------------------------------------------
-# Validate production files
-# -----------------------------------------------------------------------------
+# =============================================================================
+# Validate production stack
+# =============================================================================
 
 log "Validating production stack"
 
@@ -173,9 +233,9 @@ docker compose config >/dev/null
 
 success "Docker Compose configuration is valid"
 
-# -----------------------------------------------------------------------------
-# Build the production image
-# -----------------------------------------------------------------------------
+# =============================================================================
+# Build production image
+# =============================================================================
 
 log "Building production image"
 
@@ -187,9 +247,9 @@ fi
 
 success "Production image built"
 
-# -----------------------------------------------------------------------------
+# =============================================================================
 # Recreate production container
-# -----------------------------------------------------------------------------
+# =============================================================================
 
 log "Recreating production container"
 
@@ -197,13 +257,14 @@ docker compose up -d --force-recreate --remove-orphans
 
 success "Container recreation requested"
 
-# -----------------------------------------------------------------------------
-# Wait for container startup
-# -----------------------------------------------------------------------------
+# =============================================================================
+# Wait for container
+# =============================================================================
 
-log "Waiting for the container to become available"
+log "Waiting for the portfolio container"
 
 for attempt in {1..30}; do
+
     status="$(
         docker inspect \
             --format '{{.State.Status}}' \
@@ -228,9 +289,9 @@ status="$(
 
 success "${CONTAINER_NAME} is running"
 
-# -----------------------------------------------------------------------------
-# Check Nginx inside the application container
-# -----------------------------------------------------------------------------
+# =============================================================================
+# Application health
+# =============================================================================
 
 log "Checking application health endpoint"
 
@@ -239,9 +300,9 @@ docker exec "${CONTAINER_NAME}" \
 
 success "Application health endpoint responded"
 
-# -----------------------------------------------------------------------------
-# Check Docker networking and NPM connectivity
-# -----------------------------------------------------------------------------
+# =============================================================================
+# NPM connectivity
+# =============================================================================
 
 log "Checking connectivity from Nginx Proxy Manager"
 
@@ -254,9 +315,9 @@ docker exec "${PROXY_CONTAINER}" \
 
 success "Nginx Proxy Manager can reach the portfolio"
 
-# -----------------------------------------------------------------------------
-# Check important routes through NPM
-# -----------------------------------------------------------------------------
+# =============================================================================
+# Route checks
+# =============================================================================
 
 log "Checking important portfolio routes"
 
@@ -267,10 +328,13 @@ routes=(
     "/projects/"
     "/projects/kubernetes/"
     "/projects/birdnet/"
+    "/projects/disaster-recovery/"
+    "/projects/dr-recovery/"
     "/beyond-engineering/"
 )
 
 for route in "${routes[@]}"; do
+
     docker exec "${PROXY_CONTAINER}" \
         curl --fail --silent --show-error \
         --head "${PROXY_URL}${route}" >/dev/null
@@ -278,27 +342,23 @@ for route in "${routes[@]}"; do
     success "Route available: ${route}"
 done
 
-# -----------------------------------------------------------------------------
-# List deployed downloadable files
-# -----------------------------------------------------------------------------
+# =============================================================================
+# Maintenance OFF
+# =============================================================================
 
-log "Checking deployed files"
+log "Deployment validation passed"
 
-if docker exec "${CONTAINER_NAME}" \
-    test -d /usr/share/nginx/html/files; then
+log "Disabling maintenance mode"
 
-    docker exec "${CONTAINER_NAME}" \
-        find /usr/share/nginx/html/files \
-        -maxdepth 1 \
-        -type f \
-        -printf '  %f\n' | sort
-else
-    echo "No /files directory was included in this deployment."
-fi
+"${MAINTENANCE_DIR}/disable-maintenance.sh"
 
-# -----------------------------------------------------------------------------
+MAINTENANCE_ENABLED=false
+
+success "Production site restored"
+
+# =============================================================================
 # Final status
-# -----------------------------------------------------------------------------
+# =============================================================================
 
 log "Deployment complete"
 
@@ -311,6 +371,12 @@ Status:    {{.Status}}'
 echo
 echo "Live site:"
 echo "  https://me.jrwroberts.co.uk"
+
+echo
+echo "Deployed commit:"
+cd "${SOURCE_DIR}"
+git log -1 --oneline
+
 echo
 echo "Recent logs:"
 echo "  docker logs ${CONTAINER_NAME} --tail 50"
