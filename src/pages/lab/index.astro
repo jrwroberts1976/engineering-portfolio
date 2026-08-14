@@ -25,11 +25,6 @@ import {
   currentFocus,
 } from '../../data/lab';
 
-import { dashboards } from '../../data/dashboards';
-
-const liveDashboardCount = dashboards.filter(
-  (dashboard) => Boolean(dashboard.url),
-).length;
 ---
 
 <BaseLayout
@@ -99,11 +94,6 @@ const liveDashboardCount = dashboards.filter(
           <div>
             <dt>Security</dt>
             <dd>Protected</dd>
-          </div>
-
-          <div>
-            <dt>Public dashboards</dt>
-            <dd>{liveDashboardCount} live</dd>
           </div>
         </dl>
       </aside>
