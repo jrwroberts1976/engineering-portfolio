@@ -162,6 +162,14 @@ const personalValues = [
       </div>
 
       <aside class="personal-summary">
+        <img
+          class="personal-photo"
+          src="/images/james.jpg"
+          alt="James Roberts"
+          width="480"
+          height="480"
+        />
+
         <p class="eyebrow">Outside Work</p>
 
         <div class="summary-list">
@@ -493,6 +501,18 @@ const personalValues = [
       ),
       var(--surface);
     box-shadow: var(--shadow);
+  }
+
+  .personal-photo {
+    display: block;
+    width: min(100%, 220px);
+    aspect-ratio: 1;
+    margin: 0 auto 1.5rem;
+    border: 3px solid rgba(93, 184, 255, 0.4);
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.3);
   }
 
   .summary-list {
