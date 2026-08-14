@@ -12,9 +12,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p class="eyebrow">Troubleshooting Approach</p>
         <h1>99 problems, but a <span>switch ain’t one.</span></h1>
         <p class="summary">
-          I troubleshoot by being the packet. I trace the service journey from
-          the user to the outcome, stop at every hand-off, and ask one simple
-          question: <strong>has it passed this gate?</strong>
+          My troubleshooting rule is simple: <strong>be the packet.</strong> Trace
+          the service journey from the user to the outcome, stop at every
+          hand-off, and ask one question: <strong>has it passed this gate?</strong>
         </p>
       </div>
       <aside class="principles">
@@ -54,7 +54,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="section">
     <div class="container">
       <div class="heading">
-        <p class="eyebrow">Follow the Packet</p>
+        <p class="eyebrow">Be the Packet</p>
         <h2>At every gate: has it passed this point?</h2>
         <p>
           The exact path changes with the service, but the method stays the
@@ -134,7 +134,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="container content-grid">
       <div>
         <p class="eyebrow">Collaboration and Ownership</p>
-        <h2>Many voices. Clear accountability.</h2>
+        <h2>Stop moaning. Start owning.</h2>
+        <p class="ownership-intro">Many voices. Clear accountability.</p>
       </div>
       <div class="prose">
         <p>
@@ -144,9 +145,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           the quality and speed of the investigation.
         </p>
         <p>
-          Collaboration should not mean diluted responsibility. Each gate needs
-          a subject-matter expert who owns the evidence, the decision and any
-          corrective action within their domain. The incident lead keeps the
+          Collaboration should not mean diluted responsibility. “Stop moaning.
+          Start owning.” means each gate has a subject-matter expert who owns
+          the evidence, the decision and any corrective action within their
+          domain. The incident lead keeps the
           end-to-end journey visible, connects the teams and makes sure no
           hand-off becomes a black hole.
         </p>
@@ -179,8 +181,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   h1 { margin: 0 0 1.5rem; font-size: clamp(3.4rem, 7.5vw, 6.2rem); line-height: .96; letter-spacing: -.06em; }
   h1 span { color: var(--primary); }
   h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.05; }
-  .summary, .prose p, .heading > p:last-child, .outcome > p:last-child { max-width: 780px; color: var(--text-muted); font-size: 1.12rem; }
-  .summary strong { color: var(--text); }
+  .summary, .prose p, .heading > p:last-child, .outcome > p:last-child, .ownership-intro { max-width: 780px; color: var(--text-muted); font-size: 1.12rem; }
+  .summary strong { color: var(--text); } .ownership-intro { margin: 1rem 0 0; }
   .principles, .packet-flow article, .evidence-grid article { padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
   .principles ul { margin: 1rem 0 0; padding-left: 1.2rem; }
   .principles li { margin: .6rem 0; color: var(--text-muted); }
