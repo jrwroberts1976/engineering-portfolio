@@ -37,7 +37,7 @@ if (!project) {
         <p class="eyebrow">Scope</p>
         <dl>
           <div><dt>Detection</dt><dd>Suricata and CrowdSec</dd></div>
-          <div><dt>Prevention</dt><dd>Firewall enforcement and DNS filtering</dd></div>
+          <div><dt>Prevention</dt><dd>Cloudflare edge protection and DNS filtering</dd></div>
           <div><dt>Assurance</dt><dd>Greenbone vulnerability management</dd></div>
           <div><dt>Evidence</dt><dd>Prometheus, Grafana and fixed snapshots</dd></div>
         </dl>
@@ -92,7 +92,7 @@ if (!project) {
         <article class="card">
           <span>02</span>
           <h3>Protect</h3>
-          <p>Firewall enforcement and Pi-hole DNS filtering reduce exposure and block unwanted activity.</p>
+          <p>Cloudflare edge controls and Pi-hole DNS filtering reduce exposure before traffic reaches services or client devices.</p>
         </article>
         <article class="card">
           <span>03</span>
@@ -118,8 +118,9 @@ if (!project) {
       <div class="security-flow">
         <article class="flow-step">
           <p class="capability-label">01 · Prevention</p>
-          <h3>DNS filtering and privacy</h3>
-          <p>Pi-hole filters DNS requests across the network, stopping client devices resolving known advertising, tracking and unwanted domains before a connection can be made.</p>
+          <h3>Edge and DNS protection</h3>
+          <p>Cloudflare provides the first external layer of prevention through DNS, TLS, web application firewall rules, rate limiting and DDoS mitigation for publicly exposed services.</p>
+          <p>Pi-hole adds an internal layer, filtering DNS requests across the network and stopping client devices resolving known advertising, tracking and unwanted domains before a connection can be made.</p>
           <a href="/projects/pihole">View Pi-hole project →</a>
           <a class="snapshot-link" href="https://snapshots.raintank.io/dashboard/snapshot/wsQAvFhSIS1VxbbnfibI2fAWHhI3Zv3m" target="_blank" rel="noopener noreferrer">
             View dashboard snapshot →
