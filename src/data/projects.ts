@@ -25,6 +25,26 @@ import type { Project } from './types';
 
 export const projects: Project[] = [
   {
+    id: 'secops',
+    category: 'Security Operations',
+    title: 'SecOps — Security Operations',
+    shortTitle: 'SecOps',
+    description:
+      'A joined-up security operations capability combining threat detection, vulnerability management, DNS filtering and evidence-led remediation.',
+    href: '/projects/secops',
+    status: 'Active project',
+    technologies: [
+      'CrowdSec',
+      'Greenbone',
+      'Suricata',
+      'Pi-hole',
+      'Prometheus',
+      'Grafana',
+    ],
+    featured: true,
+  },
+
+  {
     id: 'greenbone',
     category: 'Vulnerability Management',
     title: 'Greenbone Vulnerability Management',
