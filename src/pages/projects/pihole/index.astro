@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getProjectById } from '../../../data/projects';
+
+const project = getProjectById('pihole');
+
+if (!project) {
+  throw new Error('Pi-hole project data could not be found.');
+}
+---
+
+<BaseLayout
+  title="Pi-hole DNS Filtering"
+  description="A network-wide DNS filtering service that provides preventative protection, privacy controls and operational visibility for the homelab."
+>
+  <section class="project-hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">SecOps Prevention Control</p>
+        <h1>Network-wide DNS filtering before connections are made.</h1>
+        <p class="summary">
+          Pi-hole acts as a lightweight preventative control for the homelab,
+          filtering DNS requests for advertising, tracking and other unwanted
+          domains before client devices establish a connection.
+        </p>
+        <div class="button-row">
+          <a
+            class="button button-primary"
+            href="https://snapshots.raintank.io/dashboard/snapshot/wsQAvFhSIS1VxbbnfibI2fAWHhI3Zv3m"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View Pi-hole dashboard snapshot
+          </a>
+          <a class="button button-secondary" href="/projects/secops">View SecOps</a>
+        </div>
+      </div>
+
+      <aside class="facts">
+        <p class="eyebrow">Project Overview</p>
+        <dl>
+          <div><dt>Control type</dt><dd>Prevention</dd></div>
+          <div><dt>Scope</dt><dd>Network-wide DNS filtering</dd></div>
+          <div><dt>Platform</dt><dd>Pi-hole on Docker</dd></div>
+          <div><dt>Observability</dt><dd>Prometheus and Grafana</dd></div>
+          <div><dt>Status</dt><dd class="live-status">Operational</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="technology-strip">
+    <div class="container"><ul class="tag-list">{project.technologies.map((technology) => <li>{technology}</li>)}</ul></div>
+  </section>
+
+  <section class="section">
+    <div class="container content-grid">
+      <div>
+        <p class="eyebrow">Why It Matters</p>
+        <h2>Reduce unwanted connections at the first step.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          DNS is where many client connections begin. Filtering known unwanted
+          domains at this stage reduces advertising and tracking traffic across
+          all connected devices without configuring each device individually.
+        </p>
+        <p>
+          It is not a replacement for endpoint protection, patching or threat
+          detection. Instead, Pi-hole provides a simple preventative layer that
+          supports the wider SecOps capability.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="heading">
+        <p class="eyebrow">Operating Flow</p>
+        <h2>Prevention through DNS control.</h2>
+      </div>
+      <div class="flow">
+        <article><span>01</span><h3>DNS request</h3><p>A device requests a domain name before making a connection.</p></article>
+        <div class="arrow">→</div>
+        <article><span>02</span><h3>Policy check</h3><p>Pi-hole checks the request against configured blocklists and local rules.</p></article>
+        <div class="arrow">→</div>
+        <article><span>03</span><h3>Allow or prevent</h3><p>Known unwanted domains are not resolved; permitted services continue normally.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="heading">
+        <p class="eyebrow">Operational Evidence</p>
+        <h2>A preventative control that can be measured.</h2>
+      </div>
+      <div class="grid">
+        <article><h3>Query visibility</h3><p>DNS request volume and filtering activity provide a clear view of service use.</p></article>
+        <article><h3>Blocklist health</h3><p>Monitoring confirms that the filtering data and service are available.</p></article>
+        <article><h3>Snapshot evidence</h3><p>A fixed Grafana snapshot demonstrates the service without exposing live operational data.</p></article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .project-hero { padding: 7rem 0 4rem; } .hero-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, .6fr); gap: 4rem; align-items: start; }
+  h1 { max-width: 900px; margin: 0 0 1.5rem; font-size: clamp(3rem, 7vw, 5.8rem); letter-spacing: -.055em; line-height: .98; } h2 { margin-top: 0; font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.05; }
+  .summary, .prose p, .heading > p:last-child { color: var(--text-muted); font-size: 1.1rem; } .summary { max-width: 760px; }
+  .facts { padding: 1.75rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); } .facts dl { margin: 0; } .facts dl div { padding: .8rem 0; border-bottom: 1px solid var(--border); } .facts dl div:last-child { border: 0; } .facts dt { color: var(--text-muted); font-size: .8rem; text-transform: uppercase; } .facts dd { margin: .15rem 0 0; font-weight: 700; } .live-status { color: #8ff0bc; }
+  .technology-strip { padding: 1.4rem 0; border-block: 1px solid var(--border); background: var(--surface); }
+  .content-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 5rem; } .flow { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 1rem; align-items: stretch; } .flow article, .grid article { padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); } .flow span { color: var(--primary); font-weight: 800; } .flow p, .grid p { color: var(--text-muted); } .arrow { display: grid; place-items: center; color: var(--primary); font-size: 1.8rem; font-weight: 800; } .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+  @media (max-width: 850px) { .hero-grid, .content-grid, .flow, .grid { grid-template-columns: 1fr; } .arrow { transform: rotate(90deg); min-height: 2rem; } }
+</style>
