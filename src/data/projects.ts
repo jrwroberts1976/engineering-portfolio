@@ -45,6 +45,25 @@ export const projects: Project[] = [
   },
 
   {
+    id: 'pihole',
+    category: 'Network Security',
+    title: 'Pi-hole DNS Filtering',
+    shortTitle: 'Pi-hole DNS Filtering',
+    description:
+      'A network-wide DNS filtering service providing preventative protection, privacy controls and observable blocklist health.',
+    href: '/projects/pihole',
+    status: 'Operational',
+    technologies: [
+      'Pi-hole',
+      'DNS Filtering',
+      'Docker',
+      'Prometheus',
+      'Grafana',
+    ],
+    featured: false,
+  },
+
+  {
     id: 'greenbone',
     category: 'Vulnerability Management',
     title: 'Greenbone Vulnerability Management',
