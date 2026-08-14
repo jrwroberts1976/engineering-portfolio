@@ -12,11 +12,8 @@ platform built using Prometheus, Grafana, Loki, exporters and alerting.
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 import { getProjectById } from '../../../data/projects';
-import { getDashboardById } from '../../../data/dashboards';
 
 const project = getProjectById('monitoring');
-const platformDashboard = getDashboardById('platform');
-const securityDashboard = getDashboardById('security');
 
 if (!project) {
   throw new Error('Monitoring project data could not be found.');
@@ -304,31 +301,14 @@ const skills = [
         </p>
 
         <div class="button-row">
-          {
-            platformDashboard?.url && (
-              <a
-                class="button button-primary"
-                href={platformDashboard.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View Live Platform Dashboard
-              </a>
-            )
-          }
-
-          {
-            securityDashboard?.url && (
-              <a
-                class="button button-secondary"
-                href={securityDashboard.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View Security Dashboard
-              </a>
-            )
-          }
+          <a
+            class="button button-primary"
+            href="https://grafana.jrwroberts.co.uk/public-dashboards/9f2c1f2f843741c6bcb402b676ebf20c"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View live operations dashboard
+          </a>
 
           <a class="button button-secondary" href="/architecture">
             View Architecture
@@ -789,31 +769,14 @@ const skills = [
       </div>
 
       <div class="button-column">
-        {
-          platformDashboard?.url && (
-            <a
-              class="button button-primary"
-              href={platformDashboard.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Platform Dashboard
-            </a>
-          )
-        }
-
-        {
-          securityDashboard?.url && (
-            <a
-              class="button button-secondary"
-              href={securityDashboard.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Security Dashboard
-            </a>
-          )
-        }
+        <a
+          class="button button-primary"
+          href="https://grafana.jrwroberts.co.uk/public-dashboards/9f2c1f2f843741c6bcb402b676ebf20c"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View live operations dashboard
+        </a>
 
         <a class="button button-secondary" href="/projects/docker-platform">
           Docker Platform
