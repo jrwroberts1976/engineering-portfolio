@@ -1,150 +1,441 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getProjectById } from '../../../data/projects';
+
+const project = getProjectById('disaster-recovery');
+
+if (!project) {
+  throw new Error('Disaster Recovery project data could not be found.');
+}
 ---
 
 <BaseLayout
   title="Homelab Disaster Recovery Platform"
-  description="A practical disaster recovery framework using Restic backups, automation, monitoring and recovery validation."
+  description="A practical disaster recovery platform using Restic backups, monitoring and recovery validation."
 >
 
 <section class="project-hero">
   <div class="container project-hero-grid">
+
     <div>
       <p class="eyebrow">Infrastructure Resilience Case Study</p>
 
-      <h1>Disaster recovery designed for rebuild, not just backup.</h1>
+      <h1>
+        Disaster recovery designed for real-world failure.
+      </h1>
 
       <p class="project-summary">
-        A practical recovery platform using Restic backups, automation,
-        monitoring and validation procedures to restore homelab services after
-        hardware or system failure.
+        A practical recovery platform built around automated Restic backups,
+        infrastructure monitoring and repeatable rebuild procedures.
+        The objective is not just protecting data, but proving that services
+        can be recovered after failure.
       </p>
 
       <div class="button-row">
-        <a class="button button-primary"
-          href="/projects">
+        <a class="button button-primary" href="/projects">
           Back to projects
         </a>
       </div>
     </div>
 
+
     <aside class="project-facts">
+
       <p class="eyebrow">Project Overview</p>
 
       <dl>
-        <div><dt>Platform</dt><dd>Linux Homelab</dd></div>
-        <div><dt>Backup Engine</dt><dd>Restic</dd></div>
-        <div><dt>Validation</dt><dd>Recovery testing</dd></div>
-        <div><dt>Monitoring</dt><dd>Prometheus / Grafana</dd></div>
-        <div><dt>Status</dt><dd class="live-status">Active project</dd></div>
+
+        <div>
+          <dt>Project type</dt>
+          <dd>Disaster Recovery</dd>
+        </div>
+
+        <div>
+          <dt>Backup platform</dt>
+          <dd>Restic</dd>
+        </div>
+
+        <div>
+          <dt>Infrastructure</dt>
+          <dd>Linux / Docker / Raspberry Pi</dd>
+        </div>
+
+        <div>
+          <dt>Observability</dt>
+          <dd>Prometheus + Grafana</dd>
+        </div>
+
+        <div>
+          <dt>Status</dt>
+          <dd class="live-status">Active project</dd>
+        </div>
+
       </dl>
+
     </aside>
+
   </div>
 </section>
 
 
-<section class="section">
-<div class="container content-grid">
+<section class="technology-strip">
+<div class="container">
 
-<div class="section-heading">
-<p class="eyebrow">The Challenge</p>
-<h2>Backups are only useful when recovery is proven.</h2>
-</div>
-
-<div class="prose">
-<p>
-The platform provides automated backups of critical infrastructure,
-configuration and application data, but the primary objective is recovery
-confidence.
-</p>
-
-<p>
-The disaster recovery process documents how services can be rebuilt onto
-replacement hardware, including Raspberry Pi recovery scenarios.
-</p>
-</div>
+<ul class="tag-list">
+{project.technologies.map((technology) =>
+<li>{technology}</li>
+)}
+</ul>
 
 </div>
 </section>
 
 
+
+<section class="section">
+
+<div class="container content-grid">
+
+<div class="section-heading">
+<p class="eyebrow">The Challenge</p>
+<h2>
+Backups are only useful when recovery is proven.
+</h2>
+</div>
+
+
+<div class="prose">
+
+<p>
+A growing homelab environment creates the same operational challenges
+found in professional infrastructure. Hosts fail, storage can become
+unavailable and configuration changes can introduce unexpected problems.
+</p>
+
+<p>
+This project focuses on creating a predictable recovery process rather
+than simply storing backup files. The aim is to rebuild services quickly,
+safely and consistently.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
 <section class="section section-soft">
+
 <div class="container">
 
 <div class="section-heading">
 <p class="eyebrow">Recovery Workflow</p>
-<h2>Backup through to validated restoration.</h2>
+
+<h2>
+From failure to restored service.
+</h2>
+
 </div>
+
 
 <div class="architecture">
 
 <div class="architecture-item">
 <span>01</span>
 <strong>Backup</strong>
-<p>Restic snapshots protect system and application data.</p>
+<p>
+Restic captures important configuration, application data and system state.
+</p>
 </div>
+
+
+<div class="architecture-arrow">→</div>
+
 
 <div class="architecture-item">
 <span>02</span>
 <strong>Monitor</strong>
-<p>Prometheus metrics track backup health and age.</p>
+<p>
+Prometheus metrics track backup success, age and repository health.
+</p>
 </div>
+
+
+<div class="architecture-arrow">→</div>
+
 
 <div class="architecture-item">
 <span>03</span>
-<strong>Rebuild</strong>
-<p>Replacement hardware is prepared and restored.</p>
+<strong>Recover</strong>
+<p>
+A replacement host can restore data and rebuild the environment.
+</p>
 </div>
+
+
+<div class="architecture-arrow">→</div>
+
 
 <div class="architecture-item">
 <span>04</span>
 <strong>Validate</strong>
-<p>Services are tested before returning to production.</p>
+<p>
+Services are tested to confirm a successful recovery.
+</p>
 </div>
 
 </div>
 
 </div>
+
 </section>
 
 
+
 <section class="section">
+
 <div class="container">
 
+<div class="section-heading">
+
+<p class="eyebrow">Engineering Implementation</p>
+
+<h2>
+Automated backup with operational visibility.
+</h2>
+
+</div>
+
+
 <div class="grid capability-grid">
+
 
 <article class="card">
 <h3>Restic backups</h3>
 <p>
-Encrypted repositories with retention policies and automated execution.
+Encrypted repositories provide point-in-time recovery with controlled
+retention policies.
 </p>
 </article>
 
+
 <article class="card">
-<h3>Recovery testing</h3>
+<h3>Backup monitoring</h3>
 <p>
-A planned DR exercise using replacement hardware to prove rebuild capability.
+Backup status, age and health are exposed as infrastructure metrics.
 </p>
 </article>
 
+
 <article class="card">
-<h3>Observability</h3>
+<h3>Grafana visibility</h3>
 <p>
-Backup success, age and storage health exposed through monitoring.
+Recovery readiness is displayed alongside the wider monitoring platform.
 </p>
 </article>
 
+
 <article class="card">
-<h3>Infrastructure recovery</h3>
+<h3>DR testing</h3>
 <p>
-Documented restoration of Linux hosts, Docker workloads and services.
+A dedicated Raspberry Pi 4 will be used to validate the complete recovery
+process.
 </p>
 </article>
+
 
 </div>
 
 </div>
+
+</section>
+
+
+
+<section class="section section-soft">
+
+<div class="container content-grid">
+
+<div class="section-heading">
+
+<p class="eyebrow">
+Recovery Exercise
+</p>
+
+<h2>
+Testing the plan, not just storing backups.
+</h2>
+
+</div>
+
+
+<div class="prose">
+
+<p>
+The next phase is a full disaster recovery test using replacement hardware.
+The exercise will measure recovery time, identify missing dependencies and
+improve the rebuild documentation.
+</p>
+
+<p>
+The final objective is a repeatable process that can recover the platform
+after a complete host failure.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="section">
+
+<div class="container content-grid">
+
+<div class="section-heading">
+<p class="eyebrow">
+Engineering Outcome
+</p>
+
+<h2>
+Turning backups into resilience.
+</h2>
+
+</div>
+
+
+<div class="prose">
+
+<p>
+This platform demonstrates that reliable infrastructure is not only about
+running services successfully. It is about understanding how those services
+can be restored when things go wrong.
+</p>
+
+</div>
+
+</div>
+
 </section>
 
 
 </BaseLayout>
+
+
+
+<style>
+
+.project-hero {
+padding:7rem 0 4rem;
+}
+
+
+.project-hero-grid {
+display:grid;
+grid-template-columns:minmax(0,1.4fr) minmax(290px,.6fr);
+gap:4rem;
+}
+
+
+h1 {
+max-width:900px;
+font-size:clamp(3rem,7vw,5.8rem);
+line-height:.98;
+letter-spacing:-.055em;
+}
+
+
+.project-summary {
+max-width:760px;
+color:var(--text-muted);
+font-size:1.2rem;
+}
+
+
+.project-facts {
+padding:1.75rem;
+border:1px solid var(--border);
+border-radius:var(--radius);
+background:var(--surface);
+}
+
+
+.project-facts dl div {
+padding:.8rem 0;
+border-bottom:1px solid var(--border);
+}
+
+
+.project-facts dt {
+color:var(--text-muted);
+font-size:.8rem;
+text-transform:uppercase;
+}
+
+
+.project-facts dd {
+margin:0;
+font-weight:700;
+}
+
+
+.live-status {
+color:#8ff0bc;
+}
+
+
+.architecture {
+display:flex;
+gap:.75rem;
+}
+
+
+.architecture-item {
+flex:1;
+padding:1.25rem;
+border:1px solid var(--border);
+border-radius:var(--radius);
+background:var(--surface);
+}
+
+
+.architecture-item span {
+color:var(--primary);
+font-weight:800;
+}
+
+
+.architecture-item p {
+color:var(--text-muted);
+}
+
+
+.architecture-arrow {
+display:grid;
+place-items:center;
+color:var(--primary);
+font-size:1.5rem;
+}
+
+
+@media(max-width:850px) {
+
+.project-hero-grid {
+grid-template-columns:1fr;
+}
+
+.architecture {
+flex-direction:column;
+}
+
+.architecture-arrow {
+transform:rotate(90deg);
+}
+
+}
+
+</style>
