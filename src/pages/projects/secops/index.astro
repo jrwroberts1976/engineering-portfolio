@@ -127,6 +127,7 @@ if (!project) {
           <a href="/projects/greenbone">View Greenbone case study →</a>
         </article>
         <article>
+          <p class="capability-label">Prevention</p>
           <h3>DNS filtering and privacy</h3>
           <p>Pi-hole provides network-wide DNS filtering as a supporting protective control, monitored alongside the wider platform.</p>
           <a href="https://snapshots.raintank.io/dashboard/snapshot/wsQAvFhSIS1VxbbnfibI2fAWHhI3Zv3m" target="_blank" rel="noopener noreferrer">
@@ -164,7 +165,7 @@ if (!project) {
   .card span { color: var(--primary); font-weight: 800; } .card p, .capabilities p { color: var(--text-muted); }
   .capabilities { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
   .capabilities article { padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
-  .capabilities a { color: var(--primary); font-weight: 700; text-decoration: none; } .muted { color: var(--text-muted); font-size: .9rem; }
+  .capabilities a { color: var(--primary); font-weight: 700; text-decoration: none; } .capability-label { margin: 0 0 .45rem; color: var(--primary); font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; } .muted { color: var(--text-muted); font-size: .9rem; }
   .outcome { max-width: 900px; }
   @media (max-width: 850px) { .hero-grid, .grid, .capabilities, .intro-grid { grid-template-columns: 1fr; } }
 </style>
