@@ -22,26 +22,16 @@ import { projects } from '../../data/projects';
   title="Engineering Projects"
   description="Infrastructure, cloud, container, monitoring and security engineering case studies by James Roberts."
 >
-  <!-- ======================================================= -->
-  <!-- PAGE INTRODUCTION                                       -->
-  <!-- ======================================================= -->
-
   <section class="page-intro">
-    <div class="container section-heading">
+    <div class="container projects-heading">
       <p class="eyebrow">Engineering Portfolio</p>
-
       <h1>Projects built to be operated, not just demonstrated.</h1>
-
       <p>
         These case studies show how I approach architecture, implementation,
         monitoring, security, documentation and ongoing operational support.
       </p>
     </div>
   </section>
-
-  <!-- ======================================================= -->
-  <!-- PROJECT LIST                                            -->
-  <!-- ======================================================= -->
 
   <section class="section section-soft">
     <div class="container">
@@ -64,6 +54,27 @@ import { projects } from '../../data/projects';
 </BaseLayout>
 
 <style>
+  .projects-heading {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: 0;
+  }
+
+  .projects-heading h1 {
+    max-width: 900px;
+    margin: 0;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+  }
+
+  .projects-heading p:last-child {
+    max-width: 760px;
+    margin-top: 1.2rem;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+  }
+
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
