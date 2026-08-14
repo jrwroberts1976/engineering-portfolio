@@ -50,6 +50,17 @@ export const dashboards: Dashboard[] = [
   },
 
   {
+    id: 'backup-health',
+    category: 'Platform Operations',
+    title: 'Homelab Backup & Storage Health',
+    description:
+      'Live backup success, backup age in hours, repository health and storage capacity across the homelab.',
+    projectId: 'monitoring',
+    url: 'https://grafana.jrwroberts.co.uk/public-dashboards/179670263ce243cb972f80ac17d9e0d3',
+    status: 'Live',
+  },
+
+  {
     id: 'birdnet',
     category: 'Specialist Workload',
     title: 'BirdNET Garden Wildlife Monitor',
