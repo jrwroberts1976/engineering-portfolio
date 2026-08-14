@@ -1,0 +1,157 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Agile, Not Fragile"
+  description="A practical view of Agile delivery: context-dependent, operationally accountable and never a substitute for sound planning."
+>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Delivery Perspective</p>
+        <h1>Agile, <span>not fragile.</span></h1>
+        <p class="summary">
+          Agile is a useful way to deliver in uncertain, evolving environments.
+          It is not a one-size-fits-all method, a shortcut around planning, or
+          a promise that delivery will automatically cost less.
+        </p>
+      </div>
+      <aside class="principles">
+        <p class="eyebrow">The position</p>
+        <ul>
+          <li>Choose the delivery model to fit the work.</li>
+          <li>Keep outcomes, risk and accountability visible.</li>
+          <li>Treat operations as an equal delivery partner.</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-grid">
+      <div>
+        <p class="eyebrow">Why It Matters</p>
+        <h2>Good delivery is deliberate, not ideological.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Teams need a way to learn, adjust and deliver value without losing
+          control of reliability, security, cost or stakeholder confidence.
+          Agile can provide that rhythm when the work has uncertainty, requires
+          regular feedback or benefits from incremental delivery.
+        </p>
+        <p>
+          But the framework is not the outcome. The important question is
+          whether the approach helps the team make better decisions and deliver
+          a service that can be safely supported after release.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="heading">
+        <p class="eyebrow">Fit the Method to the Work</p>
+        <h2>When Agile fits — and when it does not.</h2>
+      </div>
+      <div class="comparison">
+        <article>
+          <p class="label">Agile is a strong fit when</p>
+          <ul>
+            <li>Requirements are likely to evolve through user or operational feedback.</li>
+            <li>The work can be delivered and validated in meaningful increments.</li>
+            <li>Teams can collaborate regularly and make timely decisions.</li>
+            <li>Learning early reduces the risk of building the wrong thing.</li>
+          </ul>
+        </article>
+        <article>
+          <p class="label">A planned or hybrid approach is better when</p>
+          <ul>
+            <li>Scope, dependencies and acceptance criteria are well understood.</li>
+            <li>There are fixed regulatory, contractual or implementation windows.</li>
+            <li>Change carries high service, safety or operational risk.</li>
+            <li>Up-front design and controlled sequencing reduce uncertainty.</li>
+          </ul>
+        </article>
+      </div>
+      <p class="note">
+        Waterfall, Agile and hybrid delivery are tools. The right choice depends
+        on the risk, certainty, dependencies and operating environment — not on
+        what is fashionable.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-grid">
+      <div>
+        <p class="eyebrow">The Cost Reality</p>
+        <h2>Agile is not automatically cheaper than Waterfall.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Agile changes the cost profile; it does not remove cost. Frequent
+          planning, refinement, demonstrations, testing, stakeholder engagement
+          and continuous prioritisation all need time from capable people.
+        </p>
+        <p>
+          It may reduce expensive late rework when learning is genuinely useful.
+          It can also cost more when scope remains open without disciplined
+          prioritisation, when teams attend ceremonies without making decisions,
+          or when operational work is left outside the delivery plan.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="heading">
+        <p class="eyebrow">Dev and Ops</p>
+        <h2>Avoid capital DEV and lowercase ops.</h2>
+        <p>Software is not complete when code is merged. It is complete when it can be run, supported, secured and recovered.</p>
+      </div>
+      <div class="delivery-flow">
+        <article><span>01</span><h3>Discover and design</h3><p>Define the user outcome, service impact, constraints and operational measures of success.</p></article>
+        <div class="arrow">→</div>
+        <article><span>02</span><h3>Build and test</h3><p>Develop with security, observability, failure modes and maintainability considered from the start.</p></article>
+        <div class="arrow">→</div>
+        <article><span>03</span><h3>Release and operate</h3><p>Deploy with runbooks, monitoring, ownership and support readiness in place.</p></article>
+        <div class="arrow">→</div>
+        <article><span>04</span><h3>Learn and improve</h3><p>Use real operational feedback to improve the product, platform and delivery approach.</p></article>
+      </div>
+      <p class="note">
+        This is not an argument for collapsing every role into one person. It is
+        an argument for shared accountability: development and operations should
+        have equal voice in the decisions that affect the service.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container outcome">
+      <p class="eyebrow">Practical Experience</p>
+      <h2>Use the discipline, not just the vocabulary.</h2>
+      <p>
+        My approach is to combine iterative delivery with the right level of
+        planning, technical governance, documentation and operational
+        involvement. The goal is dependable change: delivered at a sensible
+        pace, understood by the people who run it, and measured against the
+        outcome it was intended to achieve.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero { padding: 7rem 0 4rem; } .hero-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, .6fr); gap: 4rem; align-items: start; }
+  h1 { margin: 0 0 1.5rem; font-size: clamp(3.6rem, 8vw, 6.5rem); line-height: .95; letter-spacing: -.06em; } h1 span { color: var(--primary); }
+  h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.05; } .summary, .prose p, .heading > p:last-child, .outcome > p:last-child { max-width: 760px; color: var(--text-muted); font-size: 1.12rem; }
+  .principles, .comparison article, .delivery-flow article { padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); } .principles ul, .comparison ul { margin: 1rem 0 0; padding-left: 1.2rem; } .principles li, .comparison li { margin: .6rem 0; color: var(--text-muted); }
+  .content-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 5rem; } .comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; } .label { margin: 0; color: var(--primary); font-weight: 800; }
+  .note { max-width: 900px; margin: 1.5rem 0 0; padding-left: 1rem; border-left: 3px solid var(--primary); color: var(--text-muted); }
+  .delivery-flow { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: .8rem; align-items: stretch; } .delivery-flow span { color: var(--primary); font-weight: 800; } .delivery-flow p { color: var(--text-muted); } .arrow { display: grid; place-items: center; color: var(--primary); font-size: 1.8rem; font-weight: 800; } .outcome { max-width: 900px; }
+  @media (max-width: 850px) { .hero-grid, .content-grid, .comparison, .delivery-flow { grid-template-columns: 1fr; } .arrow { transform: rotate(90deg); min-height: 1.75rem; } }
+</style>
