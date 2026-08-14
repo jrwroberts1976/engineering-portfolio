@@ -1,0 +1,150 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Homelab Disaster Recovery Platform"
+  description="A practical disaster recovery framework using Restic backups, automation, monitoring and recovery validation."
+>
+
+<section class="project-hero">
+  <div class="container project-hero-grid">
+    <div>
+      <p class="eyebrow">Infrastructure Resilience Case Study</p>
+
+      <h1>Disaster recovery designed for rebuild, not just backup.</h1>
+
+      <p class="project-summary">
+        A practical recovery platform using Restic backups, automation,
+        monitoring and validation procedures to restore homelab services after
+        hardware or system failure.
+      </p>
+
+      <div class="button-row">
+        <a class="button button-primary"
+          href="/projects">
+          Back to projects
+        </a>
+      </div>
+    </div>
+
+    <aside class="project-facts">
+      <p class="eyebrow">Project Overview</p>
+
+      <dl>
+        <div><dt>Platform</dt><dd>Linux Homelab</dd></div>
+        <div><dt>Backup Engine</dt><dd>Restic</dd></div>
+        <div><dt>Validation</dt><dd>Recovery testing</dd></div>
+        <div><dt>Monitoring</dt><dd>Prometheus / Grafana</dd></div>
+        <div><dt>Status</dt><dd class="live-status">Active project</dd></div>
+      </dl>
+    </aside>
+  </div>
+</section>
+
+
+<section class="section">
+<div class="container content-grid">
+
+<div class="section-heading">
+<p class="eyebrow">The Challenge</p>
+<h2>Backups are only useful when recovery is proven.</h2>
+</div>
+
+<div class="prose">
+<p>
+The platform provides automated backups of critical infrastructure,
+configuration and application data, but the primary objective is recovery
+confidence.
+</p>
+
+<p>
+The disaster recovery process documents how services can be rebuilt onto
+replacement hardware, including Raspberry Pi recovery scenarios.
+</p>
+</div>
+
+</div>
+</section>
+
+
+<section class="section section-soft">
+<div class="container">
+
+<div class="section-heading">
+<p class="eyebrow">Recovery Workflow</p>
+<h2>Backup through to validated restoration.</h2>
+</div>
+
+<div class="architecture">
+
+<div class="architecture-item">
+<span>01</span>
+<strong>Backup</strong>
+<p>Restic snapshots protect system and application data.</p>
+</div>
+
+<div class="architecture-item">
+<span>02</span>
+<strong>Monitor</strong>
+<p>Prometheus metrics track backup health and age.</p>
+</div>
+
+<div class="architecture-item">
+<span>03</span>
+<strong>Rebuild</strong>
+<p>Replacement hardware is prepared and restored.</p>
+</div>
+
+<div class="architecture-item">
+<span>04</span>
+<strong>Validate</strong>
+<p>Services are tested before returning to production.</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<section class="section">
+<div class="container">
+
+<div class="grid capability-grid">
+
+<article class="card">
+<h3>Restic backups</h3>
+<p>
+Encrypted repositories with retention policies and automated execution.
+</p>
+</article>
+
+<article class="card">
+<h3>Recovery testing</h3>
+<p>
+A planned DR exercise using replacement hardware to prove rebuild capability.
+</p>
+</article>
+
+<article class="card">
+<h3>Observability</h3>
+<p>
+Backup success, age and storage health exposed through monitoring.
+</p>
+</article>
+
+<article class="card">
+<h3>Infrastructure recovery</h3>
+<p>
+Documented restoration of Linux hosts, Docker workloads and services.
+</p>
+</article>
+
+</div>
+
+</div>
+</section>
+
+
+</BaseLayout>

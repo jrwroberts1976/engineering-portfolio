@@ -144,6 +144,26 @@ export const projects: Project[] = [
     featured: false,
     dashboardKey: 'platform',
   },
+    {
+    id: 'disaster-recovery',
+    category: 'Infrastructure Resilience',
+    title: 'Homelab Disaster Recovery Platform',
+    shortTitle: 'Disaster Recovery Platform',
+    description:
+      'A practical disaster recovery framework using Restic backups, automation, monitoring and recovery validation to rebuild infrastructure after failure.',
+    href: '/projects/disaster-recovery',
+    status: 'Active project',
+    technologies: [
+      'Restic',
+      'Linux',
+      'Docker',
+      'Raspberry Pi',
+      'Prometheus',
+      'Grafana',
+      'Backup Automation',
+    ],
+    featured: true,
+  },
 
   {
     id: 'birdnet',
