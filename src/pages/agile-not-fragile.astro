@@ -104,6 +104,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </p>
       </div>
     </div>
+
+    <div class="container capacity-note">
+      <p class="eyebrow">Capacity Is a Delivery Commitment</p>
+      <h3>Ring-fenced people and time are essential.</h3>
+      <p>
+        A squad can only make credible sprint commitments when the people and
+        skills required to deliver are protected from competing day-to-day work.
+        Product priorities need matching engineering, testing, security and
+        operational capacity — not simply a target date.
+      </p>
+      <p>
+        Ring-fencing resources can be difficult for the business when teams are
+        supporting live services and responding to urgent demand. Without that
+        protection, however, work is repeatedly interrupted, sprint targets are
+        missed and product expectations are set without the capacity to meet
+        them.
+      </p>
+    </div>
   </section>
 
   <section class="section">
@@ -151,7 +169,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.05; } .summary, .prose p, .heading > p:last-child, .outcome > p:last-child { max-width: 760px; color: var(--text-muted); font-size: 1.12rem; }
   .principles, .comparison article, .delivery-flow article { padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); } .principles ul, .comparison ul { margin: 1rem 0 0; padding-left: 1.2rem; } .principles li, .comparison li { margin: .6rem 0; color: var(--text-muted); }
   .content-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 5rem; } .comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; } .label { margin: 0; color: var(--primary); font-weight: 800; }
-  .note { max-width: 900px; margin: 1.5rem 0 0; padding-left: 1rem; border-left: 3px solid var(--primary); color: var(--text-muted); }
+  .note { max-width: 900px; margin: 1.5rem 0 0; padding-left: 1rem; border-left: 3px solid var(--primary); color: var(--text-muted); } .capacity-note { margin-top: 3rem; max-width: 900px; padding: 1.75rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); } .capacity-note h3 { margin: .25rem 0 1rem; font-size: 1.55rem; } .capacity-note p:not(.eyebrow) { color: var(--text-muted); }
   .delivery-flow { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: .8rem; align-items: stretch; } .delivery-flow span { color: var(--primary); font-weight: 800; } .delivery-flow p { color: var(--text-muted); } .arrow { display: grid; place-items: center; color: var(--primary); font-size: 1.8rem; font-weight: 800; } .outcome { max-width: 900px; }
   @media (max-width: 850px) { .hero-grid, .content-grid, .comparison, .delivery-flow { grid-template-columns: 1fr; } .arrow { transform: rotate(90deg); min-height: 1.75rem; } }
 </style>
