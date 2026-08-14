@@ -288,7 +288,11 @@ const personalValues = [
 
   <section class="section section-soft">
     <div class="container cuba-panel">
-      <div class="cuba-mark" aria-hidden="true">🇨🇺</div>
+      <div class="cuba-mark" role="img" aria-label="Cuban flag">
+        <span class="cuba-flag" aria-hidden="true">
+          <span class="cuba-star">★</span>
+        </span>
+      </div>
 
       <div>
         <p class="eyebrow">A Memorable Experience</p>
@@ -615,7 +619,39 @@ const personalValues = [
     border: 1px solid var(--border);
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.03);
-    font-size: 4rem;
+  }
+
+  .cuba-flag {
+    position: relative;
+    display: grid;
+    width: 78px;
+    height: 52px;
+    place-items: center;
+    overflow: hidden;
+    background: repeating-linear-gradient(
+      to bottom,
+      #002a8f 0 10.4px,
+      #fff 10.4px 20.8px
+    );
+  }
+
+  .cuba-flag::before {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    border-top: 26px solid transparent;
+    border-bottom: 26px solid transparent;
+    border-left: 43px solid #cf142b;
+    content: '';
+  }
+
+  .cuba-star {
+    position: relative;
+    z-index: 1;
+    margin-right: 36px;
+    color: #fff;
+    font-size: 19px;
+    line-height: 1;
   }
 
   .cuba-panel h2 {
@@ -746,7 +782,17 @@ const personalValues = [
     .cuba-mark {
       width: 90px;
       height: 90px;
-      font-size: 3rem;
+    }
+
+    .cuba-flag {
+      width: 62px;
+      height: 42px;
+    }
+
+    .cuba-flag::before {
+      border-top-width: 21px;
+      border-bottom-width: 21px;
+      border-left-width: 35px;
     }
 
     .costa-rica-panel {
