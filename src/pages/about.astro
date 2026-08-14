@@ -1,17 +1,5 @@
 ---
-/*
-|--------------------------------------------------------------------------
-| About Page
-|--------------------------------------------------------------------------
-|
-| Professional information is loaded from:
-|
-|   src/data/profile.ts
-|
-*/
-
 import BaseLayout from '../layouts/BaseLayout.astro';
-
 import {
   professionalSummary,
   professionalStrengths,
@@ -24,461 +12,267 @@ import {
   title="Professional Profile"
   description="Professional profile, engineering background and career direction of James Roberts."
 >
-  <!-- ======================================================= -->
-  <!-- HERO                                                    -->
-  <!-- ======================================================= -->
+  <main class="profile-page">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">ABOUT JAMES ROBERTS</p>
+          <h1>20+ years of infrastructure experience.<span>Modern engineering focus.</span></h1>
+          <p class="hero-lead">{professionalSummary.introduction}</p>
 
-  <section class="about-hero">
-    <div class="container about-hero-grid">
-      <div>
-        <p class="eyebrow">Professional Profile</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="/files/James%20Roberts.pdf" target="_blank">Download CV</a>
+            <a class="button button-secondary" href="/projects">View engineering work</a>
+          </div>
+        </div>
 
-        <h1>
-          Infrastructure experience with a
-          <span>modern engineering focus.</span>
-        </h1>
+        <aside class="hero-focus">
+          <p class="eyebrow">CURRENT FOCUS</p>
+          <h2>Platform, cloud &amp; infrastructure engineering</h2>
+          <p>{professionalSummary.currentFocus}</p>
+          <div class="skill-row">
+            <span>Linux</span><span>Docker</span><span>Kubernetes</span>
+            <span>Cloud</span><span>Automation</span><span>Security</span>
+          </div>
+        </aside>
+      </div>
+    </section>
 
-        <p class="hero-summary">
-          {professionalSummary.introduction}
-        </p>
-
-        <div class="button-row">
-
-        <a
-          class="button button-primary"
-          href="/files/James%20Roberts.pdf"
-          target="_blank"
-        >
-          📄 Download CV
-        </a>
-
-        
-
-        <a
-          class="button button-secondary"
-          href="https://www.linkedin.com/in/james-roberts-007752393/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          💼 LinkedIn
-        </a>
-
-        <a
-          class="button button-secondary"
-          href="https://github.com/jrwroberts1976"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          💻 GitHub
-        </a>
-
-          <a class="button button-primary" href="/projects">
-            Explore projects
-          </a>
-
-          <a class="button button-secondary" href="/leadership">
-            Technical leadership
-          </a>
+    <section class="statement section">
+      <div class="container statement-grid">
+        <div>
+          <p class="eyebrow">HOW I WORK</p>
+          <h2>Build it. Secure it. Monitor it. Operate it.</h2>
+        </div>
+        <div class="statement-copy">
+          <p>{professionalSummary.headline}</p>
+          <p>{professionalSummary.workingStyle}</p>
+          <p>My background in support and operations means I naturally consider resilience, supportability, troubleshooting, monitoring and service continuity when designing technical solutions.</p>
         </div>
       </div>
+    </section>
 
-      <aside class="profile-panel">
-        <p class="eyebrow">Current Direction</p>
+    <section class="journey-section section section-soft">
+      <div class="container">
+        <div class="section-intro">
+          <p class="eyebrow">CAREER JOURNEY</p>
+          <h2>Experience that has evolved with the technology.</h2>
+          <p>From operational foundations to modern platform and cloud engineering.</p>
+        </div>
 
-        <h2>Platform, cloud and infrastructure engineering</h2>
-
-        <p>
-          {professionalSummary.currentFocus}
-        </p>
-
-        <ul>
-          <li>Linux and UNIX infrastructure</li>
-          <li>Docker and Kubernetes</li>
-          <li>AWS and Microsoft Azure</li>
-          <li>Terraform and automation</li>
-          <li>Monitoring and observability</li>
-          <li>Security engineering</li>
-        </ul>
-      </aside>
-    </div>
-  </section>
-
-  <!-- ======================================================= -->
-  <!-- PROFESSIONAL APPROACH                                   -->
-  <!-- ======================================================= -->
-
-  <section class="section section-soft">
-    <div class="container content-grid">
-      <div class="section-heading">
-        <p class="eyebrow">How I Work</p>
-        <h2>Engineering beyond implementation.</h2>
-      </div>
-
-      <div class="prose">
-        <p>
-          {professionalSummary.headline}
-        </p>
-
-        <p>
-          {professionalSummary.workingStyle}
-        </p>
-
-        <p>
-          My background in support and operations means I naturally consider
-          resilience, supportability, troubleshooting, monitoring and service
-          continuity when designing technical solutions.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======================================================= -->
-  <!-- PROFESSIONAL STRENGTHS                                  -->
-  <!-- ======================================================= -->
-
-  <section class="section">
-    <div class="container">
-      <div class="section-heading">
-        <p class="eyebrow">Core Strengths</p>
-
-        <h2>Experience across technology and operations.</h2>
-
-        <p>
-          My experience combines deep operational knowledge with practical
-          development across modern infrastructure tooling.
-        </p>
-      </div>
-
-      <div class="strengths-grid">
-        {
-          professionalStrengths.map((strength, index) => (
-            <article class="strength-card">
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <h3>{strength.title}</h3>
-              <p>{strength.description}</p>
-            </article>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- ======================================================= -->
-  <!-- CAREER JOURNEY                                          -->
-  <!-- ======================================================= -->
-
-  <section class="section section-soft">
-    <div class="container">
-      <div class="section-heading">
-        <p class="eyebrow">Career Journey</p>
-
-        <h2>Building on a strong infrastructure foundation.</h2>
-
-        <p>
-          My development into cloud and platform engineering builds on
-          extensive experience supporting real operational environments.
-        </p>
-      </div>
-
-      <div class="journey">
-        {
-          careerJourney.map((stage, index) => (
-            <article class="journey-item">
-              <div class="journey-marker">
-                <span>{String(index + 1).padStart(2, '0')}</span>
-              </div>
-
-              <div>
-                <p class="journey-period">{stage.period}</p>
+        <div class="timeline">
+          {careerJourney.map((stage, index) => (
+            <article class="timeline-item">
+              <div class="timeline-index">{String(index + 1).padStart(2, '0')}</div>
+              <div class="timeline-line"></div>
+              <div class="timeline-content">
+                <p class="timeline-period">{stage.period}</p>
                 <h3>{stage.title}</h3>
                 <p>{stage.description}</p>
               </div>
             </article>
-          ))
-        }
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ======================================================= -->
-  <!-- CAREER GOALS                                            -->
-  <!-- ======================================================= -->
+    <section class="capabilities section">
+      <div class="container">
+        <div class="section-intro">
+          <p class="eyebrow">WHAT I BRING</p>
+          <h2>Technical depth with operational perspective.</h2>
+        </div>
 
-  <section class="section">
-    <div class="container goals-grid">
-      <div class="section-heading">
-        <p class="eyebrow">Career Direction</p>
-
-        <h2>Combining experience with continual development.</h2>
+        <div class="capability-grid">
+          {professionalStrengths.map((strength, index) => (
+            <article class="capability">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{strength.title}</h3>
+              <p>{strength.description}</p>
+            </article>
+          ))}
+        </div>
       </div>
+    </section>
 
-      <div class="goals-list">
-        {
-          careerGoals.map((goal, index) => (
-            <article>
+    <section class="direction section section-soft">
+      <div class="container direction-grid">
+        <div class="section-intro">
+          <p class="eyebrow">CAREER DIRECTION</p>
+          <h2>Continually developing while building on experience.</h2>
+        </div>
+        <div class="goals-list">
+          {careerGoals.map((goal, index) => (
+            <div class="goal">
               <span>{String(index + 1).padStart(2, '0')}</span>
               <p>{goal}</p>
-            </article>
-          ))
-        }
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ======================================================= -->
-  <!-- FINAL ACTION                                            -->
-  <!-- ======================================================= -->
-
-  <section class="section section-soft">
-    <div class="container final-panel">
-      <div>
-        <p class="eyebrow">Practical Evidence</p>
-
-        <h2>Explore the engineering work behind the profile.</h2>
-
-        <p>
-          The projects, architecture and live dashboards provide practical
-          evidence of the technologies and approaches described here.
-        </p>
+    <section class="closing section">
+      <div class="container closing-panel">
+        <div>
+          <p class="eyebrow">PRACTICAL EVIDENCE</p>
+          <h2>See the engineering work behind the profile.</h2>
+          <p>Explore the projects, architecture and live engineering lab that demonstrate the technologies and approaches described here.</p>
+        </div>
+        <a class="button button-primary" href="/projects">Explore projects →</a>
       </div>
-
-      <div class="button-row">
-        <a class="button button-primary" href="/projects">
-          Engineering projects
-        </a>
-
-        <a class="button button-secondary" href="/lab">
-          Engineering Lab
-        </a>
-      </div>
-    </div>
-  </section>
+    </section>
+  </main>
 </BaseLayout>
 
 <style>
-  .about-hero {
-    padding: 7rem 0 5rem;
-  }
+  .profile-page { overflow: hidden; }
 
-  .about-hero-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
-    align-items: center;
-    gap: 4rem;
-  }
-
-  h1 {
-    max-width: 900px;
-    margin: 0 0 1.5rem;
-    font-size: clamp(3rem, 7vw, 5.8rem);
-    letter-spacing: -0.055em;
-    line-height: 0.98;
-  }
-
-  h1 span {
-    display: block;
-    color: var(--primary);
-  }
-
-  .hero-summary {
-    max-width: 760px;
-    color: var(--text-muted);
-    font-size: 1.2rem;
-  }
-
-  .profile-panel {
-    padding: 1.75rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+  .hero {
+    padding: 6.5rem 0 6rem;
     background:
-      radial-gradient(
-        circle at top right,
-        rgba(93, 184, 255, 0.14),
-        transparent 16rem
-      ),
-      var(--surface);
-    box-shadow: var(--shadow);
+      radial-gradient(circle at 82% 18%, rgba(93,184,255,.12), transparent 25rem),
+      radial-gradient(circle at 12% 80%, rgba(93,184,255,.06), transparent 22rem);
   }
 
-  .profile-panel h2 {
-    margin-top: 0;
-  }
-
-  .profile-panel p,
-  .profile-panel li {
-    color: var(--text-muted);
-  }
-
-  .profile-panel ul {
+  .hero-inner {
     display: grid;
-    gap: 0.55rem;
-    padding-left: 1.2rem;
-  }
-
-  .content-grid,
-  .goals-grid {
-    display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
+    grid-template-columns: minmax(0, 1.55fr) minmax(320px, .75fr);
     gap: 5rem;
+    align-items: end;
   }
 
-  .strengths-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.25rem;
+  .hero h1 {
+    max-width: 1000px;
+    margin: .35rem 0 1.6rem;
+    font-size: clamp(3.3rem, 7vw, 6.5rem);
+    line-height: .94;
+    letter-spacing: -.06em;
   }
 
-  .strength-card {
-    padding: 1.5rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface);
-  }
+  .hero h1 span { display: block; color: var(--primary); }
 
-  .strength-card > span {
-    color: var(--primary);
-    font-size: 1.8rem;
-    font-weight: 850;
-  }
-
-  .strength-card h3 {
-    margin: 0.8rem 0 0.4rem;
-  }
-
-  .strength-card p {
+  .hero-lead {
+    max-width: 760px;
+    margin: 0;
     color: var(--text-muted);
+    font-size: 1.22rem;
+    line-height: 1.75;
   }
 
-  .journey {
+  .hero-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+
+  .hero-focus {
+    padding: 1.8rem 0 0 2rem;
+    border-left: 1px solid var(--border);
+  }
+
+  .hero-focus h2 { margin: .35rem 0 .8rem; font-size: 1.45rem; line-height: 1.2; }
+  .hero-focus p:not(.eyebrow) { color: var(--text-muted); line-height: 1.65; }
+
+  .skill-row { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.4rem; }
+  .skill-row span {
+    padding: .4rem .7rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-muted);
+    font-size: .78rem;
+  }
+
+  .section { padding: 6rem 0; }
+  .section-soft { background: var(--surface-soft, rgba(255,255,255,.025)); }
+
+  .statement-grid, .direction-grid {
     display: grid;
-    max-width: 900px;
-    gap: 0;
+    grid-template-columns: minmax(260px, .8fr) minmax(0, 1.2fr);
+    gap: 6rem;
+    align-items: start;
   }
 
-  .journey-item {
+  .statement h2, .section-intro h2, .closing h2 {
+    max-width: 650px;
+    margin: .35rem 0 0;
+    font-size: clamp(2rem, 4vw, 3.6rem);
+    line-height: 1.02;
+    letter-spacing: -.04em;
+  }
+
+  .statement-copy { max-width: 760px; }
+  .statement-copy p { margin: 0 0 1.2rem; color: var(--text-muted); line-height: 1.8; font-size: 1.05rem; }
+
+  .section-intro { max-width: 850px; margin-bottom: 3.5rem; }
+  .section-intro > p:last-child { color: var(--text-muted); margin-top: 1rem; }
+
+  .timeline { max-width: 1000px; }
+  .timeline-item {
     display: grid;
-    grid-template-columns: 70px 1fr;
-    gap: 1.4rem;
-    min-height: 160px;
+    grid-template-columns: 60px 1px minmax(0, 1fr);
+    gap: 1.5rem;
+    min-height: 150px;
   }
 
-  .journey-marker {
-    position: relative;
-    display: flex;
-    justify-content: center;
-  }
-
-  .journey-marker::after {
-    position: absolute;
-    top: 46px;
-    bottom: 0;
-    width: 1px;
-    background: var(--border);
+  .timeline-index { color: var(--primary); font-size: .85rem; font-weight: 850; padding-top: .15rem; }
+  .timeline-line { position: relative; background: var(--border); }
+  .timeline-line::before {
     content: "";
-  }
-
-  .journey-item:last-child .journey-marker::after {
-    display: none;
-  }
-
-  .journey-marker span {
-    display: grid;
-    width: 44px;
-    height: 44px;
-    place-items: center;
-    border: 1px solid rgba(93, 184, 255, 0.45);
+    position: absolute;
+    top: .2rem;
+    left: 50%;
+    width: 9px;
+    height: 9px;
+    transform: translateX(-50%);
     border-radius: 50%;
-    background: var(--surface);
-    color: var(--primary);
-    font-weight: 850;
+    background: var(--primary);
+    box-shadow: 0 0 0 5px var(--surface-soft, rgba(255,255,255,.025));
   }
+  .timeline-item:last-child .timeline-line { background: transparent; }
 
-  .journey-period {
-    margin: 0;
-    color: var(--primary);
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
+  .timeline-content { padding-bottom: 2.5rem; }
+  .timeline-period { margin: 0 0 .3rem; color: var(--primary); font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .timeline-content h3 { margin: 0 0 .4rem; font-size: 1.4rem; }
+  .timeline-content p:last-child { max-width: 760px; margin: 0; color: var(--text-muted); line-height: 1.7; }
 
-  .journey-item h3 {
-    margin: 0.25rem 0;
-  }
+  .capability-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--border); }
+  .capability { padding: 1.8rem 1.8rem 1.8rem 0; border-bottom: 1px solid var(--border); }
+  .capability:not(:nth-child(3n + 1)) { padding-left: 1.8rem; border-left: 1px solid var(--border); }
+  .capability span { color: var(--primary); font-weight: 850; font-size: .8rem; }
+  .capability h3 { margin: .7rem 0 .45rem; font-size: 1.15rem; }
+  .capability p { margin: 0; color: var(--text-muted); line-height: 1.65; }
 
-  .journey-item p:last-child {
-    color: var(--text-muted);
-  }
+  .goals-list { display: grid; gap: 0; border-top: 1px solid var(--border); }
+  .goal { display: grid; grid-template-columns: 45px 1fr; gap: 1rem; padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
+  .goal span { color: var(--primary); font-weight: 850; }
+  .goal p { margin: 0; line-height: 1.6; }
 
-  .goals-list {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .goals-list article {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 1rem;
-    padding: 1.2rem;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    background: var(--surface);
-  }
-
-  .goals-list span {
-    color: var(--primary);
-    font-weight: 850;
-  }
-
-  .goals-list p {
-    margin: 0;
-    color: var(--text-muted);
-  }
-
-  .final-panel {
+  .closing-panel {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 3rem;
-    padding: 2.5rem;
-    border: 1px solid rgba(93, 184, 255, 0.35);
+    padding: 3.5rem;
+    border: 1px solid rgba(93,184,255,.3);
     border-radius: var(--radius);
     background: var(--surface);
+    box-shadow: var(--shadow);
   }
-
-  .final-panel h2 {
-    margin: 0;
-  }
-
-  .final-panel p:last-child {
-    color: var(--text-muted);
-  }
+  .closing-panel h2 { margin: .3rem 0 .8rem; }
+  .closing-panel p:last-child { max-width: 700px; margin: 0; color: var(--text-muted); line-height: 1.7; }
 
   @media (max-width: 950px) {
-    .about-hero-grid,
-    .content-grid,
-    .goals-grid {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    .strengths-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    .hero-inner, .statement-grid, .direction-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-focus { padding: 1.5rem 0 0; border-left: 0; border-top: 1px solid var(--border); }
+    .capability-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .capability:not(:nth-child(3n + 1)) { padding-left: 0; border-left: 0; }
+    .capability:nth-child(even) { padding-left: 1.8rem; border-left: 1px solid var(--border); }
   }
 
-  @media (max-width: 700px) {
-    .strengths-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .journey-item {
-      grid-template-columns: 52px 1fr;
-    }
-
-    .final-panel {
-      align-items: flex-start;
-      flex-direction: column;
-    }
+  @media (max-width: 650px) {
+    .hero { padding: 4.5rem 0 4rem; }
+    .section { padding: 4rem 0; }
+    .hero h1 { font-size: clamp(3rem, 15vw, 4.6rem); }
+    .capability-grid { grid-template-columns: 1fr; }
+    .capability:nth-child(even) { padding-left: 0; border-left: 0; }
+    .closing-panel { align-items: flex-start; flex-direction: column; padding: 2rem; }
+    .timeline-item { grid-template-columns: 38px 1px minmax(0, 1fr); gap: 1rem; }
   }
 </style>
