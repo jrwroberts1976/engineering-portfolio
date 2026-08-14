@@ -1,0 +1,200 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="99 Problems but a Switch Ain’t One"
+  description="A practical troubleshooting approach: follow the packet, validate each gate, collaborate across teams and retain clear subject-matter ownership."
+>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Troubleshooting Approach</p>
+        <h1>99 problems, but a <span>switch ain’t one.</span></h1>
+        <p class="summary">
+          I troubleshoot by being the packet. I trace the service journey from
+          the user to the outcome, stop at every hand-off, and ask one simple
+          question: <strong>has it passed this gate?</strong>
+        </p>
+      </div>
+      <aside class="principles">
+        <p class="eyebrow">The discipline</p>
+        <ul>
+          <li>Follow evidence, not assumptions.</li>
+          <li>Prove each hand-off before moving on.</li>
+          <li>Collaborate widely while keeping clear ownership.</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-grid">
+      <div>
+        <p class="eyebrow">The Starting Point</p>
+        <h2>Start with the journey, not the loudest theory.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          A reported “network issue” can originate anywhere: the user device,
+          name resolution, identity, a firewall rule, a proxy, an application,
+          a dependency or the return path. Starting with a preferred answer
+          slows everyone down.
+        </p>
+        <p>
+          Instead, I model the real path taken by the request and response.
+          Each component is a gate. Evidence that a packet or request has
+          crossed one gate narrows the search and gives the next investigation
+          a useful starting point.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="heading">
+        <p class="eyebrow">Follow the Packet</p>
+        <h2>At every gate: has it passed this point?</h2>
+        <p>
+          The exact path changes with the service, but the method stays the
+          same: establish the expected journey, test it, record what is known,
+          and move only when the previous gate is evidenced.
+        </p>
+      </div>
+
+      <div class="packet-flow" aria-label="Troubleshooting journey">
+        <article>
+          <span>01</span>
+          <h3>User and endpoint</h3>
+          <p>Is the client healthy, connected and making the expected request?</p>
+        </article>
+        <div class="arrow">→</div>
+        <article>
+          <span>02</span>
+          <h3>Access and network</h3>
+          <p>Has DNS resolved correctly? Has traffic reached the expected route, switch, gateway and firewall?</p>
+        </article>
+        <div class="arrow">→</div>
+        <article>
+          <span>03</span>
+          <h3>Security and edge</h3>
+          <p>Has identity, policy, proxying, inspection or rate limiting allowed the request through?</p>
+        </article>
+        <div class="arrow">→</div>
+        <article>
+          <span>04</span>
+          <h3>Application and dependency</h3>
+          <p>Did the service receive the request, process it and obtain what it needs to respond?</p>
+        </article>
+        <div class="arrow">→</div>
+        <article>
+          <span>05</span>
+          <h3>Return path and experience</h3>
+          <p>Did the response return successfully, in time, and with the result the user expected?</p>
+        </article>
+      </div>
+
+      <p class="note">
+        “The switch ain’t one” is a reminder not to blame the network by
+        default. A switch can absolutely be the fault; it simply earns that
+        conclusion through evidence, like every other component.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="heading">
+        <p class="eyebrow">Evidence at the Gate</p>
+        <h2>Make the next question smaller.</h2>
+      </div>
+      <div class="evidence-grid">
+        <article>
+          <h3>Define the expected path</h3>
+          <p>Agree what “working” should look like: source, destination, protocol, identity and expected response.</p>
+        </article>
+        <article>
+          <h3>Test the hand-off</h3>
+          <p>Use the smallest useful observation: logs, metrics, packet capture, traces, configuration or a controlled request.</p>
+        </article>
+        <article>
+          <h3>Record what it proves</h3>
+          <p>“The request reached this point” is more useful than “we checked the firewall”. It prevents repeated work.</p>
+        </article>
+        <article>
+          <h3>Choose the next owner</h3>
+          <p>Pass a bounded question to the subject-matter expert responsible for the next gate, with the evidence attached.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-grid">
+      <div>
+        <p class="eyebrow">Collaboration and Ownership</p>
+        <h2>Many voices. Clear accountability.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Effective troubleshooting is cross-team by design. Network,
+          security, platform, application, service desk and supplier teams may
+          all have part of the answer. Bringing them together early improves
+          the quality and speed of the investigation.
+        </p>
+        <p>
+          Collaboration should not mean diluted responsibility. Each gate needs
+          a subject-matter expert who owns the evidence, the decision and any
+          corrective action within their domain. The incident lead keeps the
+          end-to-end journey visible, connects the teams and makes sure no
+          hand-off becomes a black hole.
+        </p>
+        <p>
+          That balance avoids both extremes: isolated technical silos and large
+          calls where everyone is present but nobody is accountable.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container outcome">
+      <p class="eyebrow">The Outcome</p>
+      <h2>Faster diagnosis, stronger learning and fewer repeat incidents.</h2>
+      <p>
+        Working the path methodically makes troubleshooting calmer and more
+        transparent. It gives stakeholders a clear account of what is known,
+        what is being tested and who owns the next action. More importantly, it
+        turns an incident into practical knowledge that can improve monitoring,
+        runbooks, design and future delivery.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero { padding: 7rem 0 4rem; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, .6fr); gap: 4rem; align-items: start; }
+  h1 { margin: 0 0 1.5rem; font-size: clamp(3.4rem, 7.5vw, 6.2rem); line-height: .96; letter-spacing: -.06em; }
+  h1 span { color: var(--primary); }
+  h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.05; }
+  .summary, .prose p, .heading > p:last-child, .outcome > p:last-child { max-width: 780px; color: var(--text-muted); font-size: 1.12rem; }
+  .summary strong { color: var(--text); }
+  .principles, .packet-flow article, .evidence-grid article { padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+  .principles ul { margin: 1rem 0 0; padding-left: 1.2rem; }
+  .principles li { margin: .6rem 0; color: var(--text-muted); }
+  .content-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 5rem; }
+  .packet-flow { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: .7rem; align-items: stretch; }
+  .packet-flow span { color: var(--primary); font-weight: 800; }
+  .packet-flow h3 { margin: .5rem 0; font-size: 1.05rem; }
+  .packet-flow p, .evidence-grid p { margin-bottom: 0; color: var(--text-muted); }
+  .arrow { display: grid; place-items: center; color: var(--primary); font-size: 1.65rem; font-weight: 800; }
+  .note { max-width: 900px; margin: 1.5rem 0 0; padding-left: 1rem; border-left: 3px solid var(--primary); color: var(--text-muted); }
+  .evidence-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+  .evidence-grid h3 { margin: 0 0 .8rem; font-size: 1.1rem; }
+  .outcome { max-width: 900px; }
+  @media (max-width: 1000px) { .packet-flow { grid-template-columns: repeat(3, minmax(0, 1fr)); } .packet-flow .arrow { display: none; } .evidence-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 850px) { .hero-grid, .content-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 620px) { .packet-flow, .evidence-grid { grid-template-columns: 1fr; } }
+</style>
