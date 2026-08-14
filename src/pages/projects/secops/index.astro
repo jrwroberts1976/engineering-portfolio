@@ -119,7 +119,7 @@ if (!project) {
         <article class="flow-step">
           <p class="capability-label">01 · Prevention</p>
           <h3>Edge and DNS protection</h3>
-          <p>Cloudflare provides the first external layer of prevention through DNS, TLS, web application firewall rules, rate limiting and DDoS mitigation for publicly exposed services.</p>
+          <p>Cloudflare provides the first external layer of prevention through DNS, TLS, web application firewall rules, rate limiting and DDoS mitigation for publicly exposed services routed through it.</p>
           <p>Pi-hole adds an internal layer, filtering DNS requests across the network and stopping client devices resolving known advertising, tracking and unwanted domains before a connection can be made.</p>
           <a href="/projects/pihole">View Pi-hole project →</a>
           <a class="snapshot-link" href="https://snapshots.raintank.io/dashboard/snapshot/wsQAvFhSIS1VxbbnfibI2fAWHhI3Zv3m" target="_blank" rel="noopener noreferrer">
@@ -132,7 +132,7 @@ if (!project) {
         <article class="flow-step">
           <p class="capability-label">02 · Detection</p>
           <h3>Threat detection and response</h3>
-          <p>CrowdSec combines behavioural detection, community intelligence and automated firewall decisions for internet-facing services.</p>
+          <p>CrowdSec combines behavioural detection, community intelligence and automated firewall decisions for internet-facing and infrastructure services. For direct access through the public IP or DuckDNS, it sees the real source address and can block decisions at the origin firewall.</p>
           <a href="/projects/crowdsec">View CrowdSec case study →</a>
         </article>
 
