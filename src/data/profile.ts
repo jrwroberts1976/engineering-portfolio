@@ -32,53 +32,53 @@ export const professionalSummary = {
   name: 'James Roberts',
 
   headline:
-    'Infrastructure and systems professional developing modern platform, cloud and DevOps engineering capability.',
+    'Infrastructure and systems professional combining long-term operational experience with modern platform, cloud, security and automation engineering.',
 
   introduction:
-    'I have more than 20 years of experience supporting UNIX, Linux, enterprise infrastructure and operationally critical services.',
+    'I have more than 20 years of experience supporting UNIX, Linux, enterprise infrastructure and operationally critical services, with a current focus on building and operating modern infrastructure platforms.',
 
   currentFocus:
-    'My current development work focuses on Linux engineering, Docker, Kubernetes, AWS, Azure, infrastructure automation, monitoring, observability and security engineering.',
+    'My current engineering work brings together Linux, Docker, Kubernetes, AWS, Azure, infrastructure automation, Git-based delivery, monitoring, observability, vulnerability management and security engineering.',
 
   workingStyle:
-    'I focus on practical, supportable solutions. I consider how systems will be monitored, maintained, secured and documented after deployment rather than treating implementation as the end of the work.',
+    'I focus on practical, supportable solutions. I consider how systems will be monitored, maintained, secured, tested and documented after deployment rather than treating implementation as the end of the work.',
 };
 
 export const professionalStrengths: ProfessionalStrength[] = [
   {
     title: 'Infrastructure Operations',
     description:
-      'Supporting Linux, UNIX and enterprise systems through incident resolution, maintenance, performance investigation and operational improvement.',
-  },
-
-  {
-    title: 'Technical Troubleshooting',
-    description:
-      'Investigating complex issues across applications, infrastructure, networking, monitoring and service dependencies.',
+      'Supporting Linux, UNIX and enterprise systems through incident resolution, maintenance, performance investigation, patch management and operational improvement.',
   },
 
   {
     title: 'Platform Engineering',
     description:
-      'Building practical capability with Docker, Kubernetes, cloud platforms, automation and infrastructure as code.',
+      'Building and operating practical Docker and Kubernetes platforms, with container lifecycle management, service health checks, networking and production deployment processes.',
+  },
+
+  {
+    title: 'Cloud and Automation',
+    description:
+      'Developing practical capability across AWS, Microsoft Azure, Terraform, Git-based workflows and repeatable infrastructure and application deployment.',
   },
 
   {
     title: 'Monitoring and Observability',
     description:
-      'Designing dashboards, metrics, alerts and operational views using Prometheus, Grafana and related tooling.',
+      'Building operational visibility with Prometheus, Grafana, Loki, Blackbox Exporter and custom metrics, dashboards and alerting across multiple hosts and services.',
   },
 
   {
     title: 'Security Engineering',
     description:
-      'Implementing authentication, MFA, threat detection, firewall enforcement and controlled external access.',
+      'Applying layered security through Suricata, CrowdSec, Greenbone vulnerability scanning, firewall controls, authentication, secure external access and continuous security checks.',
   },
 
   {
-    title: 'Technical Leadership',
+    title: 'Delivery and Technical Leadership',
     description:
-      'Leading implementation activity, mentoring engineers and helping teams understand and resolve complex technical problems.',
+      'Leading implementation activity, coordinating teams and suppliers, mentoring engineers, managing technical risk and turning complex infrastructure work into supportable operational services.',
   },
 ];
 
@@ -193,9 +193,9 @@ export const careerJourney: CareerStage[] = [
 
   {
     period: 'Current Direction',
-    title: 'Platform and Cloud Engineering',
+    title: 'Platform, Security and Operational Engineering',
     description:
-      'Bringing long-term infrastructure experience together with modern engineering practices and operational automation.',
+      'Bringing long-term infrastructure experience together with container platforms, cloud engineering, observability, vulnerability management, security controls and automated production delivery.',
   },
 ];
 
@@ -203,5 +203,5 @@ export const careerGoals = [
   'Continue moving toward Platform Engineering, Cloud Infrastructure and DevOps-focused roles.',
   'Apply long-standing Linux and infrastructure experience within modern cloud and container environments.',
   'Develop further technical leadership, project delivery and service-management responsibility.',
-  'Continue building practical evidence through documented engineering projects.',
+  'Continue building practical evidence through documented engineering projects and production-grade automation.',
 ];
