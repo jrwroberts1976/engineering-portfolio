@@ -16,10 +16,8 @@ technical troubleshooting.
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 import { getProjectById } from '../../../data/projects';
-import { getDashboardById } from '../../../data/dashboards';
 
 const project = getProjectById('birdnet');
-const dashboard = getDashboardById('birdnet');
 
 if (!project) {
   throw new Error('BirdNET project data could not be found.');
@@ -271,18 +269,14 @@ const technicalSkills = [
         </p>
 
         <div class="button-row">
-          {
-            dashboard?.url && (
-              <a
-                class="button button-primary"
-                href={dashboard.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View BirdNET Dashboard
-              </a>
-            )
-          }
+          <a
+            class="button button-primary"
+            href="https://snapshots.raintank.io/dashboard/snapshot/shIDuSmzf2rnfeemgFI0zxRtCBOriW5D"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View BirdNET dashboard snapshot
+          </a>
 
           <a class="button button-secondary" href="/lab">
             Visit the Engineering Lab
@@ -786,18 +780,14 @@ const technicalSkills = [
       </div>
 
       <div class="button-column">
-        {
-          dashboard?.url && (
-            <a
-              class="button button-primary"
-              href={dashboard.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View BirdNET Dashboard
-            </a>
-          )
-        }
+        <a
+          class="button button-primary"
+          href="https://snapshots.raintank.io/dashboard/snapshot/shIDuSmzf2rnfeemgFI0zxRtCBOriW5D"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View BirdNET dashboard snapshot
+        </a>
 
         <a class="button button-secondary" href="/projects/monitoring">
           Monitoring Platform
