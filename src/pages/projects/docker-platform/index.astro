@@ -12,11 +12,8 @@ the portfolio, monitoring, security and self-hosted engineering services.
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 import { getProjectById } from '../../../data/projects';
-import { getDashboardById } from '../../../data/dashboards';
 
 const project = getProjectById('docker-platform');
-const platformDashboard = getDashboardById('platform');
-const securityDashboard = getDashboardById('security');
 
 if (!project) {
   throw new Error('Docker platform project data could not be found.');
@@ -262,18 +259,14 @@ const skills = [
             View Platform Architecture
           </a>
 
-          {
-            securityDashboard?.url && (
-              <a
-                class="button button-secondary"
-                href={securityDashboard.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Live Security Dashboard
-              </a>
-            )
-          }
+          <a
+            class="button button-secondary"
+            href="https://snapshots.raintank.io/dashboard/snapshot/0F5uMPI2zA9PZGxMYRdGlrgpEIuNGtWA"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View dashboard snapshot
+          </a>
         </div>
       </div>
 
@@ -714,37 +707,20 @@ const skills = [
         <h2>Explore the operational platform.</h2>
 
         <p>
-          Public dashboards and related case studies provide live and
+          A fixed Grafana dashboard snapshot and related case studies provide
           documented evidence of the platform in operation.
         </p>
       </div>
 
       <div class="button-column">
-        {
-          securityDashboard?.url && (
-            <a
-              class="button button-primary"
-              href={securityDashboard.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Security Dashboard
-            </a>
-          )
-        }
-
-        {
-          platformDashboard?.url && (
-            <a
-              class="button button-secondary"
-              href={platformDashboard.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Platform Dashboard
-            </a>
-          )
-        }
+        <a
+          class="button button-primary"
+          href="https://snapshots.raintank.io/dashboard/snapshot/0F5uMPI2zA9PZGxMYRdGlrgpEIuNGtWA"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View dashboard snapshot
+        </a>
 
         <a class="button button-secondary" href="/projects/crowdsec">
           CrowdSec Case Study
