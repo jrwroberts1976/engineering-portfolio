@@ -115,25 +115,32 @@ if (!project) {
         <h2>Controls with clear ownership.</h2>
       </div>
 
-      <div class="capabilities">
-        <article>
+      <div class="security-flow">
+        <article class="flow-step">
+          <p class="capability-label">01 · Prevention</p>
+          <h3>DNS filtering and privacy</h3>
+          <p>Pi-hole filters DNS requests across the network, stopping client devices resolving known advertising, tracking and unwanted domains before a connection can be made.</p>
+          <a href="https://snapshots.raintank.io/dashboard/snapshot/wsQAvFhSIS1VxbbnfibI2fAWHhI3Zv3m" target="_blank" rel="noopener noreferrer">
+            View Pi-hole dashboard snapshot →
+          </a>
+        </article>
+
+        <div class="flow-arrow" aria-hidden="true">→</div>
+
+        <article class="flow-step">
+          <p class="capability-label">02 · Detection and response</p>
           <h3>Threat detection and response</h3>
           <p>CrowdSec combines behavioural detection, community intelligence and automated firewall decisions for internet-facing services.</p>
           <a href="/projects/crowdsec">View CrowdSec case study →</a>
         </article>
-        <article>
+
+        <div class="flow-arrow" aria-hidden="true">→</div>
+
+        <article class="flow-step">
+          <p class="capability-label">03 · Assessment and remediation</p>
           <h3>Vulnerability management</h3>
           <p>Greenbone provides scheduled evidence of weaknesses across managed Linux systems, with remediation kept approval-led and deterministic.</p>
           <a href="/projects/greenbone">View Greenbone case study →</a>
-        </article>
-        <article>
-          <p class="capability-label">Prevention</p>
-          <h3>DNS filtering and privacy</h3>
-          <p>Pi-hole provides network-wide DNS filtering as a supporting protective control, monitored alongside the wider platform.</p>
-          <p>It is a prevention measure because it stops client devices resolving known advertising, tracking and unwanted domains before a connection can be made.</p>
-          <a href="https://snapshots.raintank.io/dashboard/snapshot/wsQAvFhSIS1VxbbnfibI2fAWHhI3Zv3m" target="_blank" rel="noopener noreferrer">
-            View Pi-hole dashboard snapshot →
-          </a>
         </article>
       </div>
     </div>
@@ -164,9 +171,9 @@ if (!project) {
   .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
   .card { padding: 1.4rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
   .card span { color: var(--primary); font-weight: 800; } .card p, .capabilities p { color: var(--text-muted); }
-  .capabilities { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
-  .capabilities article { padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
-  .capabilities a { color: var(--primary); font-weight: 700; text-decoration: none; } .capability-label { margin: 0 0 .45rem; color: var(--primary); font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; } .muted { color: var(--text-muted); font-size: .9rem; }
+  .security-flow { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 1rem; align-items: stretch; }
+  .flow-step { padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+  .flow-step p { color: var(--text-muted); } .flow-step a { color: var(--primary); font-weight: 700; text-decoration: none; } .capability-label { margin: 0 0 .45rem; color: var(--primary) !important; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; } .flow-arrow { display: grid; place-items: center; color: var(--primary); font-size: 1.8rem; font-weight: 800; }
   .outcome { max-width: 900px; }
-  @media (max-width: 850px) { .hero-grid, .grid, .capabilities, .intro-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 850px) { .hero-grid, .grid, .intro-grid, .security-flow { grid-template-columns: 1fr; } .flow-arrow { transform: rotate(90deg); min-height: 2rem; } }
 </style>
