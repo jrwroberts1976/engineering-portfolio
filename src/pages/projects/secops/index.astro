@@ -120,8 +120,9 @@ if (!project) {
           <p class="capability-label">01 · Prevention</p>
           <h3>DNS filtering and privacy</h3>
           <p>Pi-hole filters DNS requests across the network, stopping client devices resolving known advertising, tracking and unwanted domains before a connection can be made.</p>
-          <a href="https://snapshots.raintank.io/dashboard/snapshot/wsQAvFhSIS1VxbbnfibI2fAWHhI3Zv3m" target="_blank" rel="noopener noreferrer">
-            View Pi-hole dashboard snapshot →
+          <a href="/projects/pihole">View Pi-hole project →</a>
+          <a class="snapshot-link" href="https://snapshots.raintank.io/dashboard/snapshot/wsQAvFhSIS1VxbbnfibI2fAWHhI3Zv3m" target="_blank" rel="noopener noreferrer">
+            View dashboard snapshot →
           </a>
         </article>
 
@@ -173,7 +174,7 @@ if (!project) {
   .card span { color: var(--primary); font-weight: 800; } .card p, .capabilities p { color: var(--text-muted); }
   .security-flow { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 1rem; align-items: stretch; }
   .flow-step { padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
-  .flow-step p { color: var(--text-muted); } .flow-step a { color: var(--primary); font-weight: 700; text-decoration: none; } .capability-label { margin: 0 0 .45rem; color: var(--primary) !important; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; } .flow-arrow { display: grid; place-items: center; color: var(--primary); font-size: 1.8rem; font-weight: 800; }
+  .flow-step p { color: var(--text-muted); } .flow-step a { color: var(--primary); font-weight: 700; text-decoration: none; display: block; } .flow-step .snapshot-link { margin-top: .55rem; } .capability-label { margin: 0 0 .45rem; color: var(--primary) !important; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; } .flow-arrow { display: grid; place-items: center; color: var(--primary); font-size: 1.8rem; font-weight: 800; }
   .outcome { max-width: 900px; }
   @media (max-width: 850px) { .hero-grid, .grid, .intro-grid, .security-flow { grid-template-columns: 1fr; } .flow-arrow { transform: rotate(90deg); min-height: 2rem; } }
 </style>
