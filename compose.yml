@@ -9,6 +9,7 @@ services:
         PUBLIC_GRAFANA_SECURITY_DASHBOARD: ${PUBLIC_GRAFANA_SECURITY_DASHBOARD:-}
         PUBLIC_GRAFANA_PLATFORM_DASHBOARD: ${PUBLIC_GRAFANA_PLATFORM_DASHBOARD:-}
         PUBLIC_GRAFANA_BIRDNET_DASHBOARD: ${PUBLIC_GRAFANA_BIRDNET_DASHBOARD:-}
+        PUBLIC_TURNSTILE_SITE_KEY: ${PUBLIC_TURNSTILE_SITE_KEY:-}
 
     image: james-roberts/engineering-portfolio:latest
 
@@ -17,8 +18,49 @@ services:
     ports:
       - "${PORTFOLIO_PORT:-8095}:80"
 
+    depends_on:
+      contact-api:
+        condition: service_healthy
+
     networks:
       - apps
+
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+
+  contact-api:
+    container_name: engineering-portfolio-contact-api
+
+    build:
+      context: ./contact-api
+      dockerfile: Dockerfile
+
+    image: james-roberts/engineering-portfolio-contact-api:latest
+
+    restart: unless-stopped
+
+    environment:
+      TURNSTILE_SECRET_KEY: ${TURNSTILE_SECRET_KEY:?TURNSTILE_SECRET_KEY is required}
+      TURNSTILE_EXPECTED_HOSTNAME: ${TURNSTILE_EXPECTED_HOSTNAME:-me.jrwroberts.co.uk}
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USERNAME: ${SMTP_USERNAME:?SMTP_USERNAME is required}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:?SMTP_PASSWORD is required}
+      CONTACT_TO_EMAIL: ${CONTACT_TO_EMAIL:?CONTACT_TO_EMAIL is required}
+      CONTACT_FROM_EMAIL: ${CONTACT_FROM_EMAIL:-${SMTP_USERNAME}}
+      CONTACT_RATE_LIMIT_COUNT: ${CONTACT_RATE_LIMIT_COUNT:-5}
+      CONTACT_RATE_LIMIT_WINDOW_SECONDS: ${CONTACT_RATE_LIMIT_WINDOW_SECONDS:-3600}
+      CONTACT_MAX_BODY_BYTES: ${CONTACT_MAX_BODY_BYTES:-16384}
+
+    networks:
+      - apps
+
+    security_opt:
+      - no-new-privileges:true
+
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,noexec,nosuid,nodev
 
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
