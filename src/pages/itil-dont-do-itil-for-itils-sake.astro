@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="ITIL: Don’t Do ITIL for ITIL’s Sake"
+  description="A personal view of ITIL from a career spent working within the framework: use the principles that add value, keep governance proportionate, and never let process become the objective."
+>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Service Management</p>
+        <h1>Don’t do <span>ITIL for ITIL’s sake.</span></h1>
+        <p class="summary">
+          I’ve spent most of my career working under the ITIL framework and I’ve
+          done the training and earned my green badge. My biggest takeaway is
+          simple: <strong>the framework should serve the organisation, not become the organisation.</strong>
+        </p>
+      </div>
+      <aside class="principles">
+        <p class="eyebrow">My takeaway</p>
+        <ul>
+          <li>Use the parts that solve a real problem.</li>
+          <li>Keep governance proportionate to risk.</li>
+          <li>Never confuse following process with delivering value.</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-grid">
+      <div><p class="eyebrow">The Detail Trap</p><h2>More process does not automatically mean more control.</h2></div>
+      <div class="prose">
+        <p>One of the attractions of ITIL is control. Define the process, define the roles, categorise the work, measure it, review it and improve it. All sensible ideas.</p>
+        <p>The problem comes when organisations keep adding detail in the belief that more process automatically means more control: another approval, another mandatory field, another category, another meeting, another KPI.</p>
+        <p>Eventually people spend so much time servicing the framework that they have less time to deliver the service. At that point you may not have gained control. You may simply have created <strong>more frustration with better documentation.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-grid">
+      <div><p class="eyebrow">Purpose Before Process</p><h2>The process is not the objective.</h2></div>
+      <div class="prose">
+        <p>Incident management exists to help restore service. Change management exists to help make changes while understanding and managing risk. Problem management exists to understand why things keep going wrong and prevent them happening again.</p>
+        <p>None of those things exist simply so that we can demonstrate that we followed an ITIL process.</p>
+        <p>If a process isn’t helping people make better decisions, manage risk, restore services faster or improve the experience of the people using those services, it is worth asking what the process is actually achieving.</p>
+        <p class="note">“Because that’s the process” is rarely a good enough answer on its own.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="heading"><p class="eyebrow">The CAB Trap</p><h2>Control the risk, not the paperwork.</h2></div>
+      <div class="cards">
+        <article><h3>Useful governance</h3><p>Visibility of change, understood risk, a rollback plan and awareness of conflicting activity are valuable controls.</p></article>
+        <article><h3>Process for process</h3><p>Every change waiting for a weekly meeting where people approve work they may know little about can create delay without meaningfully reducing risk.</p></article>
+        <article><h3>Proportionate control</h3><p>A low-risk, repeatable change should not necessarily require the same governance as a major infrastructure change capable of taking down a critical service.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-grid">
+      <div><p class="eyebrow">Judgement Matters</p><h2>Not everything needs a process.</h2></div>
+      <div class="prose">
+        <p>Sometimes the answer is simply to let capable people make sensible decisions. Governance should provide guardrails, not remove judgement.</p>
+        <p>If engineers understand the service and its risks, and have good monitoring, documentation and recovery procedures, the framework should support them rather than make their job unnecessarily difficult.</p>
+        <p>If people are constantly finding ways around a process just to get their work done, that is worth investigating. The problem might not be the people. <strong>The problem might be the process.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-grid">
+      <div><p class="eyebrow">RACI</p><h2>Useful until maintaining the matrix becomes the work.</h2></div>
+      <div class="prose">
+        <p>RACI is another good example of something I genuinely value, but which can quickly become more complicated than the problem it was meant to solve.</p>
+        <p>At its heart it asks four useful questions: who is <strong>Responsible</strong> for doing the work, who is <strong>Accountable</strong> for the outcome, who needs to be <strong>Consulted</strong>, and who simply needs to be <strong>Informed</strong>?</p>
+        <p>That clarity matters. When something goes wrong, one of the most important questions is: <strong>who owns this?</strong> A simple RACI can remove the silence and finger-pointing that follows when nobody is quite sure.</p>
+        <p>The trouble starts when the spreadsheet becomes an exercise in its own right. Dozens of activities, twenty teams, every box needing a letter, and meetings debating whether somebody should be Consulted or merely Informed.</p>
+        <p class="note">If you spend three hours defining who is responsible for something that would have taken twenty minutes to do, that isn’t control. That’s administration.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-grid">
+      <div><p class="eyebrow">Accountability</p><h2>The conversation matters more than the matrix.</h2></div>
+      <div class="prose">
+        <p>For me, the most valuable part of RACI is not the spreadsheet. It is the conversation: who owns this, who has authority to make the decision, who genuinely needs to be involved and who just needs to know?</p>
+        <p>Having somebody marked A in a spreadsheet does not automatically create accountability. They need to understand that they own the outcome and have enough authority to do something about it. Likewise, putting ten people down as Consulted may simply mean ten people are invited to another meeting.</p>
+        <p><strong>Used well, RACI removes ambiguity. Used badly, it documents ambiguity in a spreadsheet.</strong></p>
+        <p>Use the tool when it solves a problem, keep it as simple as possible and question it when the administration starts outweighing the value. Don’t do RACI for RACI’s sake either.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-grid">
+      <div><p class="eyebrow">Different Organisations</p><h2>ITIL does not need to look the same everywhere.</h2></div>
+      <div class="prose">
+        <p>A large enterprise operating critical services has very different requirements from a small technology team running a handful of systems. Trying to implement exactly the same level of governance in both makes little sense.</p>
+        <p>That does not mean smaller organisations should ignore ITIL. Almost everyone working in IT can take something useful from it: clearer incident handling, distinguishing incidents from problems, impact and urgency, sensible rollback plans, learning from major incidents and understanding that technology ultimately exists to provide a service to somebody.</p>
+        <p>You do not need to implement the entire framework to benefit from those ideas.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container outcome">
+      <p class="eyebrow">My Takeaway</p>
+      <h2>Take the bits that make you better.</h2>
+      <p>I’m certainly not anti-ITIL. It has influenced how I think about incidents, changes, problems, risk, ownership and what it means to provide a service rather than simply operate technology.</p>
+      <p>But I have also seen how easily organisations become bogged down in the detail. The pursuit of control can create so much process that people become frustrated by the very framework that was supposed to help them.</p>
+      <p>Use what helps. Adapt what nearly helps. Question what doesn’t. Apply enough governance to manage genuine risk, and keep asking whether your processes are still delivering value.</p>
+      <blockquote><strong>ITIL is a framework, not the objective.<br />Don’t do ITIL for ITIL’s sake.</strong></blockquote>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero { padding: 7rem 0 4rem; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, .6fr); gap: 4rem; align-items: start; }
+  h1 { margin: 0 0 1.5rem; font-size: clamp(3.4rem, 7.5vw, 6.2rem); line-height: .96; letter-spacing: -.06em; }
+  h1 span { color: var(--primary); }
+  h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.05; }
+  .summary, .prose p, .heading > p:last-child, .outcome > p { max-width: 820px; color: var(--text-muted); font-size: 1.12rem; }
+  .summary strong, .prose strong { color: var(--text); }
+  .principles, .cards article { padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+  .principles ul { margin: 1rem 0 0; padding-left: 1.2rem; }
+  .principles li { margin: .6rem 0; color: var(--text-muted); }
+  .content-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 5rem; }
+  .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 2rem; }
+  .cards h3 { margin: 0 0 .8rem; font-size: 1.15rem; }
+  .cards p { margin-bottom: 0; color: var(--text-muted); }
+  .note { margin-top: 1.5rem; padding-left: 1rem; border-left: 3px solid var(--primary); color: var(--text-muted); }
+  .outcome { max-width: 950px; }
+  blockquote { margin: 2rem 0 0; padding: 1.5rem 1.75rem; border-left: 4px solid var(--primary); background: var(--surface); border-radius: 0 var(--radius) var(--radius) 0; font-size: clamp(1.3rem, 2.5vw, 1.8rem); line-height: 1.4; }
+  @media (max-width: 850px) { .hero-grid, .content-grid { grid-template-columns: 1fr; gap: 2rem; } .cards { grid-template-columns: 1fr; } }
+</style>
