@@ -1,6 +1,19 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
+# Load Nginx Proxy Manager credentials used by maintenance mode
+NPM_ENV="$HOME/docker/secrets/npm.env"
 
+if [[ ! -r "$NPM_ENV" ]]; then
+    echo "ERROR: Cannot read $NPM_ENV"
+    exit 1
+fi
+
+set -a
+# shellcheck disable=SC1090
+source "$NPM_ENV"
+set +a
+
+: "${NPM_TOKEN:?NPM_TOKEN is not set in $NPM_ENV}"
 # =============================================================================
 # Engineering Portfolio – Production Deployment
 # =============================================================================
