@@ -1,181 +1,222 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
 ---
 
 <BaseLayout
   title="Contact"
-  description="Contact James Roberts about infrastructure, platform engineering, cloud, technical delivery and related opportunities."
+  description="Contact James Roberts about infrastructure, platform engineering, cloud, technical delivery and engineering opportunities."
 >
-  <section class="contact-hero">
-    <div class="container">
-      <p class="eyebrow">Contact</p>
-      <h1>Interested in my work? <span>Let’s connect.</span></h1>
-      <p class="hero-summary">
-        If you would like to discuss infrastructure, platform engineering,
-        technical delivery or an opportunity to work together, send me a message.
-      </p>
-    </div>
-  </section>
 
-  <section class="section section-soft">
-    <div class="container form-layout">
-      <div>
-        <p class="eyebrow">Send a Message</p>
-        <h2>A simple route to a real conversation.</h2>
-        <p class="form-intro">
-          I value direct, useful conversations. Your details are used only to
-          respond to this enquiry and are not stored by this website.
-        </p>
-        <div class="security-note">
-          <strong>Protected by design.</strong>
-          <p>Submissions are validated server-side, rate limited and protected by Cloudflare Turnstile. Message content is not written to application logs.</p>
-        </div>
-      </div>
+<section class="contact-hero">
+  <div class="container">
+    <p class="eyebrow">Contact</p>
 
-      <form id="contact-form" class="contact-form" novalidate>
-        <div class="field-row">
-          <label>
-            <span>Name</span>
-            <input type="text" name="name" autocomplete="name" minlength="2" maxlength="100" required />
-          </label>
+    <h1>
+      Interested in my work?
+      <span>Let's connect.</span>
+    </h1>
 
-          <label>
-            <span>Email</span>
-            <input type="email" name="email" autocomplete="email" maxlength="254" required />
-          </label>
-        </div>
+    <p class="hero-summary">
+      If you would like to discuss infrastructure, platform engineering,
+      technical delivery or opportunities to work together, please get in touch.
+    </p>
+  </div>
+</section>
 
-        <label>
-          <span>Subject</span>
-          <input type="text" name="subject" maxlength="120" required />
-        </label>
 
-        <label>
-          <span>Message</span>
-          <textarea name="message" rows="8" maxlength="5000" required></textarea>
-        </label>
+<section class="section section-soft">
 
-        <label class="honeypot" aria-hidden="true">
-          <span>Website</span>
-          <input type="text" name="website" tabindex="-1" autocomplete="off" />
-        </label>
+  <div class="container">
 
-        {
-          turnstileSiteKey ? (
-            <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="dark" data-size="flexible"></div>
-          ) : (
-            <p class="setup-warning">Contact form protection is not configured yet.</p>
-          )
-        }
+    <div class="contact-grid">
 
-        <div class="form-actions">
-          <button class="button button-primary" type="submit" disabled={!turnstileSiteKey}>Send message</button>
-          <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
-        </div>
-      </form>
-    </div>
-  </section>
+      <article class="card">
 
-  <section class="section">
-    <div class="container contact-options">
-      <article>
         <p class="eyebrow">GitHub</p>
+
         <h2>See the work.</h2>
-        <p>Browse my engineering repositories, infrastructure projects and technical documentation.</p>
-        <a class="card-link" href="https://github.com/jrwroberts1976" target="_blank" rel="noopener noreferrer">Visit GitHub ↗</a>
+
+        <p>
+          Browse infrastructure projects, automation examples,
+          monitoring platforms and engineering documentation.
+        </p>
+
+        <a
+          class="card-link"
+          href="https://github.com/jrwroberts1976"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Visit GitHub →
+        </a>
+
       </article>
 
-      <article>
+
+      <article class="card">
+
         <p class="eyebrow">Professional Profile</p>
+
         <h2>See the experience.</h2>
-        <p>Review my infrastructure background, delivery experience, technical leadership and career journey.</p>
-        <a class="card-link" href="/about">View profile →</a>
+
+        <p>
+          Review my infrastructure background, technical leadership,
+          delivery experience and engineering journey.
+        </p>
+
+        <a class="card-link" href="/about">
+          View profile →
+        </a>
+
       </article>
+
+
+      <article class="card">
+
+        <p class="eyebrow">Email</p>
+
+        <h2>Start a conversation.</h2>
+
+        <p>
+          For enquiries, opportunities or discussions around engineering,
+          infrastructure and delivery, contact me directly.
+        </p>
+
+        <a
+          class="card-link"
+          href="mailto:jrwroberts1976@gmail.com"
+        >
+          Send email →
+        </a>
+
+      </article>
+
+
+      <article class="card">
+
+        <p class="eyebrow">Portfolio</p>
+
+        <h2>Explore the platform.</h2>
+
+        <p>
+          Explore case studies covering cloud, Kubernetes, monitoring,
+          security operations and resilience engineering.
+        </p>
+
+        <a class="card-link" href="/projects">
+          View projects →
+        </a>
+
+      </article>
+
+
     </div>
-  </section>
 
-  {turnstileSiteKey && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+  </div>
 
-  <script is:inline>
-    const form = document.getElementById('contact-form');
-    const status = document.getElementById('form-status');
+</section>
 
-    if (form && status) {
-      form.addEventListener('submit', async (event) => {
-        event.preventDefault();
 
-        if (!form.reportValidity()) return;
+<section class="section">
 
-        const submitButton = form.querySelector('button[type="submit"]');
-        const tokenInput = form.querySelector('input[name="cf-turnstile-response"]');
-        const turnstileToken = tokenInput?.value || '';
+  <div class="container">
 
-        if (!turnstileToken) {
-          status.textContent = 'Please complete the security check and try again.';
-          return;
-        }
+    <p class="eyebrow">Privacy</p>
 
-        submitButton.disabled = true;
-        status.textContent = 'Sending…';
+    <h2>A simple static contact approach.</h2>
 
-        const fields = new FormData(form);
-        const payload = {
-          name: fields.get('name') || '',
-          email: fields.get('email') || '',
-          subject: fields.get('subject') || '',
-          message: fields.get('message') || '',
-          website: fields.get('website') || '',
-          turnstileToken,
-        };
+    <div class="prose">
 
-        try {
-          const response = await fetch('/api/contact', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-          });
+      <p>
+        This website does not collect contact form submissions or store
+        visitor information.
+      </p>
 
-          const result = await response.json().catch(() => ({}));
-          status.textContent = result.message || 'Unable to submit your message. Please try again.';
+      <p>
+        Removing unnecessary processing keeps the platform simpler,
+        easier to maintain and reduces operational dependencies.
+      </p>
 
-          if (response.ok && result.ok) {
-            form.reset();
-          }
-        } catch {
-          status.textContent = 'Unable to submit your message. Please try again later.';
-        } finally {
-          if (window.turnstile) window.turnstile.reset();
-          submitButton.disabled = false;
-        }
-      });
-    }
-  </script>
+    </div>
+
+  </div>
+
+</section>
+
+
 </BaseLayout>
 
+
 <style>
-  .contact-hero { padding: 7rem 0 5rem; }
-  h1 { max-width: 950px; margin: 0 0 1.5rem; font-size: clamp(3.2rem, 8vw, 6rem); letter-spacing: -.055em; line-height: .98; }
-  h1 span { display: block; color: var(--primary); }
-  h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.05; }
-  .hero-summary, .form-intro, .contact-options p { max-width: 760px; color: var(--text-muted); font-size: 1.1rem; }
-  .form-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 5rem; align-items: start; }
-  .security-note { margin-top: 2rem; padding: 1.3rem; border-left: 3px solid var(--primary); background: var(--surface); }
-  .security-note p { margin-bottom: 0; color: var(--text-muted); }
-  .contact-form { display: grid; gap: 1.15rem; padding: 1.6rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
-  .field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-  label { display: grid; gap: .45rem; color: var(--text); font-weight: 700; }
-  input, textarea { width: 100%; border: 1px solid var(--border); border-radius: 10px; background: #091525; color: var(--text); padding: .85rem .95rem; font: inherit; }
-  textarea { resize: vertical; min-height: 170px; }
-  input:focus, textarea:focus { outline: 2px solid var(--primary); outline-offset: 2px; }
-  .honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
-  .form-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-  .form-status { margin: 0; color: var(--text-muted); }
-  .setup-warning { margin: 0; padding: .8rem 1rem; border: 1px solid #d8a84e; border-radius: 10px; color: #f6c768; }
-  .contact-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
-  .contact-options article { display: flex; min-height: 250px; flex-direction: column; padding: 1.6rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
-  .contact-options .card-link { margin-top: auto; }
-  @media (max-width: 850px) { .form-layout, .contact-options { grid-template-columns: 1fr; gap: 2rem; } }
-  @media (max-width: 620px) { .field-row { grid-template-columns: 1fr; } }
+
+.contact-hero {
+  padding: 7rem 0 5rem;
+}
+
+
+h1 {
+  max-width: 950px;
+  margin: 0 0 1.5rem;
+  font-size: clamp(3.2rem, 8vw, 6rem);
+  letter-spacing: -.055em;
+  line-height: .98;
+}
+
+
+h1 span {
+  display: block;
+  color: var(--primary);
+}
+
+
+.hero-summary {
+  max-width: 760px;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-height: 260px;
+  padding: 1.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+
+.card h2 {
+  margin: 0 0 1rem;
+}
+
+
+.card p {
+  color: var(--text-muted);
+}
+
+
+.card-link {
+  margin-top: auto;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+
+@media (max-width: 850px) {
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
 </style>
