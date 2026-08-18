@@ -14,12 +14,6 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 HOST = "0.0.0.0"
 PORT = int(os.getenv("CONTACT_API_PORT", "8080"))
-TURNSTILE_SECRET = os.environ["TURNSTILE_SECRET_KEY"]
-TURNSTILE_EXPECTED_HOSTNAME = os.getenv("TURNSTILE_EXPECTED_HOSTNAME", "me.jrwroberts.co.uk")
-SMTP_HOST = os.getenv("SMTP_HOST", "smtp.gmail.com")
-SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
-SMTP_USERNAME = os.environ["SMTP_USERNAME"]
-SMTP_PASSWORD = os.environ["SMTP_PASSWORD"]
 CONTACT_TO_EMAIL = os.environ["CONTACT_TO_EMAIL"]
 CONTACT_FROM_EMAIL = os.getenv("CONTACT_FROM_EMAIL", SMTP_USERNAME)
 RATE_LIMIT_COUNT = int(os.getenv("CONTACT_RATE_LIMIT_COUNT", "5"))
