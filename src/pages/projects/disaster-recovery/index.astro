@@ -5,446 +5,113 @@ import { getProjectById } from '../../../data/projects';
 const project = getProjectById('disaster-recovery');
 
 if (!project) {
-  throw new Error('Disaster Recovery project data could not be found.');
+  throw new Error('Backup & Recovery project data could not be found.');
 }
 ---
 
 <BaseLayout
-  title="Homelab Disaster Recovery Platform"
-  description="A practical disaster recovery platform using Restic backups, monitoring and recovery validation."
+  title="Backup & Recovery Platform"
+  description="An operational resilience platform providing automated backups, recovery assurance, monitoring and daily management reporting."
 >
-
 <section class="project-hero">
-  <div class="container project-hero-grid">
-
-    <div>
-      <p class="eyebrow">Infrastructure Resilience Case Study</p>
-
-      <h1>
-        Disaster recovery designed for real-world failure.
-      </h1>
-
-      <p class="project-summary">
-        A practical recovery platform built around automated Restic backups,
-        infrastructure monitoring and repeatable rebuild procedures.
-        The objective is not just protecting data, but proving that services
-        can be recovered after failure.
-      </p>
-
-      <div class="button-row">
-        <a
-          class="button button-primary"
-          href="https://snapshots.raintank.io/dashboard/snapshot/H2Aa9xdr8BcZvUzgF3I7WWBJV1Sv71Xe"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View backup dashboard snapshot
-        </a>
-
-        <a class="button button-secondary" href="/projects">
-          Back to projects
-        </a>
-      </div>
-    </div>
-
-
-    <aside class="project-facts">
-
-      <p class="eyebrow">Project Overview</p>
-
-      <dl>
-
-        <div>
-          <dt>Project type</dt>
-          <dd>Disaster Recovery</dd>
-        </div>
-
-        <div>
-          <dt>Backup platform</dt>
-          <dd>Restic</dd>
-        </div>
-
-        <div>
-          <dt>Infrastructure</dt>
-          <dd>Linux / Docker / Raspberry Pi</dd>
-        </div>
-
-        <div>
-          <dt>Observability</dt>
-          <dd>Prometheus + Grafana</dd>
-        </div>
-
-        <div>
-          <dt>Status</dt>
-          <dd class="live-status">Active project</dd>
-        </div>
-
-      </dl>
-
-    </aside>
-
-  </div>
-</section>
-
-
-<section class="technology-strip">
 <div class="container">
-
-<ul class="tag-list">
-{project.technologies.map((technology) =>
-<li>{technology}</li>
-)}
-</ul>
-
+<p class="eyebrow">Infrastructure Resilience Case Study</p>
+<h1>Backup & Recovery Platform</h1>
+<p class="project-summary">
+A production-style resilience capability combining automated backups,
+recovery assurance, monitoring visibility and operational reporting.
+The objective is not only protecting data, but proving recovery readiness.
+</p>
 </div>
 </section>
 
-
-
 <section class="section">
-
 <div class="container content-grid">
-
-<div class="section-heading">
+<div>
 <p class="eyebrow">The Challenge</p>
-<h2>
-Backups are only useful when recovery is proven.
-</h2>
+<h2>Backups are only useful when recovery confidence is measurable.</h2>
 </div>
-
-
 <div class="prose">
-
 <p>
-A growing homelab environment creates the same operational challenges
-found in professional infrastructure. Hosts fail, storage can become
-unavailable and configuration changes can introduce unexpected problems.
+A reliable infrastructure platform requires more than storing backup files.
+It requires visibility, validation and repeatable operational processes.
 </p>
-
 <p>
-This project focuses on creating a predictable recovery process rather
-than simply storing backup files. The aim is to rebuild services quickly,
-safely and consistently.
+This project creates an operational resilience capability across a
+multi-host environment using automation, monitoring and evidence-based reporting.
 </p>
-
 </div>
-
 </div>
-
 </section>
 
-
-
 <section class="section section-soft">
-
 <div class="container">
-
-<div class="section-heading">
-<p class="eyebrow">Recovery Workflow</p>
-
-<h2>
-From failure to restored service.
-</h2>
-
-</div>
-
-
+<p class="eyebrow">Operational Workflow</p>
+<h2>From backup execution to management confidence.</h2>
 <div class="architecture">
-
-<div class="architecture-item">
-<span>01</span>
-<strong>Backup</strong>
-<p>
-Restic captures important configuration, application data and system state.
-</p>
+<div>Backup automation</div>
+<div>Prometheus metrics</div>
+<div>Grafana visibility</div>
+<div>Daily management email</div>
 </div>
-
-
-<div class="architecture-arrow">→</div>
-
-
-<div class="architecture-item">
-<span>02</span>
-<strong>Monitor</strong>
-<p>
-Prometheus metrics track backup success, age and repository health.
-</p>
 </div>
-
-
-<div class="architecture-arrow">→</div>
-
-
-<div class="architecture-item">
-<span>03</span>
-<strong>Recover</strong>
-<p>
-A replacement host can restore data and rebuild the environment.
-</p>
-</div>
-
-
-<div class="architecture-arrow">→</div>
-
-
-<div class="architecture-item">
-<span>04</span>
-<strong>Validate</strong>
-<p>
-Services are tested to confirm a successful recovery.
-</p>
-</div>
-
-</div>
-
-</div>
-
 </section>
-
-
 
 <section class="section">
-
 <div class="container">
-
-<div class="section-heading">
-
-<p class="eyebrow">Engineering Implementation</p>
-
-<h2>
-Automated backup with operational visibility.
-</h2>
-
-</div>
-
-
+<p class="eyebrow">Recovery Assurance</p>
+<h2>Measuring resilience, not assuming it.</h2>
 <div class="grid capability-grid">
-
-
-<article class="card">
-<h3>Restic backups</h3>
-<p>
-Encrypted repositories provide point-in-time recovery with controlled
-retention policies.
-</p>
-</article>
-
-
-<article class="card">
-<h3>Backup monitoring</h3>
-<p>
-Backup status, age and health are exposed as infrastructure metrics.
-</p>
-</article>
-
-
-<article class="card">
-<h3>Grafana visibility</h3>
-<p>
-Recovery readiness is displayed alongside the wider monitoring platform.
-</p>
-</article>
-
-
-<article class="card">
-<h3>DR testing</h3>
-<p>
-A dedicated Raspberry Pi 4 will be used to validate the complete recovery
-process.
-</p>
-</article>
-
-
+<article class="card"><h3>Backup Operations</h3><p>Automated backups provide controlled recovery points across managed infrastructure.</p></article>
+<article class="card"><h3>Repository Integrity</h3><p>Integrity checks provide evidence that backup repositories remain healthy.</p></article>
+<article class="card"><h3>Replication Health</h3><p>Off-host replication improves resilience against local infrastructure failure.</p></article>
+<article class="card"><h3>Recovery Validation</h3><p>Recovery processes are monitored and validated to improve confidence.</p></article>
 </div>
-
 </div>
-
 </section>
-
-
 
 <section class="section section-soft">
-
-<div class="container content-grid">
-
-<div class="section-heading">
-
-<p class="eyebrow">
-Recovery Exercise
-</p>
-
-<h2>
-Testing the plan, not just storing backups.
-</h2>
-
-</div>
-
-
+<div class="container">
+<p class="eyebrow">Management Visibility</p>
+<h2>Turning technical health into operational reporting.</h2>
 <div class="prose">
-
 <p>
-The next phase is a full disaster recovery test using replacement hardware.
-The exercise will measure recovery time, identify missing dependencies and
-improve the rebuild documentation.
+The platform generates daily management reporting by combining backup health,
+recovery information and operational status into a concise automated brief.
 </p>
-
 <p>
-The final objective is a repeatable process that can recover the platform
-after a complete host failure.
+This provides visibility for decision making without requiring management to
+review technical dashboards or individual systems.
 </p>
-
 </div>
-
 </div>
-
 </section>
-
-
 
 <section class="section">
-
-<div class="container content-grid">
-
-<div class="section-heading">
-<p class="eyebrow">
-Engineering Outcome
-</p>
-
-<h2>
-Turning backups into resilience.
-</h2>
-
-</div>
-
-
+<div class="container">
+<p class="eyebrow">Operational Maturity</p>
+<h2>Building resilience through visibility, assurance and ownership.</h2>
 <div class="prose">
-
-<p>
-This platform demonstrates that reliable infrastructure is not only about
-running services successfully. It is about understanding how those services
-can be restored when things go wrong.
-</p>
-
+<p><strong>Visibility:</strong> Recovery readiness is exposed through monitoring dashboards.</p>
+<p><strong>Assurance:</strong> Backup health, integrity and replication are measured.</p>
+<p><strong>Communication:</strong> Daily reporting connects engineering outcomes with operational decisions.</p>
+<p><strong>Ownership:</strong> Automation reduces dependency on individual knowledge.</p>
 </div>
-
 </div>
-
 </section>
 
+<section class="section">
+<div class="container">
+<p class="eyebrow">Engineering Outcome</p>
+<h2>Turning backups into resilience.</h2>
+<div class="prose">
+<p>
+This project demonstrates that reliable infrastructure is not defined by
+whether backups exist. It is defined by whether recovery capability is
+visible, measurable and repeatable.
+</p>
+</div>
+</div>
+</section>
 
 </BaseLayout>
-
-
-
-<style>
-
-.project-hero {
-padding:7rem 0 4rem;
-}
-
-
-.project-hero-grid {
-display:grid;
-grid-template-columns:minmax(0,1.4fr) minmax(290px,.6fr);
-gap:4rem;
-}
-
-
-h1 {
-max-width:900px;
-font-size:clamp(3rem,7vw,5.8rem);
-line-height:.98;
-letter-spacing:-.055em;
-}
-
-
-.project-summary {
-max-width:760px;
-color:var(--text-muted);
-font-size:1.2rem;
-}
-
-
-.project-facts {
-padding:1.75rem;
-border:1px solid var(--border);
-border-radius:var(--radius);
-background:var(--surface);
-}
-
-
-.project-facts dl div {
-padding:.8rem 0;
-border-bottom:1px solid var(--border);
-}
-
-
-.project-facts dt {
-color:var(--text-muted);
-font-size:.8rem;
-text-transform:uppercase;
-}
-
-
-.project-facts dd {
-margin:0;
-font-weight:700;
-}
-
-
-.live-status {
-color:#8ff0bc;
-}
-
-
-.architecture {
-display:flex;
-gap:.75rem;
-}
-
-
-.architecture-item {
-flex:1;
-padding:1.25rem;
-border:1px solid var(--border);
-border-radius:var(--radius);
-background:var(--surface);
-}
-
-
-.architecture-item span {
-color:var(--primary);
-font-weight:800;
-}
-
-
-.architecture-item p {
-color:var(--text-muted);
-}
-
-
-.architecture-arrow {
-display:grid;
-place-items:center;
-color:var(--primary);
-font-size:1.5rem;
-}
-
-
-@media(max-width:850px) {
-
-.project-hero-grid {
-grid-template-columns:1fr;
-}
-
-.architecture {
-flex-direction:column;
-}
-
-.architecture-arrow {
-transform:rotate(90deg);
-}
-
-}
-
-</style>
