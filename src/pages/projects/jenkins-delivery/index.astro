@@ -1,0 +1,230 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getProjectById } from '../../../data/projects';
+
+const project = getProjectById('jenkins-delivery');
+
+if (!project) {
+  throw new Error('Jenkins delivery project data could not be found.');
+}
+---
+
+<BaseLayout
+  title={project.title}
+  description="A secure end-to-end Jenkins delivery pipeline for Java, Gradle, Docker, Trivy and K3s with automated deployment verification and rollback."
+>
+  <section class="project-hero">
+    <div class="container project-hero-grid">
+      <div>
+        <p class="eyebrow">CI/CD & Platform Delivery Case Study</p>
+        <h1>From source commit to a healthy Kubernetes workload.</h1>
+        <p class="project-summary">
+          This project builds a complete delivery path for a small Java
+          application: test it, package it, build an immutable container,
+          security-scan it, publish it to a protected registry and deploy it to
+          K3s with health verification and automatic rollback.
+        </p>
+
+        <div class="button-row">
+          {
+            project.repositoryUrl && (
+              <a
+                class="button button-primary"
+                href={project.repositoryUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View GitHub Repository
+              </a>
+            )
+          }
+          <a class="button button-secondary" href="/projects">Back to projects</a>
+        </div>
+      </div>
+
+      <aside class="project-facts">
+        <p class="eyebrow">Project Overview</p>
+        <dl>
+          <div><dt>Pipeline</dt><dd>Jenkins Pipeline as Code</dd></div>
+          <div><dt>Application</dt><dd>Java 21 / Gradle</dd></div>
+          <div><dt>Security gate</dt><dd>Trivy HIGH / CRITICAL</dd></div>
+          <div><dt>Runtime</dt><dd>K3s / Kubernetes</dd></div>
+          <div><dt>Release model</dt><dd>Immutable build-number tags</dd></div>
+          <div><dt>Status</dt><dd class="live-status">Operational</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="technology-strip">
+    <div class="container">
+      <ul class="tag-list">
+        {project.technologies.map((technology) => <li>{technology}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">The Challenge</p>
+        <h2>Make delivery safe enough to trust.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Building an image is the easy part. The useful engineering work is in
+          controlling what is allowed to move forward, keeping credentials out
+          of source control, proving each hand-off and making failure recoverable.
+        </p>
+        <p>
+          The goal was therefore not simply to create a Jenkins job. It was to
+          build a traceable delivery system where a source commit can reach
+          Kubernetes only after tests, packaging and a vulnerability gate have
+          passed, and where a bad deployment returns automatically to the last
+          working image.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Delivery Flow</p>
+        <h2>A controlled path from GitHub to K3s.</h2>
+        <p>Each stage produces evidence before the next stage is allowed to run.</p>
+      </div>
+
+      <div class="architecture">
+        <div class="architecture-item"><span>01</span><strong>Test & package</strong><p>Gradle compiles, tests and archives the Java application.</p></div>
+        <div class="architecture-arrow">→</div>
+        <div class="architecture-item"><span>02</span><strong>Containerise</strong><p>An isolated Docker-in-Docker builder creates the release image.</p></div>
+        <div class="architecture-arrow">→</div>
+        <div class="architecture-item"><span>03</span><strong>Security gate</strong><p>Trivy blocks HIGH or CRITICAL findings before publication.</p></div>
+        <div class="architecture-arrow">→</div>
+        <div class="architecture-item"><span>04</span><strong>Publish & deploy</strong><p>The approved image is pushed to the private registry and rolled out to K3s.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Security Controls</p>
+        <h2>Delivery with deliberately narrow trust boundaries.</h2>
+      </div>
+
+      <div class="grid capability-grid">
+        <article class="card">
+          <h3>Isolated Docker builder</h3>
+          <p>Jenkins talks to a dedicated Docker-in-Docker daemon over TLS rather than receiving TestServer's host Docker socket.</p>
+        </article>
+        <article class="card">
+          <h3>Vulnerability gate</h3>
+          <p>Trivy 0.72.0 scans the image for HIGH and CRITICAL vulnerabilities and returns a failing exit code when policy is breached.</p>
+        </article>
+        <article class="card">
+          <h3>Separate registry identities</h3>
+          <p>Jenkins uses a publishing service account while K3s uses a separate runtime pull identity. Registry access is also firewall-restricted.</p>
+        </article>
+        <article class="card">
+          <h3>Restricted deployment account</h3>
+          <p>Jenkins deploys through a forced SSH command that can invoke only the root-owned Homelab Defender deployment script, not a general shell.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Failure Was Part of the Test</p>
+        <h2>The rollback path was proven before the success path.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Jenkins build 13 completed testing, containerisation, security
+          scanning, registry publication and the Kubernetes rollout. The first
+          service-level health request then received a transient connection
+          reset. The deployment script treated that as a failed release and
+          automatically restored the previous working image.
+        </p>
+        <p>
+          The health check was then improved to retry safely. Build 14 repeated
+          the complete pipeline, passed the Trivy gate with zero HIGH/CRITICAL
+          findings, published the immutable image and deployed it successfully.
+          Kubernetes rolled out the new pod and the service health check returned
+          <code>ok</code> on the first retry cycle.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Release Evidence</p>
+        <h2>The first fully automated release.</h2>
+      </div>
+
+      <div class="outcome-grid">
+        <article class="outcome"><strong>14</strong><span>Jenkins build</span><p>First complete hands-off source-to-Kubernetes release.</p></article>
+        <article class="outcome"><strong>0</strong><span>HIGH / CRITICAL findings</span><p>Trivy gate passed before the image was allowed into the registry.</p></article>
+        <article class="outcome"><strong>200</strong><span>Health response</span><p>The Kubernetes ClusterIP service returned a healthy application response.</p></article>
+        <article class="outcome"><strong>Auto</strong><span>Rollback</span><p>A failed post-deployment verification restores the previous image automatically.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Engineering Outcome</p>
+        <h2>A delivery pipeline that behaves like an operational system.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          The finished pipeline is more than CI. It creates a controlled release
+          chain from GitHub through Gradle, Docker and Trivy into an authenticated
+          registry and finally K3s. The release is not considered successful
+          until the workload has rolled out and the application health endpoint
+          has been verified through the Kubernetes Service.
+        </p>
+        <p>
+          The project also keeps the Kubernetes baseline, deployment script,
+          rollback procedure, beginner documentation and a living glossary in
+          Git so the implementation remains understandable and reproducible.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .project-hero { padding: 7rem 0 4rem; }
+  .project-hero-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(290px, .6fr); align-items: start; gap: 4rem; }
+  h1 { max-width: 920px; margin: 0 0 1.5rem; font-size: clamp(3rem, 7vw, 5.8rem); letter-spacing: -.055em; line-height: .98; }
+  .project-summary { max-width: 780px; color: var(--text-muted); font-size: 1.2rem; }
+  .project-facts { padding: 1.75rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+  .project-facts dl { margin: 0; }
+  .project-facts dl div { display: grid; gap: .15rem; padding: .8rem 0; border-bottom: 1px solid var(--border); }
+  .project-facts dl div:last-child { border-bottom: 0; }
+  .project-facts dt { color: var(--text-muted); font-size: .8rem; text-transform: uppercase; }
+  .project-facts dd { margin: 0; font-weight: 700; }
+  .live-status { color: #8ff0bc; }
+  .technology-strip { padding: 1.5rem 0; border-block: 1px solid var(--border); background: var(--surface); }
+  .architecture { display: flex; align-items: stretch; gap: .75rem; }
+  .architecture-item { flex: 1; padding: 1.25rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+  .architecture-item span { color: var(--primary); font-weight: 800; }
+  .architecture-item p { color: var(--text-muted); }
+  .architecture-arrow { display: grid; place-items: center; color: var(--primary); font-size: 1.5rem; }
+  .outcome-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+  .outcome { padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+  .outcome strong { display: block; color: var(--primary); font-size: 2rem; }
+  .outcome span { display: block; margin: .2rem 0 .7rem; font-weight: 800; }
+  .outcome p { margin: 0; color: var(--text-muted); }
+  code { color: var(--primary); }
+  @media (max-width: 900px) { .outcome-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 850px) { .project-hero-grid { grid-template-columns: 1fr; gap: 2rem; } .architecture { flex-direction: column; } .architecture-arrow { transform: rotate(90deg); } }
+  @media (max-width: 600px) { .outcome-grid { grid-template-columns: 1fr; } }
+</style>
