@@ -38,8 +38,20 @@ if (!project) {
               </a>
             )
           }
+          <a
+            class="button button-primary"
+            href="http://192.168.2.195:8080/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Play Homelab Defender
+          </a>
           <a class="button button-secondary" href="/projects">Back to projects</a>
         </div>
+        <p class="access-note">
+          Game link is currently available on the homelab LAN while the local
+          Kubernetes port-forward is running.
+        </p>
       </div>
 
       <aside class="project-facts">
@@ -205,6 +217,7 @@ if (!project) {
   .project-hero-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(290px, .6fr); align-items: start; gap: 4rem; }
   h1 { max-width: 920px; margin: 0 0 1.5rem; font-size: clamp(3rem, 7vw, 5.8rem); letter-spacing: -.055em; line-height: .98; }
   .project-summary { max-width: 780px; color: var(--text-muted); font-size: 1.2rem; }
+  .access-note { max-width: 760px; margin-top: .8rem; color: var(--text-muted); font-size: .9rem; }
   .project-facts { padding: 1.75rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
   .project-facts dl { margin: 0; }
   .project-facts dl div { display: grid; gap: .15rem; padding: .8rem 0; border-bottom: 1px solid var(--border); }
