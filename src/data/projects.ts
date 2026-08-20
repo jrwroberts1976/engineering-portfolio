@@ -45,6 +45,28 @@ export const projects: Project[] = [
   },
 
   {
+    id: 'jenkins-delivery',
+    category: 'CI/CD & Platform Delivery',
+    title: 'Jenkins Secure Delivery Pipeline',
+    shortTitle: 'Jenkins Delivery Pipeline',
+    description:
+      'An end-to-end delivery pipeline that tests, packages, containerises, security-scans, publishes and deploys a Java application to K3s with automated health verification and rollback.',
+    href: '/projects/jenkins-delivery',
+    status: 'Operational',
+    technologies: [
+      'Jenkins',
+      'Gradle',
+      'Docker',
+      'Trivy',
+      'K3s',
+      'Kubernetes',
+    ],
+    featured: true,
+    repositoryUrl:
+      'https://github.com/jrwroberts1976/jenkins-gradle-delivery-lab',
+  },
+
+  {
     id: 'pihole',
     category: 'Network Security',
     title: 'Pi-hole DNS Filtering',
