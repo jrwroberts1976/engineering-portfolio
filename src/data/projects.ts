@@ -145,6 +145,30 @@ export const projects: Project[] = [
   },
 
   {
+    id: 'container-version-control',
+    category: 'Platform Engineering',
+    title: 'Homelab Container Version Control',
+    shortTitle: 'Container Version Control',
+    description:
+      'A staged platform-engineering programme that makes Docker image changes controlled, observable and reversible from Git declaration through validation, deployment, runtime drift detection and rollback.',
+    href: '/projects/container-version-control',
+    status: 'In delivery',
+    technologies: [
+      'Docker Compose',
+      'GitHub',
+      'Renovate',
+      'Jenkins',
+      'Trivy',
+      'SOPS + age',
+      'Prometheus',
+      'Grafana',
+    ],
+    featured: false,
+    repositoryUrl:
+      'https://github.com/jrwroberts1976/homelab-container-version-control',
+  },
+
+  {
     id: 'kubernetes',
     category: 'Kubernetes',
     title: 'Kubernetes Homelab',
