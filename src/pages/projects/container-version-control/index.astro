@@ -1,0 +1,294 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getProjectById } from '../../../data/projects';
+
+const project = getProjectById('container-version-control');
+
+if (!project) {
+  throw new Error('Container version control project data could not be found.');
+}
+---
+
+<BaseLayout
+  title="Homelab Container Version Control"
+  description="A staged platform-engineering programme for controlled Docker image versioning, validation, secrets management, drift detection and rollback."
+>
+  <section class="project-hero">
+    <div class="container project-hero-grid">
+      <div>
+        <p class="eyebrow">Platform Engineering Case Study</p>
+        <h1>Make container changes controlled, observable and reversible.</h1>
+        <p class="project-summary">
+          This project closes the gap between the image version declared in
+          Docker Compose and the image that is actually running. Git becomes
+          the desired-state authority, update proposals are validated before
+          deployment, runtime drift is monitored, and every change has a
+          defined rollback path.
+        </p>
+        <div class="button-row">
+          <a class="button button-secondary" href="/projects">Back to projects</a>
+          <a
+            class="button button-primary"
+            href="https://github.com/jrwroberts1976/homelab-container-version-control"
+            target="_blank"
+            rel="noreferrer"
+          >
+            View project repository
+          </a>
+        </div>
+      </div>
+
+      <aside class="project-facts">
+        <p class="eyebrow">Project Overview</p>
+        <dl>
+          <div><dt>Project type</dt><dd>Container lifecycle governance</dd></div>
+          <div><dt>Initial scope</dt><dd>TestServer + ids-01</dd></div>
+          <div><dt>Source of truth</dt><dd>Git / Docker Compose</dd></div>
+          <div><dt>Delivery model</dt><dd>Staged go-live</dd></div>
+          <div><dt>Target window</dt><dd>21 Aug – 16 Oct 2026</dd></div>
+          <div><dt>Status</dt><dd class="live-status">In delivery</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="technology-strip">
+    <div class="container">
+      <ul class="tag-list">
+        {project.technologies.map((technology) => <li>{technology}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">The Challenge</p>
+        <h2>A running container is not the same thing as a controlled deployment.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Routine maintenance exposed a version-control gap: a container could
+          be running a newer image than the version still declared in Compose.
+          Recreating that service could therefore introduce an unexpected
+          downgrade even though the running platform appeared healthy.
+        </p>
+        <p>
+          Update tooling such as WUD was already useful for identifying newer
+          images, but update detection alone does not provide an authoritative
+          desired state, validation gate, audit trail or guaranteed rollback
+          point. The project was created to add those controls end to end.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Target Architecture</p>
+        <h2>One controlled path from declaration to runtime.</h2>
+        <p>
+          Each tool has one clear role. Runtime discovery and update signals do
+          not bypass the Git-controlled desired state.
+        </p>
+      </div>
+
+      <div class="architecture">
+        <div class="architecture-item">
+          <span>01</span>
+          <strong>Git + Compose</strong>
+          <p>Defines the intended image tag and digest.</p>
+        </div>
+        <div class="architecture-arrow">→</div>
+        <div class="architecture-item">
+          <span>02</span>
+          <strong>Renovate</strong>
+          <p>Proposes image changes through pull requests.</p>
+        </div>
+        <div class="architecture-arrow">→</div>
+        <div class="architecture-item">
+          <span>03</span>
+          <strong>Jenkins + Trivy</strong>
+          <p>Validates configuration, downgrade risk and image security.</p>
+        </div>
+        <div class="architecture-arrow">→</div>
+        <div class="architecture-item">
+          <span>04</span>
+          <strong>Guarded deploy</strong>
+          <p>Stages the change with health checks and rollback metadata.</p>
+        </div>
+        <div class="architecture-arrow">→</div>
+        <div class="architecture-item">
+          <span>05</span>
+          <strong>Docker hosts</strong>
+          <p>Runs the approved image on TestServer and ids-01.</p>
+        </div>
+        <div class="architecture-arrow">→</div>
+        <div class="architecture-item">
+          <span>06</span>
+          <strong>Prometheus + Grafana</strong>
+          <p>Reports compliance, drift and deployment health.</p>
+        </div>
+      </div>
+
+      <div class="signal-note">
+        <strong>Independent signal:</strong> WUD continues to report available
+        updates from the running estate, but it does not become the source of
+        truth or an automatic production deployment mechanism.
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Engineering Controls</p>
+        <h2>Version management is more than choosing a tag.</h2>
+      </div>
+
+      <div class="grid capability-grid">
+        <article class="card">
+          <h3>Declared vs running inventory</h3>
+          <p>
+            Capture Compose declarations, running image references and digests
+            so drift can be identified before maintenance changes anything.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Pull-request updates</h3>
+          <p>
+            Renovate proposes controlled image changes in Git rather than
+            changing running containers directly.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Validation gate</h3>
+          <p>
+            Jenkins checks rendered Compose configuration, architecture support,
+            downgrade risk and Trivy findings before deployment is permitted.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Secrets foundation</h3>
+          <p>
+            SOPS + age protects encrypted configuration, with Compose secrets
+            preferred over plaintext environment variables where supported.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Rollback-first deployment</h3>
+          <p>
+            The current image and known-good state are recorded before a change,
+            and health checks determine whether the deployment is accepted.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Runtime compliance</h3>
+          <p>
+            Prometheus and Grafana will expose drift, floating versions and
+            compliance exceptions instead of relying on manual inspection.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Staged Go-Live</p>
+        <h2>Automation only earns more authority after the controls are proven.</h2>
+        <p>
+          The delivery plan uses explicit go/no-go gates. A failed secrets,
+          validation or rollback test blocks progression even if the calendar
+          says the next stage should have started.
+        </p>
+      </div>
+
+      <div class="stage-grid">
+        <article class="stage-card"><span>Stage 0</span><strong>Discovery & baseline</strong><p>21–28 Aug</p></article>
+        <article class="stage-card"><span>Stage 1</span><strong>Git control & policy</strong><p>29 Aug–4 Sep</p></article>
+        <article class="stage-card"><span>Stage 2</span><strong>Secrets foundation</strong><p>5–11 Sep</p></article>
+        <article class="stage-card"><span>Stage 3</span><strong>Update proposals</strong><p>12–18 Sep</p></article>
+        <article class="stage-card"><span>Stage 4</span><strong>Validation gate</strong><p>19–25 Sep</p></article>
+        <article class="stage-card"><span>Stage 5</span><strong>Pilot go-live</strong><p>26 Sep–2 Oct</p></article>
+        <article class="stage-card"><span>Stage 6</span><strong>Production rollout</strong><p>3–9 Oct</p></article>
+        <article class="stage-card"><span>Stage 7</span><strong>Observability & closure</strong><p>10–16 Oct</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Design Principles</p>
+        <h2>The process is intentionally conservative around production change.</h2>
+      </div>
+      <div class="prose principle-list">
+        <p><strong>Git is authoritative.</strong> Runtime state can inform the process, but it does not silently redefine desired state.</p>
+        <p><strong>Secrets are a go-live dependency.</strong> Deployment automation does not progress until encryption, Jenkins handling and key recovery are tested.</p>
+        <p><strong>Rollback is designed before rollout.</strong> A deployment is not considered safe if the previous known-good state cannot be restored.</p>
+        <p><strong>Critical services move last.</strong> DNS, security and core monitoring services are introduced only after lower-risk pilots prove the process.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Engineering Outcome</p>
+        <h2>Turn container maintenance into a reproducible operating model.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          The project is still in delivery, so the outcome is deliberately
+          framed as the target operating model rather than a completed claim.
+          Success means every production image change can be traced from an
+          approved Git declaration to validation evidence, deployment health,
+          runtime compliance and a tested rollback point.
+        </p>
+        <p>
+          It also brings version control, secrets management, vulnerability
+          scanning and observability into one workflow instead of treating them
+          as separate maintenance activities.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .project-hero { padding: 7rem 0 4rem; }
+  .project-hero-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(290px, .6fr); align-items: start; gap: 4rem; }
+  h1 { max-width: 980px; margin: 0 0 1.5rem; font-size: clamp(3rem, 7vw, 5.8rem); letter-spacing: -.055em; line-height: .98; }
+  .project-summary { max-width: 800px; color: var(--text-muted); font-size: 1.2rem; }
+  .project-facts { padding: 1.75rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+  .project-facts dl { margin: 0; }
+  .project-facts dl div { display: grid; gap: .15rem; padding: .8rem 0; border-bottom: 1px solid var(--border); }
+  .project-facts dl div:last-child { border-bottom: 0; }
+  .project-facts dt { color: var(--text-muted); font-size: .8rem; text-transform: uppercase; }
+  .project-facts dd { margin: 0; font-weight: 700; }
+  .live-status { color: #8ff0bc; }
+  .technology-strip { padding: 1.5rem 0; border-block: 1px solid var(--border); background: var(--surface); }
+  .architecture { display: flex; align-items: stretch; gap: .65rem; }
+  .architecture-item { flex: 1; min-width: 0; padding: 1.1rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+  .architecture-item span, .stage-card span { display: block; margin-bottom: .45rem; color: var(--primary); font-weight: 800; font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; }
+  .architecture-item p { margin-bottom: 0; color: var(--text-muted); }
+  .architecture-arrow { display: grid; place-items: center; color: var(--primary); font-size: 1.4rem; }
+  .signal-note { margin-top: 1.5rem; padding: 1.2rem 1.4rem; border-left: 3px solid var(--primary); background: var(--surface); color: var(--text-muted); }
+  .signal-note strong { color: var(--text); }
+  .stage-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+  .stage-card { padding: 1.2rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+  .stage-card strong { display: block; }
+  .stage-card p { margin: .35rem 0 0; color: var(--text-muted); }
+  .principle-list p { padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+  .principle-list p:last-child { border-bottom: 0; }
+  @media (max-width: 1100px) { .architecture { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .architecture-arrow { display: none; } .stage-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 850px) { .project-hero-grid { grid-template-columns: 1fr; gap: 2rem; } .architecture, .stage-grid { grid-template-columns: 1fr; } }
+</style>
