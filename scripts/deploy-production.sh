@@ -303,15 +303,43 @@ status="$(
 success "${CONTAINER_NAME} is running"
 
 # =============================================================================
-# Application health
+# Application readiness
 # =============================================================================
 
-log "Checking application health endpoint"
+log "Waiting for application readiness"
 
-docker exec "${CONTAINER_NAME}" \
-    wget -q --spider http://127.0.0.1/healthz
+ready=false
 
-success "Application health endpoint responded"
+for attempt in {1..30}; do
+    health_status="$(
+        docker inspect \
+            --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' \
+            "${CONTAINER_NAME}" 2>/dev/null || true
+    )"
+
+    if [[ "${health_status}" == "unhealthy" ]]; then
+        fail "${CONTAINER_NAME} reported an unhealthy Docker health status"
+    fi
+
+    if docker exec "${CONTAINER_NAME}" \
+        wget -q --spider http://127.0.0.1/healthz 2>/dev/null; then
+        ready=true
+        break
+    fi
+
+    sleep 2
+done
+
+[[ "${ready}" == true ]] ||
+    fail "Application health endpoint did not become ready within 60 seconds"
+
+health_status="$(
+    docker inspect \
+        --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' \
+        "${CONTAINER_NAME}" 2>/dev/null || true
+)"
+
+success "Application health endpoint responded (Docker health: ${health_status})"
 
 # =============================================================================
 # NPM connectivity
@@ -339,6 +367,7 @@ routes=(
     "/about/"
     "/leadership/"
     "/projects/"
+    "/projects/container-version-control/"
     "/projects/kubernetes/"
     "/projects/birdnet/"
     "/projects/disaster-recovery/"
