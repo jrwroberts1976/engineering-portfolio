@@ -2,7 +2,8 @@
 set -Eeuo pipefail
 
 MODE="${1:---validate-only}"
-REPOSITORY_ROOT="$(git rev-parse --show-toplevel)"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPOSITORY_ROOT="$(git -C "$SCRIPT_DIR/.." rev-parse --show-toplevel)"
 COMPOSE_FILE="${REPOSITORY_ROOT}/compose.yml"
 SOURCE_URL="https://github.com/jrwroberts1976/engineering-portfolio"
 IMAGE_REFERENCE="james-roberts/engineering-portfolio:local"
