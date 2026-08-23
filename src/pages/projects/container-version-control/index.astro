@@ -11,7 +11,7 @@ if (!project) {
 
 <BaseLayout
   title="Homelab Container Version Control"
-  description="A staged platform-engineering programme for controlled Docker image versioning, validation, secrets management, drift detection and rollback."
+  description="A staged platform-engineering programme for controlled Docker and Kubernetes image governance, critical-host source control, validation, drift detection and rollback."
 >
   <section class="project-hero">
     <div class="container project-hero-grid">
@@ -19,11 +19,10 @@ if (!project) {
         <p class="eyebrow">Platform Engineering Case Study</p>
         <h1>Make container changes controlled, observable and reversible.</h1>
         <p class="project-summary">
-          This project closes the gap between the image version declared in
-          Docker Compose and the image that is actually running. Git becomes
-          the desired-state authority, update proposals are validated before
-          deployment, runtime drift is monitored, and every change has a
-          defined rollback path.
+          This project closes the gap between declared and running container
+          versions across Docker and Kubernetes. The same Git ownership model
+          now also protects critical DietPi operational source, while runtime
+          databases and plaintext secrets remain deliberately outside Git.
         </p>
         <div class="button-row">
           <a class="button button-secondary" href="/projects">Back to projects</a>
@@ -42,11 +41,11 @@ if (!project) {
         <p class="eyebrow">Project Overview</p>
         <dl>
           <div><dt>Project type</dt><dd>Container lifecycle governance</dd></div>
-          <div><dt>Initial scope</dt><dd>TestServer + ids-01</dd></div>
-          <div><dt>Source of truth</dt><dd>Git / Docker Compose</dd></div>
+          <div><dt>Current scope</dt><dd>Docker + K3s + DietPi operations</dd></div>
+          <div><dt>Source of truth</dt><dd>Git-owned desired state</dd></div>
           <div><dt>Delivery model</dt><dd>Staged go-live</dd></div>
           <div><dt>Target window</dt><dd>21 Aug – 16 Oct 2026</dd></div>
-          <div><dt>Status</dt><dd class="live-status">In delivery</dd></div>
+          <div><dt>Status</dt><dd class="live-status">Stage 1 complete</dd></div>
         </dl>
       </aside>
     </div>
@@ -212,8 +211,8 @@ if (!project) {
       </div>
 
       <div class="stage-grid">
-        <article class="stage-card"><span>Stage 0</span><strong>Discovery & baseline</strong><p>21–28 Aug</p></article>
-        <article class="stage-card"><span>Stage 1</span><strong>Git control & policy</strong><p>29 Aug–4 Sep</p></article>
+        <article class="stage-card"><span>Stage 0</span><strong>Discovery & baseline</strong><p>Complete — 23 Aug</p></article>
+        <article class="stage-card"><span>Stage 1</span><strong>Git control & policy</strong><p>Complete — 23 Aug</p></article>
         <article class="stage-card"><span>Stage 2</span><strong>Secrets foundation</strong><p>5–11 Sep</p></article>
         <article class="stage-card"><span>Stage 3</span><strong>Update proposals</strong><p>12–18 Sep</p></article>
         <article class="stage-card"><span>Stage 4</span><strong>Validation gate</strong><p>19–25 Sep</p></article>
