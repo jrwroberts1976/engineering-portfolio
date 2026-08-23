@@ -20,6 +20,16 @@ RUN npm run build
 
 FROM nginx:alpine AS runtime
 
+ARG BUILD_REVISION=unknown
+ARG BUILD_CREATED=unknown
+ARG BUILD_SOURCE=https://github.com/jrwroberts1976/engineering-portfolio
+
+LABEL org.opencontainers.image.title="James Roberts Engineering Portfolio" \
+      org.opencontainers.image.description="Engineering portfolio and homelab case studies" \
+      org.opencontainers.image.source="$BUILD_SOURCE" \
+      org.opencontainers.image.revision="$BUILD_REVISION" \
+      org.opencontainers.image.created="$BUILD_CREATED"
+
 RUN rm -rf /usr/share/nginx/html/*
 
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf

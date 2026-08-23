@@ -149,6 +149,18 @@ git checkout main
 
 git pull --ff-only origin main
 
+BUILD_REVISION="$(git rev-parse HEAD)"
+BUILD_CREATED="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+BUILD_SOURCE="https://github.com/jrwroberts1976/engineering-portfolio"
+
+export BUILD_REVISION
+export BUILD_CREATED
+export BUILD_SOURCE
+
+printf 'Build revision: %s\n' "$BUILD_REVISION"
+printf 'Build created:  %s\n' "$BUILD_CREATED"
+printf 'Build source:   %s\n' "$BUILD_SOURCE"
+
 success "Source repository updated"
 
 echo
