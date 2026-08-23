@@ -72,13 +72,14 @@ export const projects: Project[] = [
     title: 'Pi-hole DNS Filtering',
     shortTitle: 'Pi-hole DNS Filtering',
     description:
-      'A network-wide DNS filtering service providing preventative protection, privacy controls and observable blocklist health.',
+      'A DietPi-hosted Pi-hole and Unbound DNS control with observable blocklist health and Git-owned non-secret operational recovery source.',
     href: '/projects/pihole',
     status: 'Operational',
     technologies: [
       'Pi-hole',
       'DNS Filtering',
-      'Docker',
+      'DietPi',
+      'Unbound',
       'Prometheus',
       'Grafana',
     ],
@@ -150,9 +151,9 @@ export const projects: Project[] = [
     title: 'Homelab Container Version Control',
     shortTitle: 'Container Version Control',
     description:
-      'A staged platform-engineering programme that makes Docker image changes controlled, observable and reversible from Git declaration through validation, deployment, runtime drift detection and rollback.',
+      'A platform-engineering programme governing Docker and Kubernetes images while extending Git ownership to critical DietPi operational source, validation, drift detection and rollback.',
     href: '/projects/container-version-control',
-    status: 'In delivery',
+    status: 'Stage 1 complete',
     technologies: [
       'Docker Compose',
       'GitHub',
