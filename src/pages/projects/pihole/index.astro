@@ -41,7 +41,8 @@ if (!project) {
         <dl>
           <div><dt>Control type</dt><dd>Prevention</dd></div>
           <div><dt>Scope</dt><dd>Network-wide DNS filtering</dd></div>
-          <div><dt>Platform</dt><dd>Pi-hole on Docker</dd></div>
+          <div><dt>Platform</dt><dd>DietPi on Raspberry Pi</dd></div>
+          <div><dt>Resolution</dt><dd>Pi-hole + local Unbound</dd></div>
           <div><dt>Observability</dt><dd>Prometheus and Grafana</dd></div>
           <div><dt>Status</dt><dd class="live-status">Operational</dd></div>
         </dl>
@@ -68,7 +69,9 @@ if (!project) {
         <p>
           It is not a replacement for endpoint protection, patching or threat
           detection. Instead, Pi-hole provides a simple preventative layer that
-          supports the wider SecOps capability.
+          supports the wider SecOps capability. Its non-secret operational
+          scripts, systemd units, active adlist declaration and Unbound overrides
+          are now Git-owned, while query databases and credentials remain excluded.
         </p>
       </div>
     </div>
@@ -99,7 +102,7 @@ if (!project) {
       <div class="grid">
         <article><h3>Query visibility</h3><p>DNS request volume and filtering activity provide a clear view of service use.</p></article>
         <article><h3>Blocklist health</h3><p>Monitoring confirms that the filtering data and service are available.</p></article>
-        <article><h3>Snapshot evidence</h3><p>A fixed Grafana snapshot demonstrates the service without exposing live operational data.</p></article>
+        <article><h3>Git-owned recovery source</h3><p>Operational scripts, systemd units, adlists and Unbound overrides provide reviewable recovery input without storing live DNS history or secrets.</p></article>
       </div>
     </div>
   </section>
