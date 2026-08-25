@@ -22,7 +22,7 @@ set +a
 #   https://github.com/jrwroberts1976/engineering-portfolio
 #
 # Source:
-#   /home/james/docker/stacks/engineering-portfolio-git
+#   /home/james/projects/engineering-portfolio
 #
 # Production:
 #   /home/james/docker/stacks/engineering-portfolio
@@ -38,7 +38,8 @@ set +a
 #
 # =============================================================================
 
-SOURCE_DIR="/home/james/docker/stacks/engineering-portfolio-git"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+SOURCE_DIR="$(cd -- "${SCRIPT_DIR}/.." && pwd)"
 PRODUCTION_DIR="/home/james/docker/stacks/engineering-portfolio"
 MAINTENANCE_DIR="/home/james/docker/stacks/maintenance-page"
 
