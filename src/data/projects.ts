@@ -131,7 +131,7 @@ export const projects: Project[] = [
     title: 'Docker Engineering Platform',
     shortTitle: 'Docker Engineering Platform',
     description:
-      'A self-hosted container platform supporting reverse proxying, authentication, monitoring, security and automated application deployment.',
+      'A self-hosted container platform with protected secret delivery, encrypted recovery, reverse proxying, authentication, monitoring, security and automated application deployment.',
     href: '/projects/docker-platform',
     status: 'Active project',
     technologies: [
@@ -151,9 +151,9 @@ export const projects: Project[] = [
     title: 'Homelab Container Version Control',
     shortTitle: 'Container Version Control',
     description:
-      'A platform-engineering programme governing Docker and Kubernetes images while extending Git ownership to critical DietPi operational source, validation, drift detection and rollback.',
+      'A platform-engineering programme governing Docker and Kubernetes images, four-host SOPS and age recovery, critical operational source, validation, drift detection and rollback.',
     href: '/projects/container-version-control',
-    status: 'Stage 1 complete',
+    status: 'Stage 2 complete',
     technologies: [
       'Docker Compose',
       'GitHub',
@@ -175,7 +175,7 @@ export const projects: Project[] = [
     title: 'Kubernetes Homelab',
     shortTitle: 'Kubernetes Homelab',
     description:
-      'A practical K3s environment demonstrating container orchestration, load balancing, ingress management and Git-based deployment.',
+      'A practical K3s environment with encrypted datastore Secrets, two-recipient SOPS recovery, container orchestration, load balancing, ingress and Git-based deployment.',
     href: '/projects/kubernetes',
     status: 'Active project',
     technologies: [
@@ -184,6 +184,7 @@ export const projects: Project[] = [
       'MetalLB',
       'Traefik',
       'containerd',
+      'SOPS + age',
     ],
     featured: true,
     repositoryUrl:
@@ -236,7 +237,7 @@ export const projects: Project[] = [
     title: 'Homelab Disaster Recovery Platform',
     shortTitle: 'Disaster Recovery Platform',
     description:
-      'A practical disaster recovery framework using Restic backups, automation, monitoring and recovery validation to rebuild infrastructure after failure.',
+      'A practical recovery framework combining Restic, passphrase-encrypted detached SOPS identity recovery, automation, monitoring and independent restoration evidence.',
     href: '/projects/disaster-recovery',
     status: 'Active project',
     technologies: [
@@ -247,6 +248,7 @@ export const projects: Project[] = [
       'Prometheus',
       'Grafana',
       'Backup Automation',
+      'SOPS + age',
     ],
     featured: true,
   },

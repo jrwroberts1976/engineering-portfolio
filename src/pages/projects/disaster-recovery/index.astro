@@ -27,9 +27,9 @@ if (!project) {
 
       <p class="hero-summary">
         A practical resilience platform that transforms backups from a passive
-        safety measure into an operational capability. Protection, recovery
-        assurance, monitoring visibility and controlled processes provide
-        evidence that services can be restored when required.
+        safety measure into an operational capability. Restic protection,
+        passphrase-encrypted detached identity recovery, monitoring and
+        independent rehearsal evidence demonstrate that recovery works.
       </p>
 
     </div>
@@ -46,7 +46,7 @@ if (!project) {
 
       <div class="scope-item">
         <span>Assurance</span>
-        <strong>Recovery validation and integrity checks</strong>
+        <strong>Integrity checks and independent recovery rehearsals</strong>
       </div>
 
       <div class="scope-item">
@@ -89,8 +89,9 @@ state across a multi-host infrastructure environment. DietPi backup,
 archive and retention automation is now captured as non-secret Git-owned
 source, with credentials and live repository state kept separately protected.
 A non-destructive recovery rehearsal reconstructed 38 managed files and 14
-executables beneath an isolated root, then passed hash, mode, syntax, systemd,
-manifest-integrity and secret-exclusion checks without changing live services.
+executables beneath an isolated root. A separate detached-media rehearsal then
+recovered all five TestServer SOPS sources using only a passphrase-encrypted
+offline identity, without changing any of the 30 running containers.
 </p>
 
 </div>
@@ -173,8 +174,8 @@ repeatable recovery points.
 <article>
 <h3>Recovery Assurance</h3>
 <p>
-Recovery readiness is measured rather than assumed, improving confidence
-when services or data need to be restored.
+Recovery readiness is measured through integrity checks, two-identity
+validation and detached-media rehearsal rather than assumed.
 </p>
 </article>
 
@@ -259,8 +260,8 @@ The outcome is not just a backup system.
 </p>
 
 <p>
-It is a resilience capability built around protection, validation, visibility
-and recovery confidence.
+It is a resilience capability built around protection, validation, visibility,
+detached recovery material and evidence that protected sources can be restored.
 </p>
 
 </div>

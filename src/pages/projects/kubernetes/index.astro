@@ -265,6 +265,18 @@ const outcomes = [
     description:
       'Scripts, manifests and documentation are maintained through Git.',
   },
+  {
+    value: 'Encrypted',
+    title: 'Datastore Secrets',
+    description:
+      'All 14 existing Kubernetes Secrets were re-encrypted with matching server hashes.',
+  },
+  {
+    value: 'Recoverable',
+    title: 'SOPS foundation',
+    description:
+      'Operational, protected recovery and detached-media controls have been independently validated.',
+  },
 ];
 
 const skills = [
@@ -428,9 +440,9 @@ const futureRoadmap = [
       'Expand from the single-node foundation when greater resilience or workload capacity is needed.',
   },
   {
-    title: 'Secrets management',
+    title: 'Application secret onboarding',
     description:
-      'Improve handling of application credentials and sensitive configuration.',
+      'Use the validated SOPS and age foundation when an application-managed credential is introduced.',
   },
   {
     title: 'Application migration',
@@ -442,7 +454,7 @@ const futureRoadmap = [
 
 <BaseLayout
   title={project.title}
-  description="A practical K3s platform using MetalLB, Traefik, containerd and Git-based Kubernetes deployment practices."
+  description="A practical K3s platform with datastore encryption, SOPS recovery, MetalLB, Traefik, containerd and Git-based deployment."
 >
   <section class="project-hero">
     <div class="container hero-grid">
@@ -455,9 +467,9 @@ const futureRoadmap = [
         </h1>
 
         <p class="hero-summary">
-          A practical K3s environment demonstrating Kubernetes deployment,
-          ingress, local load balancing, container orchestration and
-          operational documentation.
+          A practical K3s environment with datastore encryption, two-recipient
+          SOPS recovery, Kubernetes deployment, ingress, local load balancing
+          and evidence-led operational documentation.
         </p>
 
         <div class="button-row">
