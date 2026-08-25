@@ -23,9 +23,10 @@ if (!project) {
           versions across Docker and Kubernetes. The same Git ownership model
           now also protects critical DietPi operational source, while runtime
           databases and plaintext secrets remain deliberately outside Git.
-          A non-destructive rehearsal has since reconstructed all 38 managed
-          DietPi files with hash, mode, syntax, systemd and secret-exclusion
-          validation.
+          A non-destructive rehearsal reconstructed all 38 managed DietPi
+          files. Stage 2 then established four-host SOPS and age recovery,
+          protected live delivery, plaintext retirement and a successful
+          detached-media recovery rehearsal.
         </p>
         <div class="button-row">
           <a class="button button-secondary" href="/projects">Back to projects</a>
@@ -48,7 +49,7 @@ if (!project) {
           <div><dt>Source of truth</dt><dd>Git-owned desired state</dd></div>
           <div><dt>Delivery model</dt><dd>Staged go-live</dd></div>
           <div><dt>Target window</dt><dd>21 Aug – 16 Oct 2026</dd></div>
-          <div><dt>Status</dt><dd class="live-status">Stage 1 complete</dd></div>
+          <div><dt>Status</dt><dd class="live-status">Stage 2 complete</dd></div>
         </dl>
       </aside>
     </div>
@@ -177,8 +178,9 @@ if (!project) {
         <article class="card">
           <h3>Secrets foundation</h3>
           <p>
-            SOPS + age protects encrypted configuration, with Compose secrets
-            preferred over plaintext environment variables where supported.
+            SOPS + age now protects recovery sources across four hosts. Two
+            approved identities, protected file delivery and detached-media
+            recovery have all been validated.
           </p>
         </article>
 
@@ -216,7 +218,7 @@ if (!project) {
       <div class="stage-grid">
         <article class="stage-card"><span>Stage 0</span><strong>Discovery & baseline</strong><p>Complete — 23 Aug</p></article>
         <article class="stage-card"><span>Stage 1</span><strong>Git control & policy</strong><p>Complete — 23 Aug</p></article>
-        <article class="stage-card"><span>Stage 2</span><strong>Secrets foundation</strong><p>5–11 Sep</p></article>
+        <article class="stage-card"><span>Stage 2</span><strong>Secrets foundation</strong><p>Complete — 25 Aug</p></article>
         <article class="stage-card"><span>Stage 3</span><strong>Update proposals</strong><p>12–18 Sep</p></article>
         <article class="stage-card"><span>Stage 4</span><strong>Validation gate</strong><p>19–25 Sep</p></article>
         <article class="stage-card"><span>Stage 5</span><strong>Pilot go-live</strong><p>26 Sep–2 Oct</p></article>
@@ -234,7 +236,7 @@ if (!project) {
       </div>
       <div class="prose principle-list">
         <p><strong>Git is authoritative.</strong> Runtime state can inform the process, but it does not silently redefine desired state.</p>
-        <p><strong>Secrets are a go-live dependency.</strong> Deployment automation does not progress until encryption, Jenkins handling and key recovery are tested.</p>
+        <p><strong>Secrets are a go-live dependency.</strong> Encryption, protected delivery, two-identity recovery and detached-media rehearsal are proven before deployment automation gains authority.</p>
         <p><strong>Rollback is designed before rollout.</strong> A deployment is not considered safe if the previous known-good state cannot be restored.</p>
         <p><strong>Critical services move last.</strong> DNS, security and core monitoring services are introduced only after lower-risk pilots prove the process.</p>
       </div>
