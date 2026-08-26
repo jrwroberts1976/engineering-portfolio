@@ -9,8 +9,13 @@
 */
 
 const currentPath = Astro.url.pathname;
+const defenderUrl = import.meta.env.PUBLIC_HOMELAB_DEFENDER_URL?.trim();
 
-const links = [
+const links: Array<{
+  href: string;
+  label: string;
+  external?: boolean;
+}> = [
   {
     href: '/about',
     label: 'Professional Profile',
@@ -39,8 +44,16 @@ const links = [
     href: '/beyond-engineering',
     label: 'Beyond Engineering',
   },
-
-{
+  ...(defenderUrl
+    ? [
+        {
+          href: defenderUrl,
+          label: 'Play Defender',
+          external: true,
+        },
+      ]
+    : []),
+  {
     href: '/contact',
     label: 'Contact',
   },
@@ -67,9 +80,11 @@ const isActive = (href: string) =>
         links.map((link) => (
           <a
             class:list={{
-              active: isActive(link.href),
+              active: !link.external && isActive(link.href),
             }}
             href={link.href}
+            target={link.external ? '_blank' : undefined}
+            rel={link.external ? 'noopener noreferrer' : undefined}
           >
             {link.label}
           </a>
