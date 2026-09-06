@@ -16,6 +16,7 @@ jobs:
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_PAGES_PROJECT: engineering-portfolio
 
     steps:
       - name: Checkout
@@ -50,6 +51,44 @@ jobs:
           fi
 
           echo "Cloudflare credential gate: PASS"
+
+      - name: Ensure Pages project exists
+        shell: bash
+        run: |
+          API="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects/$CLOUDFLARE_PAGES_PROJECT"
+          BODY="$(mktemp)"
+
+          HTTP_CODE="$(
+            curl -sS               -o "$BODY"               -w '%{http_code}'               -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"               -H "Content-Type: application/json"               "$API"
+          )"
+
+          if [ "$HTTP_CODE" = "200" ]; then
+            echo "Cloudflare Pages project already exists."
+            rm -f "$BODY"
+            exit 0
+          fi
+
+          if [ "$HTTP_CODE" != "404" ]; then
+            echo "Unable to query Cloudflare Pages project (HTTP $HTTP_CODE)."
+            jq -r '.errors[]?.message // empty' "$BODY"
+            rm -f "$BODY"
+            exit 3
+          fi
+
+          CREATE_BODY="$(mktemp)"
+          CREATE_CODE="$(
+            curl -sS               -o "$CREATE_BODY"               -w '%{http_code}'               -X POST               -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"               -H "Content-Type: application/json"               --data '{"name":"engineering-portfolio","production_branch":"main"}'               "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects"
+          )"
+
+          if [ "$CREATE_CODE" != "200" ]; then
+            echo "Cloudflare Pages project creation failed (HTTP $CREATE_CODE)."
+            jq -r '.errors[]?.message // empty' "$CREATE_BODY"
+            rm -f "$BODY" "$CREATE_BODY"
+            exit 4
+          fi
+
+          echo "Cloudflare Pages project created."
+          rm -f "$BODY" "$CREATE_BODY"
 
       - name: Deploy migration preview
         uses: cloudflare/wrangler-action@v3
