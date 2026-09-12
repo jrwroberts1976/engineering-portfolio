@@ -1,30 +1,45 @@
-import { readFile, writeFile } from 'node:fs/promises';
+import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const source = path.join(
+const sourceDir = path.join(
   root,
-  'public/images/projects/homelab-engineering-platform-dashboard.webp',
+  'scripts/assets/engineering-platform-dashboard',
 );
 const target = path.join(
   root,
-  'public/images/projects/engineering-platform-dashboard.webp',
+  'public/images/projects/engineering-platform-dashboard.avif',
 );
 
-const encoded = (await readFile(source, 'utf8')).trim();
+const names = (await readdir(sourceDir))
+  .filter((name) => name.endsWith('.b64'))
+  .sort();
 
-if (!encoded.startsWith('UklGR')) {
-  throw new Error('Engineering platform image source is not valid base64 WebP data.');
-}
+const encoded = (
+  await Promise.all(
+    names.map((name) => readFile(path.join(sourceDir, name), 'utf8')),
+  )
+)
+  .join('')
+  .replace(/\s+/g, '');
 
 const image = Buffer.from(encoded, 'base64');
-const riff = image.subarray(0, 4).toString('ascii');
-const webp = image.subarray(8, 12).toString('ascii');
+const sha = createHash('sha256').update(image).digest('hex');
 
-if (riff !== 'RIFF' || webp !== 'WEBP') {
-  throw new Error('Decoded engineering platform image is not a valid WebP file.');
+const expectedBytes = 34759;
+const expectedSha =
+  '0157fa82e082a3b25d55d621abc3541802942ca0b40a03bfa7c2f7205d83856a';
+
+if (image.length !== expectedBytes || sha !== expectedSha) {
+  throw new Error(
+    `Engineering platform image validation failed: ${image.length} bytes, sha256 ${sha}`,
+  );
 }
 
 await writeFile(target, image);
-console.log(`Generated ${path.relative(root, target)} (${image.length} bytes)`);
+
+console.log(
+  `Generated ${path.relative(root, target)} (${image.length} bytes, sha256 ${sha})`,
+);
