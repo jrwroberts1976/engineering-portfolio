@@ -25,6 +25,30 @@ import type { Project } from './types';
 
 export const projects: Project[] = [
   {
+    id: 'engineering-platform',
+    category: 'Platform Engineering',
+    title: 'The Platform Behind This Website',
+    shortTitle: 'Engineering Platform',
+    description:
+      'A production-style platform combining Cloudflare Pages public delivery, Git-managed homelab infrastructure, central observability and daily AI-assisted log analysis through the OpenAI API.',
+    href: '/projects/engineering-platform',
+    status: 'Active platform',
+    technologies: [
+      'Cloudflare Pages',
+      'GitHub Actions',
+      'Astro',
+      'Proxmox VE',
+      'Ansible',
+      'Prometheus',
+      'Grafana',
+      'OpenAI API',
+    ],
+    featured: true,
+    repositoryUrl:
+      'https://github.com/jrwroberts1976/engineering-portfolio',
+  },
+
+  {
     id: 'secops',
     category: 'Security Operations',
     title: 'SecOps — Security Operations',
