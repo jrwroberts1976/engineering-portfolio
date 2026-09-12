@@ -4,7 +4,7 @@ dist/
 .astro/
 
 # Generated public assets
-public/images/projects/engineering-platform-dashboard.webp
+public/images/projects/engineering-platform-dashboard.avif
 
 # Local environment variables
 .env
