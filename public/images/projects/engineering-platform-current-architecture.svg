@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">The Platform Behind This Website</title>
+  <desc id="desc">Architecture diagram showing GitHub and GitHub Actions delivering the portfolio to Cloudflare Pages, with a separate homelab engineering platform, observability, security engineering, and a daily OpenAI API log analyst.</desc>
+  <defs>
+    <style>
+      .bg{fill:#09101c}.panel{fill:#111b2d;stroke:#415b7e;stroke-width:2}.panel-green{fill:#162339;stroke:#50a989;stroke-width:2}
+      .panel-blue{fill:#162339;stroke:#4282b4;stroke-width:2}.t{fill:#eef4fc;font-family:Arial,Helvetica,sans-serif}.m{fill:#a2b2c7;font-family:Arial,Helvetica,sans-serif}
+      .title{font-size:48px;font-weight:800}.subtitle{font-size:24px}.section{font-size:22px;font-weight:800;letter-spacing:.5px}
+      .boxt{font-size:22px;font-weight:800}.boxs{font-size:16px}.tag{font-size:14px;font-weight:800;fill:#07101a}
+      .footer{font-size:16px}.arrow-blue{stroke:#5db8ff;stroke-width:5;fill:none;marker-end:url(#arrowBlue)}
+      .arrow-green{stroke:#6fe3a1;stroke-width:5;fill:none;marker-end:url(#arrowGreen)}
+      .arrow-purple{stroke:#b085ff;stroke-width:4;fill:none;marker-end:url(#arrowPurple)}
+    </style>
+    <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#5db8ff"/></marker>
+    <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#6fe3a1"/></marker>
+    <marker id="arrowPurple" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#b085ff"/></marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1600" height="1000"/>
+  <text class="t title" x="70" y="82">The Platform Behind This Website</text>
+  <text class="m subtitle" x="72" y="122">Public cloud delivery separated from the homelab engineering platform</text>
+
+  <text class="t section" x="70" y="178" fill="#5db8ff">PUBLIC DELIVERY PATH</text>
+
+  <rect class="panel-blue" x="70" y="205" width="270" height="130" rx="18"/>
+  <text class="t boxt" x="205" y="252" text-anchor="middle">GitHub</text>
+  <text class="m boxs" x="205" y="284" text-anchor="middle">Source, branches and</text>
+  <text class="m boxs" x="205" y="306" text-anchor="middle">pull requests</text>
+
+  <rect class="panel-blue" x="390" y="205" width="300" height="130" rx="18"/>
+  <text class="t boxt" x="540" y="252" text-anchor="middle">GitHub Actions</text>
+  <text class="m boxs" x="540" y="284" text-anchor="middle">Audit • build • deploy</text>
+  <text class="m boxs" x="540" y="306" text-anchor="middle">• validate</text>
+
+  <rect class="panel-blue" x="740" y="205" width="300" height="130" rx="18"/>
+  <text class="t boxt" x="890" y="252" text-anchor="middle">Cloudflare Pages</text>
+  <text class="m boxs" x="890" y="284" text-anchor="middle">Externally hosted</text>
+  <text class="m boxs" x="890" y="306" text-anchor="middle">Astro site</text>
+
+  <rect class="panel-blue" x="1090" y="205" width="440" height="130" rx="18"/>
+  <text class="t boxt" x="1310" y="252" text-anchor="middle">me.jrwroberts.co.uk</text>
+  <text class="m boxs" x="1310" y="284" text-anchor="middle">Public portfolio independent</text>
+  <text class="m boxs" x="1310" y="306" text-anchor="middle">of home services</text>
+
+  <path class="arrow-blue" d="M350 270 H380"/>
+  <path class="arrow-blue" d="M700 270 H730"/>
+  <path class="arrow-blue" d="M1050 270 H1080"/>
+
+  <line x1="70" y1="380" x2="1530" y2="380" stroke="#415b7e" stroke-width="2"/>
+  <text class="t section" x="70" y="420" fill="#6fe3a1">HOMELAB — ENGINEERING PLATFORM</text>
+
+  <rect class="panel-green" x="70" y="455" width="320" height="145" rx="18"/>
+  <text class="t boxt" x="230" y="505" text-anchor="middle">admin-01</text>
+  <text class="m boxs" x="230" y="538" text-anchor="middle">SSH jump host • Ansible</text>
+  <text class="m boxs" x="230" y="560" text-anchor="middle">Infrastructure as Code</text>
+  <rect x="90" y="566" width="146" height="28" rx="14" fill="#6fe3a1"/>
+  <text class="tag" x="163" y="585" text-anchor="middle">CONTROL PLANE</text>
+
+  <rect class="panel-green" x="470" y="445" width="345" height="165" rx="18"/>
+  <text class="t boxt" x="642" y="495" text-anchor="middle">PROXMOX</text>
+  <text class="m boxs" x="642" y="528" text-anchor="middle">dns-01 • monitor-01</text>
+  <text class="m boxs" x="642" y="550" text-anchor="middle">cloud / service VMs</text>
+  <rect x="492" y="566" width="82" height="28" rx="14" fill="#6fe3a1"/>
+  <text class="tag" x="533" y="585" text-anchor="middle">ACTIVE</text>
+
+  <rect class="panel-green" x="865" y="445" width="345" height="165" rx="18"/>
+  <text class="t boxt" x="1037" y="495" text-anchor="middle">Proxmox-2</text>
+  <text class="m boxs" x="1037" y="528" text-anchor="middle">dns-02 • mail-relay-01</text>
+  <text class="m boxs" x="1037" y="550" text-anchor="middle">sensor-01 • edge-01</text>
+  <rect x="887" y="566" width="178" height="28" rx="14" fill="#f5be4b"/>
+  <text class="tag" x="976" y="585" text-anchor="middle">ACTIVE + RESERVED</text>
+
+  <rect class="panel-green" x="1260" y="445" width="270" height="80" rx="18"/>
+  <text class="t boxt" x="1395" y="480" text-anchor="middle">docker-01</text>
+  <text class="m boxs" x="1395" y="505" text-anchor="middle">BirdNET-Go / Docker workloads</text>
+
+  <rect class="panel-green" x="1260" y="540" width="270" height="80" rx="18"/>
+  <text class="t boxt" x="1395" y="575" text-anchor="middle">media-01</text>
+  <text class="m boxs" x="1395" y="600" text-anchor="middle">Kodi media endpoint</text>
+
+  <path class="arrow-green" d="M400 505 H460"/>
+  <path class="arrow-green" d="M400 545 H855"/>
+
+  <text class="t section" x="70" y="662" fill="#b085ff">OPERATIONS, SECURITY &amp; AI REVIEW</text>
+
+  <rect class="panel" x="70" y="705" width="335" height="175" rx="18"/>
+  <text class="t boxt" x="237" y="755" text-anchor="middle">Observability</text>
+  <text class="m boxs" x="237" y="789" text-anchor="middle">Prometheus • Grafana</text>
+  <text class="m boxs" x="237" y="811" text-anchor="middle">Alertmanager • Blackbox</text>
+  <rect x="88" y="830" width="82" height="28" rx="14" fill="#6fe3a1"/>
+  <text class="tag" x="129" y="849" text-anchor="middle">ACTIVE</text>
+
+  <rect class="panel" x="455" y="705" width="350" height="175" rx="18"/>
+  <text class="t boxt" x="630" y="755" text-anchor="middle">Security engineering</text>
+  <text class="m boxs" x="630" y="789" text-anchor="middle">sensor-01 • Suricata / Zeek</text>
+  <text class="m boxs" x="630" y="811" text-anchor="middle">capture path</text>
+  <rect x="473" y="830" width="170" height="28" rx="14" fill="#f5be4b"/>
+  <text class="tag" x="558" y="849" text-anchor="middle">PARTIAL / PLANNED</text>
+
+  <rect class="panel" x="840" y="705" width="350" height="175" rx="18"/>
+  <text class="t boxt" x="1015" y="755" text-anchor="middle">Daily AI log analyst</text>
+  <text class="m boxs" x="1015" y="789" text-anchor="middle">Selected logs and evidence</text>
+  <text class="m boxs" x="1015" y="811" text-anchor="middle">→ OpenAI API</text>
+  <rect x="858" y="830" width="82" height="28" rx="14" fill="#6fe3a1"/>
+  <text class="tag" x="899" y="849" text-anchor="middle">ACTIVE</text>
+
+  <rect class="panel" x="1225" y="705" width="305" height="175" rx="18"/>
+  <text class="t boxt" x="1377" y="755" text-anchor="middle">Operational review</text>
+  <text class="m boxs" x="1377" y="789" text-anchor="middle">Concise daily summary</text>
+  <text class="m boxs" x="1377" y="811" text-anchor="middle">risks • follow-up actions</text>
+  <rect x="1243" y="830" width="142" height="28" rx="14" fill="#5db8ff"/>
+  <text class="tag" x="1314" y="849" text-anchor="middle">HUMAN DECISION</text>
+
+  <path class="arrow-purple" d="M415 792 H445"/>
+  <path class="arrow-purple" d="M815 792 H830"/>
+  <path class="arrow-purple" d="M1200 792 H1215"/>
+
+  <text class="m footer" x="70" y="935">Current-state view • live, partial and reserved capabilities are shown separately</text>
+  <text class="m footer" x="1390" y="935">James Roberts</text>
+</svg>
