@@ -3,6 +3,9 @@ node_modules/
 dist/
 .astro/
 
+# Generated public assets
+public/images/projects/engineering-platform-dashboard.webp
+
 # Local environment variables
 .env
 .env.local
