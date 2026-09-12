@@ -1,0 +1,92 @@
+name: Cloudflare Pages Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: engineering-portfolio-production
+  cancel-in-progress: false
+
+jobs:
+  production:
+    name: Build and deploy production
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_PAGES_PROJECT: engineering-portfolio
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Dependency security audit
+        run: npm audit --audit-level=high
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Verify build output
+        shell: bash
+        run: |
+          test -f dist/index.html
+          test -d dist/_astro
+          echo "Static build gate: PASS"
+
+      - name: Verify Cloudflare credentials are configured
+        shell: bash
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "CLOUDFLARE_API_TOKEN is not configured."
+            exit 2
+          fi
+
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "CLOUDFLARE_ACCOUNT_ID is not configured."
+            exit 2
+          fi
+
+          echo "Cloudflare credential gate: PASS"
+
+      - name: Deploy production to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=engineering-portfolio --branch=main
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Validate production site
+        shell: bash
+        run: |
+          curl --fail \
+            --silent \
+            --show-error \
+            --location \
+            --retry 5 \
+            --retry-delay 5 \
+            --retry-all-errors \
+            https://me.jrwroberts.co.uk/ \
+            -o /tmp/production-index.html
+
+          test -s /tmp/production-index.html
+          grep -qi '<html' /tmp/production-index.html
+          echo "Production HTTP validation: PASS"
