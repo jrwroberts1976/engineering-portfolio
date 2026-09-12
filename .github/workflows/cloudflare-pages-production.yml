@@ -67,6 +67,7 @@ jobs:
           echo "Cloudflare credential gate: PASS"
 
       - name: Deploy production to Cloudflare Pages
+        id: deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -74,9 +75,16 @@ jobs:
           command: pages deploy dist --project-name=engineering-portfolio --branch=main
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Validate production site
+      - name: Validate deployed Pages artifact
         shell: bash
+        env:
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment-url }}
         run: |
+          if [ -z "$DEPLOYMENT_URL" ]; then
+            echo "Cloudflare deployment URL was not returned."
+            exit 2
+          fi
+
           curl --fail \
             --silent \
             --show-error \
@@ -84,9 +92,16 @@ jobs:
             --retry 5 \
             --retry-delay 5 \
             --retry-all-errors \
-            https://me.jrwroberts.co.uk/ \
+            "$DEPLOYMENT_URL/" \
             -o /tmp/production-index.html
 
           test -s /tmp/production-index.html
           grep -qi '<html' /tmp/production-index.html
-          echo "Production HTTP validation: PASS"
+          echo "Cloudflare Pages deployment validation: PASS"
+
+      - name: Report custom-domain status
+        shell: bash
+        run: |
+          status="$(curl --silent --output /dev/null --write-out '%{http_code}' --location --max-time 15 https://me.jrwroberts.co.uk/ || true)"
+          echo "me.jrwroberts.co.uk returned HTTP ${status:-unavailable} from the GitHub-hosted runner."
+          echo "The Pages deployment URL is the authoritative deployment gate because Cloudflare edge policy may reject datacentre-origin validation traffic."
