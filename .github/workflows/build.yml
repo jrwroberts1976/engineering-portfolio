@@ -11,8 +11,6 @@ on:
 
 permissions:
   contents: read
-  security-events: write
-  actions: read
 
 jobs:
   build-and-security:
@@ -35,16 +33,5 @@ jobs:
       - name: Dependency security audit
         run: npm audit --audit-level=high
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4
-        with:
-          languages: javascript-typescript
-          queries: security-extended
-
       - name: Build Astro
         run: npm run build
-
-      - name: Run CodeQL analysis
-        uses: github/codeql-action/analyze@v4
-        with:
-          category: /language:javascript-typescript

@@ -1,0 +1,1030 @@
+---
+/*
+===============================================================================
+Page: Engineering Platform
+
+Purpose:
+Documents the current public web delivery model and the homelab engineering
+platform that supports infrastructure, observability, security and automation.
+===============================================================================
+*/
+
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getProjectById } from '../../../data/projects';
+
+const project = getProjectById('engineering-platform');
+
+if (!project) {
+  throw new Error('Engineering platform project data could not be found.');
+}
+
+const objectives = [
+  {
+    title: 'Remove home dependency',
+    description:
+      'Host the public portfolio on Cloudflare Pages so normal website availability is independent of the homelab, home power and broadband connection.',
+  },
+  {
+    title: 'Make delivery repeatable',
+    description:
+      'Build the Astro site from Git and move production deployment toward an auditable GitHub Actions workflow with build, security and HTTP validation gates.',
+  },
+  {
+    title: 'Keep infrastructure authoritative',
+    description:
+      'Use homelab-platform and its IaC structure as the source of truth for migrated infrastructure instead of relying on historical host names or undocumented state.',
+  },
+  {
+    title: 'Operate with evidence',
+    description:
+      'Use Prometheus, Grafana, Blackbox monitoring, system logs and service checks to show whether the platform is healthy rather than assuming it is.',
+  },
+  {
+    title: 'Add AI-assisted review',
+    description:
+      'Run a scheduled daily log analyst that sends selected operational evidence to the OpenAI API and turns it into a concise review of events, risks and follow-up actions.',
+  },
+  {
+    title: 'Separate current from future',
+    description:
+      'Document live services, planned capabilities and retired identities separately so the portfolio reflects the estate that actually exists.',
+  },
+];
+
+const components = [
+  {
+    category: 'Public Web',
+    title: 'Astro + Cloudflare Pages',
+    description:
+      'The public portfolio is built as a static Astro site and hosted externally on Cloudflare Pages for fast delivery without a home-infrastructure dependency.',
+  },
+  {
+    category: 'Source & Delivery',
+    title: 'GitHub + GitHub Actions',
+    description:
+      'Git owns the application source and delivery workflow, with dependency audit, build verification, deployment and production URL validation forming the release path.',
+  },
+  {
+    category: 'Control Plane',
+    title: 'admin-01 + Infrastructure as Code',
+    description:
+      'admin-01 is the administration, SSH jump and IaC controller, with homelab-platform providing the desired-state authority for migrated services.',
+  },
+  {
+    category: 'Virtualisation',
+    title: 'PROXMOX + Proxmox-2',
+    description:
+      'Two deliberately standalone Proxmox nodes host DNS, monitoring, cloud, mail, sensor and reserved edge workloads.',
+  },
+  {
+    category: 'Core Services',
+    title: 'DNS, Monitoring, Cloud and Mail',
+    description:
+      'The platform includes a redundant Pi-hole/Unbound resolver pair, central metrics monitoring, Nextcloud and a controlled SMTP relay.',
+  },
+  {
+    category: 'Physical Workloads',
+    title: 'docker-01 + media-01',
+    description:
+      'Dedicated Raspberry Pi hosts provide BirdNET-Go Docker services and the Kodi media endpoint without overloading the virtualisation layer.',
+  },
+  {
+    category: 'Security Engineering',
+    title: 'sensor-01 + future edge capability',
+    description:
+      'The sensor VM is prepared for Suricata and Zeek capture once the dedicated NIC and SPAN path are ready, while edge-01 remains reserved for an approved future tunnel role.',
+  },
+  {
+    category: 'AI Operations',
+    title: 'Daily Log Analyst via OpenAI API',
+    description:
+      'A scheduled analysis workflow reviews selected logs and operational evidence, summarises significant events and produces a human-readable daily report for follow-up.',
+  },
+];
+
+const deliveryPhases = [
+  {
+    phase: '01',
+    title: 'Reconcile the estate',
+    description:
+      'Audited the live environment, retired stale identities and documented the real workload placement across Proxmox and physical hosts.',
+  },
+  {
+    phase: '02',
+    title: 'Externalise the public website',
+    description:
+      'Moved me.jrwroberts.co.uk to Cloudflare Pages so the public portfolio no longer depends on the home lab to remain available.',
+  },
+  {
+    phase: '03',
+    title: 'Establish IaC authority',
+    description:
+      'Made admin-01 the normal controller and homelab-platform/IaC the authoritative path for infrastructure that has been migrated and validated.',
+  },
+  {
+    phase: '04',
+    title: 'Build operational visibility',
+    description:
+      'Centralised Prometheus, Grafana, Alertmanager and Blackbox monitoring on monitor-01 and expanded health coverage across the estate.',
+  },
+  {
+    phase: '05',
+    title: 'Introduce AI-assisted analysis',
+    description:
+      'Added a daily analysis path that uses the OpenAI API to turn selected logs and security evidence into a concise operational review.',
+  },
+  {
+    phase: '06',
+    title: 'Keep improving the platform',
+    description:
+      'Continue work on backup and restore proof, sensor capture, central logging, network-host analytics and carefully controlled edge services.',
+  },
+];
+
+const challenges = [
+  {
+    title: 'Public availability depended on the house',
+    problem:
+      'A self-hosted portfolio tied normal website availability to home power, broadband, routing and container infrastructure.',
+    response:
+      'Moved the static public site to Cloudflare Pages while keeping the homelab as the engineering environment behind the portfolio story.',
+    outcome:
+      'Visitors can reach the portfolio independently of homelab maintenance or outages.',
+  },
+  {
+    title: 'Historical names had become architecture',
+    problem:
+      'Old identities such as TestServer, DietPi, ids-01 and k3s-node-01 no longer described the real estate.',
+    response:
+      'Reconciled current state, formalised active host roles and retained retired identities only as historical evidence.',
+    outcome:
+      'Architecture, runbooks and future changes now start from the same current-state model.',
+  },
+  {
+    title: 'Logs create more data than insight',
+    problem:
+      'Reviewing raw operating-system, service and security logs manually is time consuming and can hide the events that actually deserve attention.',
+    response:
+      'Created a scheduled daily log-analysis workflow using the OpenAI API to summarise selected evidence and highlight significant events and risks.',
+    outcome:
+      'Routine evidence is condensed into a useful management view while human review remains responsible for action and change decisions.',
+  },
+  {
+    title: 'Future plans could be mistaken for live services',
+    problem:
+      'Planned Cloudflare Tunnel, central logging, SPAN capture and backup capabilities could easily be shown as though they were already operational.',
+    response:
+      'Separated operational, partial, planned and retired states in both documentation and the architecture graphic.',
+    outcome:
+      'The portfolio demonstrates engineering judgement without overstating the maturity of unfinished capabilities.',
+  },
+];
+
+const operationalPractices = [
+  {
+    title: 'Git-managed change',
+    description:
+      'Application and infrastructure changes are version controlled and reviewed before becoming the new documented state.',
+  },
+  {
+    title: 'Validation gates',
+    description:
+      'Build, service health, network reachability and production HTTP checks are used to prove outcomes after change.',
+  },
+  {
+    title: 'Monitoring',
+    description:
+      'Prometheus, Grafana, Alertmanager and Blackbox provide central health and availability evidence.',
+  },
+  {
+    title: 'AI log review',
+    description:
+      'A scheduled job uses the OpenAI API to summarise selected daily log evidence and highlight items that merit investigation.',
+  },
+  {
+    title: 'Current-state documentation',
+    description:
+      'Live architecture, future intent and historical evidence are deliberately kept separate to reduce operational ambiguity.',
+  },
+  {
+    title: 'Recovery thinking',
+    description:
+      'Backup and restore capability is treated as part of service maturity, with unproven recovery called out rather than assumed.',
+  },
+];
+
+const skills = [
+  'Platform architecture',
+  'Cloudflare Pages',
+  'Astro static-site delivery',
+  'GitHub Actions',
+  'Linux systems administration',
+  'Proxmox VE',
+  'Ansible and Infrastructure as Code',
+  'Prometheus and Grafana',
+  'Blackbox monitoring',
+  'DNS and Unbound',
+  'Network architecture',
+  'Security engineering',
+  'OpenAI API integration',
+  'Operational log analysis',
+  'Technical documentation',
+  'Change and recovery planning',
+];
+---
+
+<BaseLayout
+  title={project.title}
+  description="The current engineering platform behind my portfolio: externally hosted web delivery, Git-managed infrastructure, observability, security and daily AI-assisted log analysis."
+>
+  <section class="project-hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Platform Engineering Case Study</p>
+
+        <h1>
+          The Platform Behind
+          <span>This Website</span>
+        </h1>
+
+        <p class="hero-summary">
+          A production-style engineering platform combining an externally hosted
+          Cloudflare Pages portfolio with a Git-managed homelab, central
+          monitoring, security engineering and a daily AI log analyst using the
+          OpenAI API.
+        </p>
+
+        <div class="button-row">
+          <a class="button button-primary" href="#architecture">
+            View Current Architecture
+          </a>
+
+          <a
+            class="button button-secondary"
+            href="https://github.com/jrwroberts1976"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View GitHub Profile
+          </a>
+        </div>
+      </div>
+
+      <aside class="project-facts">
+        <p class="eyebrow">Project Summary</p>
+
+        <dl>
+          <div>
+            <dt>Role</dt>
+            <dd>Platform designer and operator</dd>
+          </div>
+
+          <div>
+            <dt>Public hosting</dt>
+            <dd>Cloudflare Pages</dd>
+          </div>
+
+          <div>
+            <dt>Infrastructure</dt>
+            <dd>Dual Proxmox + physical nodes</dd>
+          </div>
+
+          <div>
+            <dt>Operations</dt>
+            <dd>Monitoring + daily AI log review</dd>
+          </div>
+
+          <div>
+            <dt>Operational status</dt>
+            <dd class="status-live">Active platform</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="technology-strip">
+    <div class="container">
+      <ul class="tag-list">
+        {project.technologies.map((technology) => <li>{technology}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="architecture">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Current Architecture</p>
+        <h2>The website is public cloud. The homelab is the engineering platform.</h2>
+        <p>
+          The architecture deliberately separates public availability from home
+          infrastructure while keeping the homelab as a realistic environment
+          for infrastructure, security, observability and automation work.
+        </p>
+      </div>
+
+      <figure class="architecture-image-wrap">
+        <img
+          class="architecture-image"
+          src="/images/projects/engineering-platform-current-architecture.webp"
+          alt="James Roberts engineering platform diagram showing Cloudflare Pages public website delivery, the current homelab infrastructure and the daily AI log analysis workflow through the OpenAI API."
+          loading="eager"
+          decoding="async"
+        />
+        <figcaption>
+          Current platform view: external portfolio delivery, active homelab
+          services, planned capabilities and daily AI-assisted log analysis.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Executive Summary</p>
+        <h2>Turning a personal website into an operated engineering service.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          The public portfolio began as another workload in the homelab. That
+          worked, but it also meant that a power cut, broadband issue, router
+          change or container outage at home could take the site offline.
+        </p>
+
+        <p>
+          I changed the architecture so the public Astro site is delivered by
+          Cloudflare Pages. Git remains the source of truth for the website, and
+          the release path is designed around repeatable build, security and
+          post-deployment validation rather than manual editing in production.
+        </p>
+
+        <p>
+          The homelab then becomes what it is better suited to be: a controlled
+          platform for infrastructure engineering, observability, networking,
+          security, automation and recovery work. The same platform also feeds
+          a daily AI log-analysis workflow through the OpenAI API so routine
+          evidence can be condensed into a useful operational review.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container challenge-panel">
+      <div>
+        <p class="eyebrow">The Design Decision</p>
+        <h2>Do not make the portfolio depend on the lab it is describing.</h2>
+      </div>
+
+      <div>
+        <p>
+          A portfolio should still be available when the infrastructure behind
+          the projects is being upgraded, rebuilt or deliberately broken for
+          learning. External static hosting removes an unnecessary availability
+          dependency without reducing the engineering value of the homelab.
+        </p>
+
+        <p>
+          This also creates a useful separation of concerns: Cloudflare Pages
+          serves the public application, while the homelab focuses on compute,
+          DNS, monitoring, cloud services, mail relay, network security and
+          future recovery capabilities.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Project Objectives</p>
+        <h2>Designed around availability, evidence and maintainability.</h2>
+      </div>
+
+      <div class="objectives-grid">
+        {
+          objectives.map((objective, index) => (
+            <article class="objective-card">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{objective.title}</h3>
+              <p>{objective.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Delivery Approach</p>
+        <h2>Architecture evolved through evidence-led changes.</h2>
+        <p>
+          The current platform is the result of migration and reconciliation,
+          not a greenfield diagram. Existing services were discovered, validated
+          and then documented or moved deliberately.
+        </p>
+      </div>
+
+      <div class="delivery-timeline">
+        {
+          deliveryPhases.map((item) => (
+            <article>
+              <span>{item.phase}</span>
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Core Components</p>
+        <h2>Each layer has a clear responsibility.</h2>
+      </div>
+
+      <div class="components-grid">
+        {
+          components.map((component) => (
+            <article class="component-card">
+              <p>{component.category}</p>
+              <h3>{component.title}</h3>
+              <span>{component.description}</span>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Public Delivery Path</p>
+        <h2>From change to production without a home-server dependency.</h2>
+      </div>
+
+      <div class="architecture-flow">
+        <article>
+          <span>01</span>
+          <strong>GitHub</strong>
+          <small>Source, branches and pull requests</small>
+        </article>
+        <div>↓</div>
+        <article>
+          <span>02</span>
+          <strong>Build and validation</strong>
+          <small>Dependencies, audit, Astro build and output checks</small>
+        </article>
+        <div>↓</div>
+        <article>
+          <span>03</span>
+          <strong>Cloudflare Pages</strong>
+          <small>Externally hosted static production site</small>
+        </article>
+        <div>↓</div>
+        <article>
+          <span>04</span>
+          <strong>me.jrwroberts.co.uk</strong>
+          <small>Public portfolio available independently of the homelab</small>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Daily AI Log Analyst</p>
+        <h2>Use AI to reduce routine log-reading, not replace engineering judgement.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          The platform includes a scheduled daily analysis workflow that gathers
+          selected operational and security evidence and submits a controlled
+          digest to the OpenAI API for analysis.
+        </p>
+
+        <p>
+          The result is a concise report highlighting unusual activity, notable
+          errors, security-relevant events and suggested areas for follow-up.
+          This gives me a repeatable first-pass review without pretending that
+          an AI summary is itself an incident response decision.
+        </p>
+
+        <p>
+          Central Loki and Alloy deployment remains a separate platform workstream;
+          the AI analyst can evolve as the logging architecture becomes more
+          centralised and more service-specific evidence becomes available.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Engineering Challenges</p>
+        <h2>Architecture improved by correcting real weaknesses.</h2>
+      </div>
+
+      <div class="challenges-grid">
+        {
+          challenges.map((challenge) => (
+            <article class="challenge-card">
+              <h3>{challenge.title}</h3>
+              <div>
+                <h4>Problem</h4>
+                <p>{challenge.problem}</p>
+              </div>
+              <div>
+                <h4>Response</h4>
+                <p>{challenge.response}</p>
+              </div>
+              <div>
+                <h4>Outcome</h4>
+                <p>{challenge.outcome}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Operational Practices</p>
+        <h2>Built to be supported after the interesting deployment work is finished.</h2>
+      </div>
+
+      <div class="operations-grid">
+        {
+          operationalPractices.map((practice, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{practice.title}</h3>
+              <p>{practice.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Operational Outcomes</p>
+        <h2>A clearer separation between public service and engineering lab.</h2>
+      </div>
+
+      <div class="results-grid">
+        <article>
+          <strong>Independent</strong>
+          <span>Public website no longer relies on home infrastructure</span>
+        </article>
+        <article>
+          <strong>Governed</strong>
+          <span>Git and IaC define migrated application and infrastructure state</span>
+        </article>
+        <article>
+          <strong>Observable</strong>
+          <span>Central metrics, probes, dashboards and health evidence</span>
+        </article>
+        <article>
+          <strong>AI-assisted</strong>
+          <span>Daily OpenAI API log analysis supports operational review</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container skills-layout">
+      <div class="section-heading">
+        <p class="eyebrow">Skills Demonstrated</p>
+        <h2>Platform engineering across cloud, infrastructure and operations.</h2>
+      </div>
+
+      <div class="skills-list">
+        {
+          skills.map((skill, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <strong>{skill}</strong>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-grid">
+      <div class="section-heading">
+        <p class="eyebrow">Lessons Learned</p>
+        <h2>Resilience sometimes means moving a workload out of the homelab.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          Self-hosting is useful when it adds learning, control or operational
+          value. It is not automatically the best answer for every workload.
+        </p>
+
+        <p>
+          Moving the public portfolio to Cloudflare Pages removed a fragile
+          dependency while making the delivery process more cloud-native and
+          easier to validate. The homelab became more useful because it could be
+          changed aggressively without taking the public site with it.
+        </p>
+
+        <p>
+          The same principle applies to observability and AI operations: collect
+          evidence first, automate the repetitive parts, and keep human judgement
+          responsible for risk, priority and production change.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container final-panel">
+      <div>
+        <p class="eyebrow">Explore the Platform</p>
+        <h2>The diagram is the summary. The projects show the engineering.</h2>
+        <p>
+          Explore the other case studies to see how individual capabilities such
+          as monitoring, security, delivery and infrastructure have been built
+          and operated in more detail.
+        </p>
+      </div>
+
+      <div class="button-column">
+        <a class="button button-primary" href="/projects">
+          View All Projects
+        </a>
+        <a class="button button-secondary" href="/projects/monitoring">
+          Monitoring Case Study
+        </a>
+        <a class="button button-secondary" href="/lab">
+          Engineering Lab
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .project-hero {
+    padding: 7rem 0 5rem;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+    align-items: center;
+    gap: 4rem;
+  }
+
+  h1 {
+    margin: 0 0 1.5rem;
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    letter-spacing: -0.06em;
+    line-height: 0.96;
+  }
+
+  h1 span {
+    display: block;
+    color: var(--primary);
+  }
+
+  .hero-summary {
+    max-width: 760px;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+  }
+
+  .project-facts {
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .project-facts dl {
+    margin: 0;
+  }
+
+  .project-facts dl div {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-facts dl div:last-child {
+    border-bottom: 0;
+  }
+
+  .project-facts dt {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .project-facts dd {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .status-live {
+    color: #8ff0bc;
+  }
+
+  .technology-strip {
+    padding: 1.1rem 0;
+    border-block: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  .technology-strip .tag-list {
+    margin: 0;
+  }
+
+  .architecture-image-wrap {
+    margin: 2.5rem 0 0;
+  }
+
+  .architecture-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .architecture-image-wrap figcaption {
+    margin-top: 0.85rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .content-grid,
+  .challenge-panel,
+  .skills-layout {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 5rem;
+  }
+
+  .objectives-grid,
+  .operations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .objective-card,
+  .operations-grid article {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .objective-card > span,
+  .operations-grid article > span {
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: 850;
+  }
+
+  .objective-card p,
+  .operations-grid p {
+    color: var(--text-muted);
+  }
+
+  .delivery-timeline {
+    display: grid;
+    gap: 0;
+    max-width: 950px;
+  }
+
+  .delivery-timeline article {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 1.2rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .delivery-timeline article > span {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    border: 1px solid rgba(93, 184, 255, 0.45);
+    border-radius: 50%;
+    color: var(--primary);
+    background: var(--surface);
+    font-weight: 850;
+  }
+
+  .delivery-timeline h3 {
+    margin: 0;
+  }
+
+  .delivery-timeline p {
+    color: var(--text-muted);
+  }
+
+  .components-grid,
+  .challenges-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .component-card,
+  .challenge-card {
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .component-card > p {
+    margin: 0;
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .component-card h3 {
+    margin: 0.35rem 0;
+  }
+
+  .component-card span,
+  .challenge-card p {
+    color: var(--text-muted);
+  }
+
+  .architecture-flow {
+    display: grid;
+    justify-items: center;
+    max-width: 850px;
+    margin-inline: auto;
+  }
+
+  .architecture-flow > article {
+    display: grid;
+    width: min(100%, 570px);
+    gap: 0.25rem;
+    padding: 1.2rem 1.4rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+  }
+
+  .architecture-flow article span {
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 850;
+  }
+
+  .architecture-flow article small {
+    color: var(--text-muted);
+  }
+
+  .architecture-flow > div {
+    padding: 0.5rem;
+    color: var(--primary);
+  }
+
+  .challenge-card h3 {
+    margin-top: 0;
+    color: var(--primary);
+  }
+
+  .challenge-card h4 {
+    margin-bottom: 0.25rem;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .results-grid article {
+    display: grid;
+    gap: 0.4rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .results-grid strong {
+    color: var(--primary);
+    font-size: 1.5rem;
+  }
+
+  .results-grid span {
+    color: var(--text-muted);
+  }
+
+  .skills-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+
+  .skills-list article {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.8rem;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: var(--surface);
+  }
+
+  .skills-list span {
+    color: var(--primary);
+    font-weight: 850;
+  }
+
+  .final-panel {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 4rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(93, 184, 255, 0.35);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .button-column {
+    display: grid;
+    gap: 0.75rem;
+    min-width: 230px;
+  }
+
+  @media (max-width: 950px) {
+    .hero-grid,
+    .content-grid,
+    .challenge-panel,
+    .skills-layout {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .objectives-grid,
+    .operations-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .results-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 700px) {
+    .objectives-grid,
+    .operations-grid,
+    .components-grid,
+    .challenges-grid,
+    .results-grid,
+    .skills-list {
+      grid-template-columns: 1fr;
+    }
+
+    .final-panel {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .button-column {
+      width: 100%;
+    }
+  }
+</style>
