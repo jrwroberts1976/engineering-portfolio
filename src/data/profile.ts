@@ -203,6 +203,13 @@ export const careerJourney: CareerStage[] = [
   },
 
   {
+    period: '2017',
+    title: 'Patching Service Transition — LV=',
+    description:
+      'Led the transition of the Linux patching process to a third-party team based in India. Documented and transferred the operational process, trained the engineers who would carry out the work, and supported the team through the handover to establish a repeatable and supportable service.',
+  },
+
+  {
     period: '2020–2024',
     title: 'Technical BC/DR Manager — LV=',
     description:
