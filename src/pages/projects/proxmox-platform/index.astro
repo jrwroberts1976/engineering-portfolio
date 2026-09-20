@@ -5,37 +5,26 @@ import { getProjectById } from '../../../data/projects';
 const project = getProjectById('proxmox-platform');
 if (!project) throw new Error('Proxmox project data could not be found.');
 
-const capabilities = [
-  ['Cluster engineering', 'Two Proxmox VE nodes operating as jameshouse-pve with a common management and migration plane.'],
-  ['Resilient quorum', 'Corosync uses a preferred direct point-to-point heartbeat link with LAN fallback, while admin-01 provides an external QDevice vote.'],
-  ['Mixed workloads', 'The platform runs both LXC containers and QEMU virtual machines for DNS, monitoring, cloud, security, management and home-automation services.'],
-  ['Infrastructure automation', 'Ansible and Terraform are used with Git-managed infrastructure definitions, validation gates and idempotency checks.'],
-  ['Observability', 'Node Exporter, Alloy, Prometheus, Grafana, Loki and Zabbix provide host, service, log and availability visibility.'],
-  ['Backup and recovery', 'Node-scoped NFS backup targets, scheduled snapshot backups, integrity checks and restore evidence support operational recovery.'],
+const operatingAreas = [
+  ['Virtualisation', 'The platform runs a mixture of LXC containers and QEMU/KVM virtual machines. Workloads are placed according to their requirements rather than forcing every service into the same deployment model.'],
+  ['Operations & automation', 'Git, Ansible and infrastructure-as-code workflows are used across the platform. Changes are validated, repeatability is checked through idempotency testing where appropriate, and rollback is considered before implementation.'],
+  ['Observability & security', 'Prometheus, Grafana, Loki, Alloy and Zabbix provide infrastructure and application visibility. Greenbone and the Suricata/Zeek sensor add active vulnerability assessment and passive network-security monitoring.'],
 ];
 
-const skills = [
-  'Proxmox VE administration', 'Debian Linux', 'LXC', 'QEMU/KVM',
-  'Corosync / Kronosnet', 'QDevice quorum', 'Linux networking', 'NFS storage',
-  'Ansible', 'Terraform', 'Git / GitOps practices', 'Prometheus & Grafana',
-  'Loki / Alloy', 'Zabbix', 'Backup validation', 'Troubleshooting',
-];
-
-const lessons = [
-  ['Quorum is not storage HA', 'The cluster provides management, membership and quorum resilience, but guest disks remain node-local. I document that boundary rather than presenting the platform as automatic workload HA.'],
-  ['Separate the heartbeat path', 'The preferred Corosync link runs over a dedicated point-to-point USB Ethernet connection, with the management LAN retained as a lower-priority fallback.'],
-  ['Treat recovery as a feature', 'Backups are scheduled per node and validated with archive integrity checks and restore evidence rather than assuming a successful job means a recoverable service.'],
-  ['Keep deployment truth in Git', 'The homelab-platform repository is the current-state authority for migrated infrastructure, reducing the risk of building from stale host names or historical designs.'],
+const technologies = [
+  'Proxmox VE', 'Debian Linux', 'LXC', 'QEMU/KVM', 'Corosync', 'Kronosnet',
+  'QDevice / QNetd', 'Linux networking', 'NFS', 'Ansible', 'Terraform', 'Git',
+  'Prometheus', 'Grafana', 'Loki', 'Alloy', 'Zabbix', 'Greenbone', 'Suricata', 'Zeek',
 ];
 ---
 
-<BaseLayout title={project.title} description="A two-node Proxmox VE cluster case study covering Linux virtualisation, Corosync, QDevice quorum, automation, monitoring, backup and recovery.">
+<BaseLayout title={project.title} description="A two-node Proxmox VE case study covering clustered virtualisation, quorum, networking, automation, observability, backup and recovery.">
   <section class="hero">
     <div class="container hero-grid">
       <div>
         <p class="eyebrow">Virtualisation &amp; Systems Administration</p>
         <h1>Proxmox VE <span>Cluster Platform</span></h1>
-        <p class="lead">A production-style virtualisation platform built and operated as a real service: clustered compute, resilient quorum, Linux workloads, infrastructure automation, observability and evidence-led recovery.</p>
+        <p class="lead">A two-node Proxmox VE platform built to run the core services in my home infrastructure. The project covers clustered virtualisation, quorum, resilient cluster networking, LXC and QEMU workloads, monitoring, automation, backup and recovery.</p>
         <div class="actions">
           <a class="button button-primary" href={project.repositoryUrl} target="_blank" rel="noopener noreferrer">View infrastructure repository</a>
           <a class="button button-secondary" href="/projects">All projects</a>
@@ -54,43 +43,71 @@ const lessons = [
     </div>
   </section>
 
-  <section class="technology-strip"><div class="container tags">{project.technologies.map((t) => <span>{t}</span>)}</div></section>
+  <section class="technology-strip"><div class="container tags">{technologies.map((t) => <span>{t}</span>)}</div></section>
 
   <section class="section">
     <div class="container split">
-      <div><p class="eyebrow">THE PROJECT</p><h2>More than installing a hypervisor.</h2></div>
+      <div><p class="eyebrow">WHY I BUILT IT</p><h2>From individual servers to a managed platform.</h2></div>
       <div class="prose">
-        <p>I designed the platform around the operational concerns that matter after installation: quorum, network paths, workload placement, monitoring, patching, backup, recovery, automation and documentation.</p>
-        <p>The current estate uses two Debian 13 based Proxmox VE nodes. Corosync has two Kronosnet links: a preferred dedicated point-to-point connection and a management-LAN fallback. A separate administration host runs QNetd and supplies the third vote.</p>
-        <p>The cluster hosts infrastructure services including DNS, monitoring, Nextcloud, network security, vulnerability scanning, container management, Zabbix and Home Assistant.</p>
+        <p>The project grew out of consolidating infrastructure that had developed across several physical systems. Rather than simply moving those services onto another server, I used the migration to build a managed virtualisation platform.</p>
+        <p>The result is a two-node Proxmox VE cluster running DNS, monitoring, Nextcloud, network security, vulnerability scanning, container management, Zabbix and Home Assistant.</p>
+        <p>My aim has been to make the environment easier to operate, understand and recover — not simply to virtualise it.</p>
       </div>
     </div>
   </section>
 
   <section class="section soft">
-    <div class="container">
-      <p class="eyebrow">ENGINEERING CAPABILITY</p><h2>Skills demonstrated by the platform.</h2>
-      <div class="grid">{capabilities.map(([title, description]) => <article><h3>{title}</h3><p>{description}</p></article>)}</div>
+    <div class="container split">
+      <div><p class="eyebrow">ARCHITECTURE</p><h2>Two nodes, three votes.</h2></div>
+      <div class="prose">
+        <p><code>PROXMOX</code> and <code>Proxmox-2</code> form the <code>jameshouse-pve</code> cluster. Corosync uses two network paths: a dedicated point-to-point Ethernet connection as the preferred cluster link and the management LAN as a lower-priority fallback.</p>
+        <p>Because this is a two-node cluster, <code>admin-01</code> runs Corosync QNetd and provides an external QDevice vote. This allows the cluster to retain quorum during the loss of one Proxmox node while the QDevice remains reachable.</p>
+        <div class="diagram" aria-label="Proxmox cluster architecture">
+          <div class="qdevice"><strong>admin-01</strong><span>QDevice / QNetd</span></div>
+          <div class="connector">│<br />│</div>
+          <div class="nodes"><div><strong>PROXMOX</strong><span>192.168.2.70</span></div><div><strong>Proxmox-2</strong><span>192.168.2.71</span></div></div>
+          <p>Corosync: dedicated link + management-LAN fallback</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="section">
-    <div class="container split">
-      <div><p class="eyebrow">SYSTEMS ADMINISTRATION</p><h2>Hands-on infrastructure operation.</h2></div>
-      <div class="skills">{skills.map((skill, i) => <div><span>{String(i + 1).padStart(2,'0')}</span>{skill}</div>)}</div>
+    <div class="container">
+      <p class="eyebrow">RUNNING THE PLATFORM</p><h2>Day-to-day infrastructure engineering.</h2>
+      <div class="grid">{operatingAreas.map(([title, description]) => <article><h3>{title}</h3><p>{description}</p></article>)}</div>
     </div>
   </section>
 
   <section class="section soft">
-    <div class="container">
-      <p class="eyebrow">ENGINEERING DECISIONS</p><h2>Understanding the boundaries matters.</h2>
-      <div class="grid two">{lessons.map(([title, description]) => <article><h3>{title}</h3><p>{description}</p></article>)}</div>
+    <div class="container split">
+      <div><p class="eyebrow">BACKUP &amp; RECOVERY</p><h2>A backup is not proven until recovery has been considered.</h2></div>
+      <div class="prose">
+        <p>Proxmox guests are protected by scheduled snapshot backups to node-specific NFS repositories on <code>media-01</code>. Backup archives use Zstandard compression and are retained according to the platform backup policy.</p>
+        <p>I do not treat a successful backup job as proof of recoverability. The project includes archive-integrity testing and restore validation, while remaining recovery gaps are documented rather than hidden.</p>
+        <p>Current recovery work includes extending unattended backup evidence, representative QEMU restore testing and application-consistent recovery testing for services such as Nextcloud and PostgreSQL.</p>
+      </div>
     </div>
   </section>
 
   <section class="section">
+    <div class="container boundary">
+      <div><p class="eyebrow">IMPORTANT LIMITATION</p><h2>Clustering does not automatically mean HA.</h2></div>
+      <div class="prose">
+        <p>The two Proxmox nodes currently use node-local guest storage. The cluster therefore provides common management, quorum and controlled migration capabilities, but it is not a shared-storage or replicated-disk HA platform.</p>
+        <p>Loss of a node does not mean its locally stored guests can simply restart on the surviving node. I deliberately document that boundary rather than describing the environment as highly available when it is not.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section soft">
     <div class="container closing">
-      <div><p class="eyebrow">OPERATIONAL APPROACH</p><h2>Build it. Secure it. Monitor it. Recover it.</h2><p>The project demonstrates the combination I bring to systems administration: long-term Linux operations experience with modern virtualisation, automation, observability, security and disciplined change management.</p></div>
+      <div>
+        <p class="eyebrow">WHAT THE PROJECT DEMONSTRATES</p>
+        <h2>Operate the platform, not just the hypervisor.</h2>
+        <p>This project applies my Linux and infrastructure operations experience to a modern virtualisation environment. It has involved Proxmox VE, Debian Linux, LXC, QEMU/KVM, Corosync/Kronosnet, QDevice, networking, Ansible, Git, monitoring, security, backup and recovery.</p>
+        <p>More importantly, it demonstrates how I approach infrastructure: understand how it works, automate what makes sense, monitor it, document its limitations and make sure there is a credible route to recovery.</p>
+      </div>
       <a class="button button-primary" href="/about">Professional profile →</a>
     </div>
   </section>
@@ -98,16 +115,17 @@ const lessons = [
 
 <style>
 .hero{padding:7rem 0 5rem;background:radial-gradient(circle at 82% 18%,rgba(93,184,255,.12),transparent 25rem)}
-.hero-grid,.split{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:4rem;align-items:center}
-h1{margin:.3rem 0 1.5rem;font-size:clamp(3.2rem,8vw,6rem);letter-spacing:-.06em;line-height:.96} h1 span{display:block;color:var(--primary)}
+.hero-grid,.split,.boundary{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:4rem;align-items:center}
+h1{margin:.3rem 0 1.5rem;font-size:clamp(3.2rem,8vw,6rem);letter-spacing:-.06em;line-height:.96}h1 span{display:block;color:var(--primary)}
 .lead,.prose p,article p,.closing p{color:var(--text-muted);line-height:1.7}.lead{max-width:780px;font-size:1.2rem}
 .actions,.tags{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
-aside,article,.closing{padding:1.6rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}
-dl{margin:0} dl div{padding:.7rem 0;border-bottom:1px solid var(--border)} dl div:last-child{border:0} dt{color:var(--text-muted);font-size:.72rem;text-transform:uppercase} dd{margin:0;font-weight:750}
+aside,article,.closing,.boundary{padding:1.6rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}
+dl{margin:0}dl div{padding:.7rem 0;border-bottom:1px solid var(--border)}dl div:last-child{border:0}dt{color:var(--text-muted);font-size:.72rem;text-transform:uppercase}dd{margin:0;font-weight:750}
 .technology-strip{padding:1rem 0;border-block:1px solid var(--border)}.tags{margin:0}.tags span{padding:.4rem .7rem;border:1px solid var(--border);border-radius:999px;font-size:.8rem}
 .section{padding:6rem 0}.soft{background:rgba(255,255,255,.025)}h2{font-size:clamp(2rem,4vw,3.5rem);letter-spacing:-.04em;line-height:1.05}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:2rem}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}article h3{margin-top:0;color:var(--primary)}
-.skills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}.skills div{padding:1rem;border-bottom:1px solid var(--border)}.skills span{margin-right:.8rem;color:var(--primary);font-weight:800}
-.closing{display:flex;align-items:center;justify-content:space-between;gap:3rem}.closing>div{max-width:760px}
-@media(max-width:850px){.hero-grid,.split,.grid,.grid.two,.skills{grid-template-columns:1fr}.closing{align-items:flex-start;flex-direction:column}}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:2rem}article h3{margin-top:0;color:var(--primary)}
+.diagram{margin-top:2rem;padding:1.5rem;border:1px solid var(--border);border-radius:var(--radius);text-align:center}.diagram span{display:block;color:var(--text-muted);font-size:.85rem}.connector{padding:.5rem;color:var(--primary)}.nodes{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.nodes div,.qdevice{padding:1rem;border:1px solid var(--border);border-radius:calc(var(--radius) * .7)}.diagram p{margin:1rem 0 0;font-size:.85rem}
+.boundary{border-color:var(--primary)}.closing{display:flex;align-items:center;justify-content:space-between;gap:3rem}.closing>div{max-width:800px}
+code{font-size:.9em}
+@media(max-width:850px){.hero-grid,.split,.boundary,.grid{grid-template-columns:1fr}.closing{align-items:flex-start;flex-direction:column}}
 </style>
