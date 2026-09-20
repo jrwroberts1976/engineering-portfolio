@@ -217,6 +217,13 @@ export const careerJourney: CareerStage[] = [
   },
 
   {
+    period: '2019',
+    title: 'Network Migration Project Delivered — LV=',
+    description:
+      'Delivered a major network migration project, coordinating technical implementation and troubleshooting through the migration window to complete the change successfully and maintain service continuity.',
+  },
+
+  {
     period: '2020–2024',
     title: 'Technical BC/DR Manager — LV=',
     description:
