@@ -234,7 +234,7 @@ export const careerJourney: CareerStage[] = [
     period: '2025',
     title: 'Infrastructure Manager — Yunex Traffic',
     description:
-      'Managed and mentored a team of infrastructure engineers supporting AWS services, acting as an escalation point and focusing on availability, reliability, automation, monitoring and operational improvement.',
+      'Managed and mentored a team of infrastructure engineers supporting AWS services, acting as an escalation point and focusing on availability, reliability, automation, monitoring and operational improvement. Contributed to ISO audit activity and Cyber Essentials Plus, supporting the technical controls, evidence gathering and infrastructure assurance required for security and compliance.',
   },
 
   {
