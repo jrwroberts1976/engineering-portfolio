@@ -182,38 +182,52 @@ export const leadershipExamples: LeadershipExample[] = [
 
 export const careerJourney: CareerStage[] = [
   {
-    period: 'Foundation',
-    title: 'UNIX and Enterprise Infrastructure',
+    period: '1998–2008',
+    title: 'IT Support — Rias plc / JRL plc',
     description:
-      'Built extensive experience supporting operationally critical UNIX and enterprise systems.',
+      'Progressed from Help Desk through first-, second- and third-line systems support, building the operational troubleshooting and customer-support foundations for my infrastructure career.',
   },
 
   {
-    period: 'Expansion',
-    title: 'Linux and Infrastructure Management',
+    period: '2008–2012',
+    title: 'Level 2 IT Consultant — Hampshire County Council',
     description:
-      'Developed wider responsibility across Linux platforms, infrastructure operations and technical service delivery.',
+      'Moved into enterprise UNIX and Linux infrastructure, including Solaris-to-IBM AIX migrations, AIX LPAR administration, Red Hat on VMware, hosted LAMP services, monitoring, backups, recovery testing and formal technical change control.',
   },
 
   {
-    period: 'Leadership',
-    title: 'Technical Delivery and Mentoring',
+    period: '2012–2020',
+    title: 'Technical Operations Analyst (UNIX) — LV=',
     description:
-      'Led technical implementation work, supported escalations and helped colleagues develop stronger engineering capability.',
+      'Provided BAU and out-of-hours UNIX/Linux support in a 24/7 enterprise environment, handling incidents, senior escalations, patching and recovery activity. Automated Red Hat patching from Bash into Ansible and acted as a technical lead during a major data-centre migration.',
   },
 
   {
-    period: 'Modern Engineering',
-    title: 'Cloud, Containers and Automation',
+    period: '2020–2024',
+    title: 'Technical BC/DR Manager — LV=',
     description:
-      'Expanded practical capability across Docker, Kubernetes, AWS, Azure, Terraform and Git-based delivery.',
+      'Led technical business-continuity and disaster-recovery activity, defining recovery requirements, coordinating annual recovery testing and multi-team physical DR exercises, and driving remediation from test findings.',
   },
 
   {
-    period: 'Current Direction',
-    title: 'Platform, Security and Operational Engineering',
+    period: '2025',
+    title: 'Infrastructure Manager — Yunex Traffic',
     description:
-      'Bringing long-term infrastructure experience together with container platforms, cloud engineering, observability, vulnerability management, security controls and automated production delivery.',
+      'Managed and mentored a team of infrastructure engineers supporting AWS services, acting as an escalation point and focusing on availability, reliability, automation, monitoring and operational improvement.',
+  },
+
+  {
+    period: '2025–Present',
+    title: 'Third Line Product Support Technician — Appello Group',
+    description:
+      'Provides third-line escalation for complex incidents and service requests, coordinating technical investigation across teams, restoring services within SLA and supporting the development of first- and second-line engineers.',
+  },
+
+  {
+    period: 'Current Engineering',
+    title: 'Modern Infrastructure & Systems Engineering',
+    description:
+      'Continues hands-on development across Linux, virtualisation, containers, automation, monitoring, networking, security, backup and recovery, combining current technologies with more than 20 years of operational infrastructure experience.',
   },
 ];
 
