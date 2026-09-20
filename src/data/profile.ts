@@ -227,7 +227,7 @@ export const careerJourney: CareerStage[] = [
     period: '2020–2024',
     title: 'Technical BC/DR Manager — LV=',
     description:
-      'Led technical business-continuity and disaster-recovery activity, defining recovery requirements, coordinating annual recovery testing and multi-team physical DR exercises, and driving remediation from test findings.',
+      'Led technical business-continuity and disaster-recovery activity across on-premises and cloud services, including Microsoft Azure and AWS. Defined recovery requirements, coordinated annual recovery testing and multi-team physical DR exercises, and drove remediation from test findings.',
   },
 
   {
