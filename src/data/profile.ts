@@ -189,6 +189,13 @@ export const careerJourney: CareerStage[] = [
   },
 
   {
+    period: '2005',
+    title: 'Red Hat RHCT & RHCE Certifications',
+    description:
+      'Achieved Red Hat Certified Technician (RHCT) and Red Hat Certified Engineer (RHCE) certifications, formally validating Linux systems administration and engineering skills developed through hands-on commercial experience.',
+  },
+
+  {
     period: '2008–2012',
     title: 'Level 2 IT Consultant — Hampshire County Council',
     description:
