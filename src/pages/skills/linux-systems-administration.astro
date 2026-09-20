@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Linux & Systems Administration" description="James Roberts' commercial Linux and UNIX systems administration experience across Red Hat Linux, AIX, Solaris, automation, migrations, monitoring and recovery.">
+  <section class="page-intro">
+    <div class="container section-heading">
+      <p class="eyebrow">Linux &amp; Systems Administration</p>
+      <h1>More than 20 years of commercial UNIX and Linux experience.</h1>
+      <p>Supporting business-critical infrastructure across Red Hat Linux, AIX and Solaris, from day-to-day production operations and incident resolution through major migrations, automation, monitoring and recovery.</p>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-grid">
+      <article>
+        <p class="eyebrow">Production Operations</p>
+        <h2>Enterprise systems support</h2>
+        <p>Long-standing experience supporting UNIX and Linux systems in 24/7 enterprise environments, including incident and problem resolution, senior technical escalation, service restoration to SLA, performance investigation, patching, upgrades and controlled operational change.</p>
+      </article>
+      <article>
+        <p class="eyebrow">Platforms</p>
+        <h2>Red Hat, AIX and Solaris</h2>
+        <p>Commercial experience includes Red Hat Enterprise Linux, IBM AIX and Solaris, with work spanning RHEL 4/5/6/7, AIX LPAR administration, Red Hat on VMware, Solaris-to-IBM AIX P-series migrations and enterprise UNIX infrastructure support.</p>
+      </article>
+      <article>
+        <p class="eyebrow">Automation</p>
+        <h2>Patching and repeatable operations</h2>
+        <p>Automated Red Hat Linux patching using Bash before moving the process to Ansible, improving consistency, repeatability and operational control while reducing reliance on manual administration.</p>
+      </article>
+      <article>
+        <p class="eyebrow">Migration &amp; Change</p>
+        <h2>Complex infrastructure change</h2>
+        <p>Experience includes Solaris-to-AIX migrations, Red Hat upgrades, service transitions and technical leadership for a major enterprise data-centre migration, supported by formal change control, validation, rollback planning and operational handover.</p>
+      </article>
+      <article>
+        <p class="eyebrow">Monitoring &amp; Platforms</p>
+        <h2>Operational visibility and application infrastructure</h2>
+        <p>Installed and supported Tivoli monitoring across UNIX estates and worked with LAMP platforms, IBM Content Manager, DB2 and associated enterprise infrastructure, combining operating-system administration with the services running on it.</p>
+      </article>
+      <article>
+        <p class="eyebrow">Resilience</p>
+        <h2>Backup, recovery and disaster recovery</h2>
+        <p>Practical experience of enterprise backups and restores, disaster recovery testing, high-availability environments and recovery planning, with later responsibility for technical business continuity and disaster recovery.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container closing">
+      <p class="eyebrow">Current Engineering</p>
+      <h2>Keeping established systems skills current.</h2>
+      <p>Alongside commercial experience, I continue to administer Linux systems through my engineering environment, using automation, monitoring, security tooling, virtualisation and documented infrastructure change.</p>
+      <div class="button-row"><a class="button button-primary" href="/skills">Back to technical skills</a><a class="button button-secondary" href="/projects">View engineering projects</a></div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+.page-intro h1{margin:0;max-width:1000px;font-size:clamp(3rem,7vw,5.5rem);letter-spacing:-.05em;line-height:1}
+.content-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
+.content-grid article{padding:2rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}
+.content-grid h2{margin:.35rem 0 .8rem;font-size:clamp(1.6rem,3vw,2.2rem)}
+.content-grid article>p:not(.eyebrow),.closing>p:not(.eyebrow){color:var(--text-muted)}
+.closing{max-width:900px}.closing h2{margin:.25rem 0 .8rem;font-size:clamp(2rem,4vw,3.5rem)}
+@media(max-width:750px){.content-grid{grid-template-columns:1fr}}
+</style>
