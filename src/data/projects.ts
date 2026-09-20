@@ -25,6 +25,32 @@ import type { Project } from './types';
 
 export const projects: Project[] = [
   {
+    id: 'proxmox-platform',
+    category: 'Virtualisation & Infrastructure',
+    title: 'Proxmox VE Cluster Platform',
+    shortTitle: 'Proxmox VE Cluster',
+    description:
+      'A production-style two-node Proxmox VE cluster with dual-link Corosync, QDevice quorum, LXC and QEMU workloads, Git-managed infrastructure, monitoring and validated backup workflows.',
+    href: '/projects/proxmox-platform',
+    status: 'Operational',
+    technologies: [
+      'Proxmox VE',
+      'Debian 13',
+      'Corosync',
+      'QDevice',
+      'LXC',
+      'QEMU',
+      'Ansible',
+      'Terraform',
+      'Prometheus',
+      'Grafana',
+    ],
+    featured: true,
+    repositoryUrl:
+      'https://github.com/jrwroberts1976/homelab-platform',
+  },
+
+  {
     id: 'engineering-platform',
     category: 'Platform Engineering',
     title: 'The Platform Behind This Website',

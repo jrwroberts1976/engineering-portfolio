@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getProjectById } from '../../../data/projects';
+
+const project = getProjectById('proxmox-platform');
+if (!project) throw new Error('Proxmox project data could not be found.');
+
+const capabilities = [
+  ['Cluster engineering', 'Two Proxmox VE nodes operating as jameshouse-pve with a common management and migration plane.'],
+  ['Resilient quorum', 'Corosync uses a preferred direct point-to-point heartbeat link with LAN fallback, while admin-01 provides an external QDevice vote.'],
+  ['Mixed workloads', 'The platform runs both LXC containers and QEMU virtual machines for DNS, monitoring, cloud, security, management and home-automation services.'],
+  ['Infrastructure automation', 'Ansible and Terraform are used with Git-managed infrastructure definitions, validation gates and idempotency checks.'],
+  ['Observability', 'Node Exporter, Alloy, Prometheus, Grafana, Loki and Zabbix provide host, service, log and availability visibility.'],
+  ['Backup and recovery', 'Node-scoped NFS backup targets, scheduled snapshot backups, integrity checks and restore evidence support operational recovery.'],
+];
+
+const skills = [
+  'Proxmox VE administration', 'Debian Linux', 'LXC', 'QEMU/KVM',
+  'Corosync / Kronosnet', 'QDevice quorum', 'Linux networking', 'NFS storage',
+  'Ansible', 'Terraform', 'Git / GitOps practices', 'Prometheus & Grafana',
+  'Loki / Alloy', 'Zabbix', 'Backup validation', 'Troubleshooting',
+];
+
+const lessons = [
+  ['Quorum is not storage HA', 'The cluster provides management, membership and quorum resilience, but guest disks remain node-local. I document that boundary rather than presenting the platform as automatic workload HA.'],
+  ['Separate the heartbeat path', 'The preferred Corosync link runs over a dedicated point-to-point USB Ethernet connection, with the management LAN retained as a lower-priority fallback.'],
+  ['Treat recovery as a feature', 'Backups are scheduled per node and validated with archive integrity checks and restore evidence rather than assuming a successful job means a recoverable service.'],
+  ['Keep deployment truth in Git', 'The homelab-platform repository is the current-state authority for migrated infrastructure, reducing the risk of building from stale host names or historical designs.'],
+];
+---
+
+<BaseLayout title={project.title} description="A two-node Proxmox VE cluster case study covering Linux virtualisation, Corosync, QDevice quorum, automation, monitoring, backup and recovery.">
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Virtualisation &amp; Systems Administration</p>
+        <h1>Proxmox VE <span>Cluster Platform</span></h1>
+        <p class="lead">A production-style virtualisation platform built and operated as a real service: clustered compute, resilient quorum, Linux workloads, infrastructure automation, observability and evidence-led recovery.</p>
+        <div class="actions">
+          <a class="button button-primary" href={project.repositoryUrl} target="_blank" rel="noopener noreferrer">View infrastructure repository</a>
+          <a class="button button-secondary" href="/projects">All projects</a>
+        </div>
+      </div>
+      <aside>
+        <p class="eyebrow">CURRENT PLATFORM</p>
+        <dl>
+          <div><dt>Cluster</dt><dd>jameshouse-pve</dd></div>
+          <div><dt>Nodes</dt><dd>2 × Proxmox VE</dd></div>
+          <div><dt>Quorum</dt><dd>2 nodes + QDevice</dd></div>
+          <div><dt>Workloads</dt><dd>LXC + QEMU</dd></div>
+          <div><dt>Status</dt><dd>Operational</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="technology-strip"><div class="container tags">{project.technologies.map((t) => <span>{t}</span>)}</div></section>
+
+  <section class="section">
+    <div class="container split">
+      <div><p class="eyebrow">THE PROJECT</p><h2>More than installing a hypervisor.</h2></div>
+      <div class="prose">
+        <p>I designed the platform around the operational concerns that matter after installation: quorum, network paths, workload placement, monitoring, patching, backup, recovery, automation and documentation.</p>
+        <p>The current estate uses two Debian 13 based Proxmox VE nodes. Corosync has two Kronosnet links: a preferred dedicated point-to-point connection and a management-LAN fallback. A separate administration host runs QNetd and supplies the third vote.</p>
+        <p>The cluster hosts infrastructure services including DNS, monitoring, Nextcloud, network security, vulnerability scanning, container management, Zabbix and Home Assistant.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section soft">
+    <div class="container">
+      <p class="eyebrow">ENGINEERING CAPABILITY</p><h2>Skills demonstrated by the platform.</h2>
+      <div class="grid">{capabilities.map(([title, description]) => <article><h3>{title}</h3><p>{description}</p></article>)}</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <div><p class="eyebrow">SYSTEMS ADMINISTRATION</p><h2>Hands-on infrastructure operation.</h2></div>
+      <div class="skills">{skills.map((skill, i) => <div><span>{String(i + 1).padStart(2,'0')}</span>{skill}</div>)}</div>
+    </div>
+  </section>
+
+  <section class="section soft">
+    <div class="container">
+      <p class="eyebrow">ENGINEERING DECISIONS</p><h2>Understanding the boundaries matters.</h2>
+      <div class="grid two">{lessons.map(([title, description]) => <article><h3>{title}</h3><p>{description}</p></article>)}</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container closing">
+      <div><p class="eyebrow">OPERATIONAL APPROACH</p><h2>Build it. Secure it. Monitor it. Recover it.</h2><p>The project demonstrates the combination I bring to systems administration: long-term Linux operations experience with modern virtualisation, automation, observability, security and disciplined change management.</p></div>
+      <a class="button button-primary" href="/about">Professional profile →</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+.hero{padding:7rem 0 5rem;background:radial-gradient(circle at 82% 18%,rgba(93,184,255,.12),transparent 25rem)}
+.hero-grid,.split{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:4rem;align-items:center}
+h1{margin:.3rem 0 1.5rem;font-size:clamp(3.2rem,8vw,6rem);letter-spacing:-.06em;line-height:.96} h1 span{display:block;color:var(--primary)}
+.lead,.prose p,article p,.closing p{color:var(--text-muted);line-height:1.7}.lead{max-width:780px;font-size:1.2rem}
+.actions,.tags{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
+aside,article,.closing{padding:1.6rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}
+dl{margin:0} dl div{padding:.7rem 0;border-bottom:1px solid var(--border)} dl div:last-child{border:0} dt{color:var(--text-muted);font-size:.72rem;text-transform:uppercase} dd{margin:0;font-weight:750}
+.technology-strip{padding:1rem 0;border-block:1px solid var(--border)}.tags{margin:0}.tags span{padding:.4rem .7rem;border:1px solid var(--border);border-radius:999px;font-size:.8rem}
+.section{padding:6rem 0}.soft{background:rgba(255,255,255,.025)}h2{font-size:clamp(2rem,4vw,3.5rem);letter-spacing:-.04em;line-height:1.05}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:2rem}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}article h3{margin-top:0;color:var(--primary)}
+.skills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}.skills div{padding:1rem;border-bottom:1px solid var(--border)}.skills span{margin-right:.8rem;color:var(--primary);font-weight:800}
+.closing{display:flex;align-items:center;justify-content:space-between;gap:3rem}.closing>div{max-width:760px}
+@media(max-width:850px){.hero-grid,.split,.grid,.grid.two,.skills{grid-template-columns:1fr}.closing{align-items:flex-start;flex-direction:column}}
+</style>

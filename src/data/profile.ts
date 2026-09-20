@@ -38,7 +38,7 @@ export const professionalSummary = {
     'I have more than 20 years of experience supporting UNIX, Linux, enterprise infrastructure and operationally critical services, with a current focus on building and operating modern infrastructure platforms.',
 
   currentFocus:
-    'My current engineering work brings together Linux, Docker, Kubernetes, AWS, Azure, infrastructure automation, Git-based delivery, monitoring, observability, vulnerability management and security engineering.',
+    'My current engineering work brings together Linux, Proxmox VE, Docker, Kubernetes, Ansible, AWS, Azure, infrastructure automation, Git-based delivery, networking, monitoring, observability, vulnerability management, backup and recovery, and security engineering.',
 
   workingStyle:
     'I focus on practical, supportable solutions. I consider how systems will be monitored, maintained, secured, tested and documented after deployment rather than treating implementation as the end of the work.',
@@ -52,13 +52,25 @@ export const professionalStrengths: ProfessionalStrength[] = [
   },
 
   {
+    title: 'Virtualisation and Proxmox VE',
+    description:
+      'Building and operating a two-node Proxmox VE cluster with Corosync, QDevice quorum, Linux bridges, LXC and QEMU workloads, controlled migration, backup scheduling and recovery validation.',
+  },
+
+  {
     title: 'Platform Engineering',
     description:
       'Building and operating practical Docker and Kubernetes platforms, with container lifecycle management, service health checks, networking and production deployment processes.',
   },
 
   {
-    title: 'Cloud and Automation',
+    title: 'Automation and Configuration Management',
+    description:
+      'Automating repeatable infrastructure work with Ansible and Bash, backed by Git-controlled configuration, validation, idempotency checks and rollback-aware change practices.',
+  },
+
+  {
+    title: 'Cloud and Infrastructure as Code',
     description:
       'Developing practical capability across AWS, Microsoft Azure, Terraform, Git-based workflows and repeatable infrastructure and application deployment.',
   },
@@ -67,6 +79,12 @@ export const professionalStrengths: ProfessionalStrength[] = [
     title: 'Monitoring and Observability',
     description:
       'Building operational visibility with Prometheus, Grafana, Loki, Blackbox Exporter and custom metrics, dashboards and alerting across multiple hosts and services.',
+  },
+
+  {
+    title: 'Networking and Troubleshooting',
+    description:
+      'Working across switching, VLANs, routing, DNS, VPNs, firewalls and service dependencies, using evidence-led troubleshooting to isolate faults across the infrastructure stack.',
   },
 
   {
