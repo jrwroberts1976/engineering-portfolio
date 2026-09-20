@@ -1,85 +1,248 @@
 ---
-/*
-|--------------------------------------------------------------------------
-| Projects Overview
-|--------------------------------------------------------------------------
-|
-| For now the portfolio has one primary project entry point: the Engineering
-| Platform. Individual technology case studies will be added back here as
-| those technologies are introduced to the current Proxmox platform.
-|
-*/
-
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ProjectCard from '../../components/ProjectCard.astro';
-
-import { getProjectById } from '../../data/projects';
-
-const project = getProjectById('engineering-platform');
-
-if (!project) {
-  throw new Error('Engineering Platform project is missing from project data.');
-}
 ---
 
 <BaseLayout
   title="Engineering Projects"
   description="The Engineering Platform behind James Roberts' infrastructure portfolio."
 >
-  <section class="page-intro">
-    <div class="container projects-heading">
-      <p class="eyebrow">Engineering Portfolio</p>
-      <h1>Projects built to be operated, not just demonstrated.</h1>
-      <p>
-        The Engineering Platform is the main project for now. Additional
-        technology case studies will be added as those technologies are
-        introduced to the current Proxmox platform.
-      </p>
+  <section class="projects-hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Engineering Portfolio</p>
+        <h1>
+          One platform.
+          <span>Built in layers.</span>
+        </h1>
+        <p class="hero-summary">
+          This portfolio follows the engineering platform I actually operate.
+          The platform is the main project; individual technologies become
+          deeper case studies as they are introduced, configured and proven.
+        </p>
+        <div class="button-row">
+          <a class="button button-primary" href="/projects/engineering-platform">
+            Explore the Engineering Platform
+          </a>
+          <a class="button button-secondary" href="/projects/proxmox-platform">
+            Proxmox Platform
+          </a>
+        </div>
+      </div>
+
+      <aside class="platform-facts">
+        <p class="eyebrow">Current Focus</p>
+        <dl>
+          <div><dt>Primary project</dt><dd>Engineering Platform</dd></div>
+          <div><dt>Virtualisation</dt><dd>Proxmox VE cluster</dd></div>
+          <div><dt>Approach</dt><dd>Build → prove → document</dd></div>
+          <div><dt>Portfolio state</dt><dd class="status-live">Actively evolving</dd></div>
+        </dl>
+      </aside>
     </div>
   </section>
 
   <section class="section section-soft">
     <div class="container">
-      <div class="projects-grid">
-        <ProjectCard
-          category={project.category}
-          title={project.title}
-          description={project.description}
-          href={project.href}
-          status={project.status}
-          technologies={project.technologies}
-        />
+      <div class="section-heading">
+        <p class="eyebrow">Platform Map</p>
+        <h2>Start with the whole platform, then drill into the engineering.</h2>
+        <p>
+          The main case study explains how the environment fits together.
+          Technology pages sit underneath it and document the implementation
+          in more detail.
+        </p>
       </div>
+
+      <div class="platform-path">
+        <a class="platform-card primary-card" href="/projects/engineering-platform">
+          <span class="card-label">01 · Main Project</span>
+          <h3>The Platform Behind This Website</h3>
+          <p>
+            The current architecture, public delivery, infrastructure,
+            observability, security, automation and operational approach.
+          </p>
+          <strong>Explore Engineering Platform →</strong>
+        </a>
+
+        <div class="path-connector" aria-hidden="true">↓</div>
+
+        <a class="platform-card" href="/projects/proxmox-platform">
+          <span class="card-label">02 · Platform Deep Dive</span>
+          <h3>Proxmox VE Cluster Platform</h3>
+          <p>
+            Two-node virtualisation, quorum, Corosync networking, LXC and QEMU
+            workloads, backup, recovery and infrastructure operations.
+          </p>
+          <strong>Explore Proxmox →</strong>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container future-panel">
+      <div>
+        <p class="eyebrow">What Comes Next</p>
+        <h2>The portfolio grows with the platform.</h2>
+        <p>
+          Additional technology deep dives will appear here when they are part
+          of the current platform and there is real implementation and
+          operational evidence to show.
+        </p>
+      </div>
+      <a class="button button-secondary" href="/projects/engineering-platform">
+        View current architecture
+      </a>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .projects-heading {
-    max-width: var(--max-width);
-    margin-inline: auto;
-    padding-inline: 0;
+  .projects-hero {
+    padding: 7rem 0 5rem;
   }
 
-  .projects-heading h1 {
-    max-width: 900px;
-    margin: 0;
-    font-size: clamp(2.8rem, 7vw, 5.5rem);
-    line-height: 1.02;
-    letter-spacing: -0.04em;
-  }
-
-  .projects-heading p:last-child {
-    max-width: 760px;
-    margin-top: 1.2rem;
-    color: var(--text-muted);
-    font-size: 1.1rem;
-  }
-
-  .projects-grid {
+  .hero-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+    align-items: center;
+    gap: 4rem;
+  }
+
+  h1 {
+    margin: 0 0 1.5rem;
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    letter-spacing: -0.06em;
+    line-height: 0.96;
+  }
+
+  h1 span {
+    display: block;
+    color: var(--primary);
+  }
+
+  .hero-summary {
+    max-width: 760px;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+  }
+
+  .platform-facts {
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .platform-facts dl { margin: 0; }
+
+  .platform-facts dl div {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .platform-facts dl div:last-child { border-bottom: 0; }
+
+  .platform-facts dt {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .platform-facts dd {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .status-live { color: #8ff0bc; }
+
+  .platform-path {
+    display: grid;
+    justify-items: center;
     max-width: 900px;
+    margin-inline: auto;
+  }
+
+  .platform-card {
+    display: block;
+    width: 100%;
+    padding: 2rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: inherit;
+    text-decoration: none;
+    box-shadow: var(--shadow);
+    transition: transform 160ms ease, border-color 160ms ease;
+  }
+
+  .platform-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(93, 184, 255, 0.5);
+  }
+
+  .primary-card {
+    border-color: rgba(93, 184, 255, 0.4);
+  }
+
+  .card-label {
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .platform-card h3 {
+    margin: 0.5rem 0 0.75rem;
+    font-size: clamp(1.7rem, 4vw, 2.5rem);
+    letter-spacing: -0.035em;
+  }
+
+  .platform-card p {
+    max-width: 720px;
+    color: var(--text-muted);
+  }
+
+  .platform-card strong { color: var(--primary); }
+
+  .path-connector {
+    padding: 0.7rem;
+    color: var(--primary);
+    font-size: 1.4rem;
+  }
+
+  .future-panel {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 4rem;
+    padding: 2.5rem;
+    border: 1px solid rgba(93, 184, 255, 0.35);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .future-panel h2 {
+    margin: 0;
+    font-size: clamp(2.1rem, 5vw, 3.5rem);
+    letter-spacing: -0.04em;
+    line-height: 1.08;
+  }
+
+  .future-panel p {
+    max-width: 760px;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 950px) {
+    .hero-grid,
+    .future-panel {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
   }
 </style>
