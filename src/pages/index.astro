@@ -1,34 +1,30 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
 import Hero from '../components/Hero.astro';
-import DeliveryHighlights from '../components/DeliveryHighlights.astro';
-import EngineeringPhilosophy from '../components/EngineeringPhilosophy.astro';
-import JourneyPreview from '../components/JourneyPreview.astro';
-import FeaturedProjects from '../components/FeaturedProjects.astro';
-import RecentHighlights from '../components/RecentHighlights.astro';
-import LabPreview from '../components/LabPreview.astro';
-import ArchitecturePreview from '../components/ArchitecturePreview.astro';
 ---
-
-<BaseLayout
-  title="Home"
-  description="James Roberts combines more than 20 years of infrastructure experience with technical leadership, project delivery, cloud, platform engineering, monitoring and automation."
->
+<BaseLayout title="Infrastructure & Systems Engineer" description="James Roberts: infrastructure and systems engineer with 20+ years of experience, supported by practical evidence across Linux, Proxmox, Docker, automation, monitoring, networking and security.">
   <Hero />
-
-  <DeliveryHighlights />
-
-  <EngineeringPhilosophy />
-
-  <JourneyPreview />
-
-  <FeaturedProjects />
-
-  <RecentHighlights />
-
-  <LabPreview />
-
-  <ArchitecturePreview />
-
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-heading"><p class="eyebrow">Core Capabilities</p><h2>Skills backed by operational experience.</h2><p>The site is organised around what I can do, with projects and the engineering lab providing evidence.</p></div>
+      <div class="cap-grid">
+        <a href="/skills#linux"><strong>Linux &amp; Systems</strong><span>UNIX, Linux, administration, patching and troubleshooting</span></a>
+        <a href="/skills#virtualisation"><strong>Virtualisation</strong><span>Proxmox VE, LXC, QEMU/KVM, clustering and recovery</span></a>
+        <a href="/skills#containers"><strong>Containers</strong><span>Docker, Compose, Komodo and container lifecycle</span></a>
+        <a href="/skills#automation"><strong>Automation</strong><span>Ansible, Bash, Git and repeatable infrastructure change</span></a>
+        <a href="/skills#observability"><strong>Observability</strong><span>Prometheus, Grafana, Loki, Alloy and alerting</span></a>
+        <a href="/skills#networking"><strong>Networking &amp; Security</strong><span>DNS, VPN, switching, firewalls, Greenbone, Suricata and Zeek</span></a>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container evidence">
+      <div><p class="eyebrow">Practical Evidence</p><h2>See the work behind the claims.</h2><p>Project case studies show design decisions, implementation, operations, troubleshooting, automation and recovery rather than a list of technology names.</p></div>
+      <div class="button-row"><a class="button button-primary" href="/projects">Projects</a><a class="button button-secondary" href="/lab">Current engineering work</a></div>
+    </div>
+  </section>
 </BaseLayout>
+<style>
+.cap-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.cap-grid a{display:grid;gap:.45rem;padding:1.5rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);text-decoration:none}.cap-grid strong{color:var(--primary);font-size:1.2rem}.cap-grid span,.evidence p{color:var(--text-muted)}.evidence{display:grid;grid-template-columns:1fr auto;gap:4rem;align-items:center}.evidence h2{margin:.2rem 0;font-size:clamp(2rem,4vw,3.5rem)}
+@media(max-width:900px){.cap-grid{grid-template-columns:repeat(2,1fr)}.evidence{grid-template-columns:1fr}}@media(max-width:600px){.cap-grid{grid-template-columns:1fr}}
+</style>

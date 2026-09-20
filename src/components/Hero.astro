@@ -1,183 +1,36 @@
-<!--
-===============================================================================
-Component: Hero
-
-Purpose:
-Creates the main homepage introduction. It presents James Roberts as an
-experienced infrastructure professional with technical leadership and project
-delivery capability.
-
-Edit this file to change the homepage headline, summary, badges or buttons.
-===============================================================================
--->
-
 <section class="hero">
   <div class="container hero-grid">
-    <div class="hero-content">
-      <p class="eyebrow">
-        Infrastructure • Technical Leadership • Project Delivery
-      </p>
-
-      <h1>
-        Engineering reliable infrastructure through
-        <span>leadership and practical delivery.</span>
-      </h1>
-
+    <div>
+      <p class="eyebrow">Infrastructure &amp; Systems Engineering</p>
+      <h1>Experienced infrastructure engineer.<span>Evidence behind the CV.</span></h1>
       <p class="hero-summary">
-        I combine more than 20 years of infrastructure and operational
-        experience with technical leadership, stakeholder coordination,
-        structured delivery and continual development across cloud,
-        containers, monitoring, automation and security.
+        I bring more than 20 years of infrastructure and operational experience across Linux and UNIX,
+        systems administration, networking and technical delivery, backed by current hands-on work in
+        Proxmox, Docker, automation, observability, security and platform engineering.
       </p>
-
       <div class="button-row">
-        <a class="button button-primary" href="/leadership">
-          Project Delivery Experience
-        </a>
-
-        <a class="button button-secondary" href="/projects">
-          Explore Engineering Projects
-        </a>
+        <a class="button button-primary" href="/skills">View technical skills</a>
+        <a class="button button-secondary" href="/projects">See project evidence</a>
+        <a class="button button-secondary" href="/files/James%20Roberts.pdf" target="_blank">Download CV</a>
       </div>
-
-      <ul class="focus-list" aria-label="Professional focus areas">
-        <li>Linux</li>
-        <li>Infrastructure</li>
-        <li>Project Delivery</li>
-        <li>Cloud</li>
-        <li>Monitoring</li>
-        <li>Security</li>
-      </ul>
     </div>
-
-    <aside class="hero-summary-panel">
-      <p class="eyebrow">Professional Overview</p>
-
-      <div class="summary-metrics">
-        <article>
-          <strong>20+</strong>
-          <span>Years of IT experience</span>
-        </article>
-
-        <article>
-          <strong>Multi-team</strong>
-          <span>Technical delivery experience</span>
-        </article>
-
-        <article>
-          <strong>Live</strong>
-          <span>Operational engineering platform</span>
-        </article>
-
-        <article>
-          <strong>End-to-end</strong>
-          <span>Planning through operational handover</span>
-        </article>
-      </div>
+    <aside class="evidence-panel">
+      <p class="eyebrow">Professional Snapshot</p>
+      <dl>
+        <div><dt>Experience</dt><dd>20+ years</dd></div>
+        <div><dt>Core</dt><dd>Linux · Infrastructure · Operations</dd></div>
+        <div><dt>Current</dt><dd>Proxmox · Docker · Ansible</dd></div>
+        <div><dt>Evidence</dt><dd>Live engineering platform</dd></div>
+      </dl>
     </aside>
   </div>
 </section>
-
 <style>
-  .hero {
-    padding: 7.5rem 0 6rem;
-  }
-
-  .hero-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.55fr);
-    align-items: center;
-    gap: 4rem;
-  }
-
-  h1 {
-    max-width: 950px;
-    margin: 0 0 1.5rem;
-    font-size: clamp(3.2rem, 7vw, 6rem);
-    line-height: 0.97;
-    letter-spacing: -0.06em;
-  }
-
-  h1 span {
-    display: block;
-    color: var(--primary);
-  }
-
-  .hero-summary {
-    max-width: 780px;
-    margin-bottom: 2rem;
-    color: var(--text-muted);
-    font-size: clamp(1.1rem, 2vw, 1.28rem);
-  }
-
-  .focus-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.55rem;
-    margin: 2rem 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .focus-list li {
-    padding: 0.42rem 0.75rem;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    color: var(--text-muted);
-    background: rgba(255, 255, 255, 0.03);
-    font-size: 0.82rem;
-    font-weight: 700;
-  }
-
-  .hero-summary-panel {
-    padding: 1.75rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background:
-      radial-gradient(
-        circle at top right,
-        rgba(93, 184, 255, 0.14),
-        transparent 16rem
-      ),
-      var(--surface);
-    box-shadow: var(--shadow);
-  }
-
-  .summary-metrics {
-    display: grid;
-    margin-top: 1rem;
-  }
-
-  .summary-metrics article {
-    display: grid;
-    gap: 0.2rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .summary-metrics article:last-child {
-    border-bottom: 0;
-  }
-
-  .summary-metrics strong {
-    color: var(--primary);
-    font-size: 1.55rem;
-    line-height: 1.1;
-  }
-
-  .summary-metrics span {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-  }
-
-  @media (max-width: 950px) {
-    .hero-grid {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-    }
-
-    .hero {
-      padding-top: 5rem;
-    }
-  }
+.hero{padding:7rem 0 5.5rem}.hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:4rem;align-items:center}
+h1{max-width:980px;margin:0 0 1.5rem;font-size:clamp(3.2rem,7vw,6rem);line-height:.97;letter-spacing:-.06em}h1 span{display:block;color:var(--primary)}
+.hero-summary{max-width:800px;color:var(--text-muted);font-size:clamp(1.1rem,2vw,1.28rem)}
+.evidence-panel{padding:1.75rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+.evidence-panel dl{margin:0}.evidence-panel dl div{padding:.8rem 0;border-bottom:1px solid var(--border)}.evidence-panel dl div:last-child{border:0}
+.evidence-panel dt{color:var(--text-muted);font-size:.75rem;text-transform:uppercase}.evidence-panel dd{margin:.15rem 0 0;font-weight:700}
+@media(max-width:950px){.hero-grid{grid-template-columns:1fr;gap:2.5rem}.hero{padding-top:5rem}}
 </style>
