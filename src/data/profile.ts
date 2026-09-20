@@ -52,9 +52,9 @@ export const professionalStrengths: ProfessionalStrength[] = [
   },
 
   {
-    title: 'Virtualisation and Proxmox VE',
+    title: 'Virtualisation',
     description:
-      'Building and operating a two-node Proxmox VE cluster with Corosync, QDevice quorum, Linux bridges, LXC and QEMU workloads, controlled migration, backup scheduling and recovery validation.',
+      'Extensive virtualisation experience across VMware, Oracle VM (OVM) and Proxmox VE environments, covering virtual machine administration, operational support, troubleshooting, migration, platform maintenance, backup and recovery. Current hands-on work includes the design and operation of a clustered Proxmox VE environment.',
   },
 
   {
