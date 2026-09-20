@@ -19,18 +19,18 @@ const technologies = [
 ---
 
 <BaseLayout title={project.title} description="A two-node Proxmox VE case study covering clustered virtualisation, quorum, networking, automation, observability, backup and recovery.">
-  <section class="hero">
+  <section class="project-hero">
     <div class="container hero-grid">
       <div>
         <p class="eyebrow">Virtualisation &amp; Systems Administration</p>
         <h1>Proxmox VE <span>Cluster Platform</span></h1>
-        <p class="lead">A two-node Proxmox VE platform built to run the core services in my home infrastructure. The project covers clustered virtualisation, quorum, resilient cluster networking, LXC and QEMU workloads, monitoring, automation, backup and recovery.</p>
-        <div class="actions">
+        <p class="hero-summary">A two-node Proxmox VE platform built to run the core services in my home infrastructure. The project covers clustered virtualisation, quorum, resilient cluster networking, LXC and QEMU workloads, monitoring, automation, backup and recovery.</p>
+        <div class="button-row">
           <a class="button button-primary" href={project.repositoryUrl} target="_blank" rel="noopener noreferrer">View infrastructure repository</a>
           <a class="button button-secondary" href="/projects">All projects</a>
         </div>
       </div>
-      <aside>
+      <aside class="project-facts">
         <p class="eyebrow">CURRENT PLATFORM</p>
         <dl>
           <div><dt>Cluster</dt><dd>jameshouse-pve</dd></div>
@@ -43,7 +43,7 @@ const technologies = [
     </div>
   </section>
 
-  <section class="technology-strip"><div class="container tags">{technologies.map((t) => <span>{t}</span>)}</div></section>
+  <section class="technology-strip"><div class="container"><ul class="tag-list">{technologies.map((t) => <li>{t}</li>)}</ul></div></section>
 
   <section class="section">
     <div class="container split">
@@ -56,7 +56,7 @@ const technologies = [
     </div>
   </section>
 
-  <section class="section soft">
+  <section class="section section-soft">
     <div class="container split">
       <div><p class="eyebrow">ARCHITECTURE</p><h2>Two nodes, three votes.</h2></div>
       <div class="prose">
@@ -79,7 +79,7 @@ const technologies = [
     </div>
   </section>
 
-  <section class="section soft">
+  <section class="section section-soft">
     <div class="container split">
       <div><p class="eyebrow">BACKUP &amp; RECOVERY</p><h2>A backup is not proven until recovery has been considered.</h2></div>
       <div class="prose">
@@ -100,7 +100,7 @@ const technologies = [
     </div>
   </section>
 
-  <section class="section soft">
+  <section class="section section-soft">
     <div class="container closing">
       <div>
         <p class="eyebrow">WHAT THE PROJECT DEMONSTRATES</p>
@@ -114,18 +114,167 @@ const technologies = [
 </BaseLayout>
 
 <style>
-.hero{padding:7rem 0 5rem;background:radial-gradient(circle at 82% 18%,rgba(93,184,255,.12),transparent 25rem)}
-.hero-grid,.split,.boundary{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:4rem;align-items:center}
-h1{margin:.3rem 0 1.5rem;font-size:clamp(3.2rem,8vw,6rem);letter-spacing:-.06em;line-height:.96}h1 span{display:block;color:var(--primary)}
-.lead,.prose p,article p,.closing p{color:var(--text-muted);line-height:1.7}.lead{max-width:780px;font-size:1.2rem}
-.actions,.tags{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
-aside,article,.closing,.boundary{padding:1.6rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}
-dl{margin:0}dl div{padding:.7rem 0;border-bottom:1px solid var(--border)}dl div:last-child{border:0}dt{color:var(--text-muted);font-size:.72rem;text-transform:uppercase}dd{margin:0;font-weight:750}
-.technology-strip{padding:1rem 0;border-block:1px solid var(--border)}.tags{margin:0}.tags span{padding:.4rem .7rem;border:1px solid var(--border);border-radius:999px;font-size:.8rem}
-.section{padding:6rem 0}.soft{background:rgba(255,255,255,.025)}h2{font-size:clamp(2rem,4vw,3.5rem);letter-spacing:-.04em;line-height:1.05}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:2rem}article h3{margin-top:0;color:var(--primary)}
-.diagram{margin-top:2rem;padding:1.5rem;border:1px solid var(--border);border-radius:var(--radius);text-align:center}.diagram span{display:block;color:var(--text-muted);font-size:.85rem}.connector{padding:.5rem;color:var(--primary)}.nodes{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.nodes div,.qdevice{padding:1rem;border:1px solid var(--border);border-radius:calc(var(--radius) * .7)}.diagram p{margin:1rem 0 0;font-size:.85rem}
-.boundary{border-color:var(--primary)}.closing{display:flex;align-items:center;justify-content:space-between;gap:3rem}.closing>div{max-width:800px}
-code{font-size:.9em}
-@media(max-width:850px){.hero-grid,.split,.boundary,.grid{grid-template-columns:1fr}.closing{align-items:flex-start;flex-direction:column}}
+  .project-hero {
+    padding: 7rem 0 5rem;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+    align-items: center;
+    gap: 4rem;
+  }
+
+  h1 {
+    margin: 0 0 1.5rem;
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    letter-spacing: -0.06em;
+    line-height: 0.96;
+  }
+
+  h1 span {
+    display: block;
+    color: var(--primary);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(2.1rem, 5vw, 3.5rem);
+    letter-spacing: -0.04em;
+    line-height: 1.08;
+  }
+
+  .hero-summary {
+    max-width: 760px;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+  }
+
+  .project-facts {
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .project-facts dl { margin: 0; }
+  .project-facts dl div {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .project-facts dl div:last-child { border-bottom: 0; }
+  .project-facts dt {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+  .project-facts dd {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .technology-strip {
+    padding: 1.1rem 0;
+    border-block: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.025);
+  }
+  .technology-strip .tag-list { margin: 0; }
+
+  .split,
+  .boundary {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 2rem;
+  }
+
+  .grid article,
+  .closing,
+  .boundary {
+    padding: 1.6rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .grid article h3 {
+    margin-top: 0;
+    color: var(--primary);
+  }
+
+  .grid article p,
+  .closing p {
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .diagram {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-align: center;
+  }
+  .diagram span {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+  .connector {
+    padding: 0.5rem;
+    color: var(--primary);
+  }
+  .nodes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .nodes div,
+  .qdevice {
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) * 0.7);
+  }
+  .diagram p {
+    margin: 1rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+
+  .boundary { border-color: rgba(93, 184, 255, 0.35); }
+
+  .closing {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+  .closing > div { max-width: 800px; }
+
+  @media (max-width: 950px) {
+    .hero-grid,
+    .split,
+    .boundary {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 700px) {
+    .grid,
+    .nodes { grid-template-columns: 1fr; }
+    .closing {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
 </style>
