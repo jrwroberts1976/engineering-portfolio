@@ -199,7 +199,7 @@ export const careerJourney: CareerStage[] = [
     period: '2008–2012',
     title: 'Level 2 IT Consultant — Hampshire County Council',
     description:
-      'Moved into enterprise UNIX and Linux infrastructure, including Solaris-to-IBM AIX migrations, AIX LPAR administration, Red Hat on VMware, hosted LAMP services, monitoring, backups, recovery testing and formal technical change control.',
+      'Moved into enterprise UNIX and Linux infrastructure, including Solaris-to-IBM AIX migrations, AIX LPAR administration, Red Hat on VMware, hosted LAMP services, monitoring, backups and recovery testing. Served as a required technical member of the Change Advisory Board (CAB) and was part of the VMware virtualisation team, contributing to controlled infrastructure change and the support of the virtual environment.',
   },
 
   {
