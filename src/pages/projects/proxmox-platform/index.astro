@@ -83,7 +83,7 @@ const technologies = [
     <div class="container split">
       <div><p class="eyebrow">BACKUP &amp; RECOVERY</p><h2>A backup is not proven until recovery has been considered.</h2></div>
       <div class="prose">
-        <p>Proxmox guests are protected by scheduled snapshot backups to node-specific NFS repositories on <code>media-01</code>. Backup archives use Zstandard compression and are retained according to the platform backup policy.</p>
+        <p>Proxmox guests are protected by scheduled snapshot backups to node-specific NFS repositories on <strong>media-01</strong>. Backup archives use Zstandard compression and are retained according to the platform backup policy.</p>
         <p>I do not treat a successful backup job as proof of recoverability. The project includes archive-integrity testing and restore validation, while remaining recovery gaps are documented rather than hidden.</p>
         <p>Current recovery work includes extending unattended backup evidence, representative QEMU restore testing and application-consistent recovery testing for services such as Nextcloud and PostgreSQL.</p>
       </div>
