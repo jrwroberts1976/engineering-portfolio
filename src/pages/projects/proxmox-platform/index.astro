@@ -60,12 +60,12 @@ const technologies = [
     <div class="container split">
       <div><p class="eyebrow">ARCHITECTURE</p><h2>Two nodes, three votes.</h2></div>
       <div class="prose">
-        <p><code>PROXMOX</code> and <code>Proxmox-2</code> form the <code>jameshouse-pve</code> cluster. Corosync uses two network paths: a dedicated point-to-point Ethernet connection as the preferred cluster link and the management LAN as a lower-priority fallback.</p>
+        <p><code>Proxmox-1</code> and <code>Proxmox-2</code> form the <code>jameshouse-pve</code> cluster. Corosync uses two network paths: a dedicated point-to-point Ethernet connection as the preferred cluster link and the management LAN as a lower-priority fallback.</p>
         <p>Because this is a two-node cluster, <code>admin-01</code> runs Corosync QNetd and provides an external QDevice vote. This allows the cluster to retain quorum during the loss of one Proxmox node while the QDevice remains reachable.</p>
         <div class="diagram" aria-label="Proxmox cluster architecture">
           <div class="qdevice"><strong>admin-01</strong><span>QDevice / QNetd</span></div>
           <div class="connector">│<br />│</div>
-          <div class="nodes"><div><strong>PROXMOX</strong><span>192.168.2.70</span></div><div><strong>Proxmox-2</strong><span>192.168.2.71</span></div></div>
+          <div class="nodes"><div><strong>Proxmox-1</strong><span>192.168.2.70</span></div><div><strong>Proxmox-2</strong><span>192.168.2.71</span></div></div>
           <p>Corosync: dedicated link + management-LAN fallback</p>
         </div>
       </div>
