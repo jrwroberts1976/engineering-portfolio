@@ -72,9 +72,9 @@ const components = [
   },
   {
     category: 'Virtualisation',
-    title: 'PROXMOX + Proxmox-2',
+    title: 'Proxmox-1 + Proxmox-2',
     description:
-      'Two deliberately standalone Proxmox nodes host DNS, monitoring, cloud, mail, sensor and reserved edge workloads.',
+      'The two-node Proxmox VE cluster hosts the virtualised DNS, monitoring, cloud, mail, security, management and home-automation workloads.',
   },
   {
     category: 'Core Services',
@@ -86,7 +86,7 @@ const components = [
     category: 'Physical Workloads',
     title: 'docker-01 + media-01',
     description:
-      'Dedicated Raspberry Pi hosts provide BirdNET-Go Docker services and the Kodi media endpoint without overloading the virtualisation layer.',
+      'media-01 and docker-01 are separate physical Raspberry Pi systems outside the Proxmox cluster. They provide NFS backup/media services and BirdNET-Go respectively.',
   },
   {
     category: 'Security Engineering',
