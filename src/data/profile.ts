@@ -206,7 +206,7 @@ export const careerJourney: CareerStage[] = [
     period: '2012–2020',
     title: 'Technical Operations Analyst (UNIX) — LV=',
     description:
-      'Provided BAU and out-of-hours UNIX/Linux support in a 24/7 enterprise environment, handling incidents, senior escalations, patching and recovery activity. Automated Red Hat patching from Bash into Ansible and acted as a technical lead during a major data-centre migration.',
+      'Provided BAU and out-of-hours UNIX/Linux support in a 24/7 enterprise environment, handling incidents, senior escalations, patching and recovery activity. Worked with Puppet for Linux configuration management and automation, automated Red Hat patching from Bash into Ansible, and acted as a technical lead during major infrastructure change.',
   },
 
   {
