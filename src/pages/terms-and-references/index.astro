@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Terms and References" description="Plain-English definitions of terms used in the homelab and engineering documentation.">
+  <section class="section"><div class="container">
+    <p class="eyebrow">Engineering Lab · Reference</p>
+    <h1>Terms and References</h1>
+    <p class="lead">Plain-English definitions for the technologies in the homelab. See the <a href="/building-blocks/">Building Blocks</a> page for how each component fits into our environment.</p>
+    <article id="snappy" class="term"><h2>Snappy</h2><p><strong>What it is:</strong> A fast, lossless compression format. Lossless means decompression recovers the original bytes exactly.</p><p><strong>Why it matters here:</strong> Alloy sends compressed log batches to Loki. The isolated Pi-hole privacy test uses <code>python-snappy</code> to decompress a synthetic Loki request so we can inspect what would be forwarded.</p><p><strong>Important distinction:</strong> Compression does not anonymise or encrypt data. The privacy filter must remove domains and client addresses <em>before</em> the message is compressed.</p><p><strong>Where:</strong> Installed in the Ansible-managed, isolated test environment on <code>dns-01</code>; not a separate production service.</p></article>
+    <article id="protobuf" class="term"><h2>Protocol Buffers (Protobuf)</h2><p><strong>What it is:</strong> A compact binary format for representing structured data. It is often used to exchange messages between services.</p><p><strong>Why it matters here:</strong> Loki push requests contain structured log streams and entries. After Snappy decompression, our synthetic receiver decodes the Protobuf message to inspect the individual outgoing log lines.</p><p><strong>Important distinction:</strong> Protobuf defines how data is encoded; it does not itself filter, secure or anonymise log contents.</p><p><strong>Where:</strong> The <code>protobuf</code> Python package is installed alongside <code>python-snappy</code> in the isolated <code>dns-01</code> test environment.</p></article>
+    <article class="term"><h2>How they work together</h2><p>Pi-hole synthetic log → Alloy privacy filter → Loki Protobuf message → Snappy compression → local test receiver → Snappy decompression → Protobuf decoding → inspect allowed event names and reject leaked identifiers.</p><p><strong>Status:</strong> The decoding dependencies are installed. The end-to-end privacy test is still pending; production Pi-hole log forwarding has not been enabled.</p><p>Deployment and verification instructions are maintained in the private homelab-platform IaC repository.</p></article>
+  </div></section>
+</BaseLayout>
+<style>
+h1{font-size:clamp(3rem,7vw,5rem);letter-spacing:-.05em}.lead{max-width:850px;color:var(--text-muted);font-size:1.15rem}.term{padding:1.5rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);margin:1.2rem 0;scroll-margin-top:120px}.term h2{margin-top:0}.term p{max-width:900px}.term code{overflow-wrap:anywhere}
+</style>
