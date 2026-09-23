@@ -46,3 +46,5 @@ All commands are run from the root of the project, from a terminal:
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
 
 <!-- Redeployment trigger: publish the removal of /building-blocks/ and its GitHub redirect (2026-09-23). -->
+
+<!-- Deployment retry: publish corrected Astro build and retire /building-blocks/ (2026-09-23). -->
