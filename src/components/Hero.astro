@@ -11,7 +11,7 @@
       <div class="button-row">
         <a class="button button-primary" href="/skills">View technical skills</a>
         <a class="button button-secondary" href="/projects">View engineering projects</a>
-        <a class="button button-secondary" href="/files/James%20Roberts.pdf" target="_blank">Download CV</a>
+        <a class="button button-secondary" href="/files/James%20Roberts.pdf" target="_blank" rel="noopener noreferrer">Download CV</a>
       </div>
     </div>
     <aside class="evidence-panel">
@@ -26,11 +26,13 @@
   </div>
 </section>
 <style>
-.hero{padding:7rem 0 5.5rem}.hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:4rem;align-items:center}
-h1{max-width:980px;margin:0 0 1.5rem;font-size:clamp(3.2rem,7vw,6rem);line-height:.97;letter-spacing:-.06em}h1 span{display:block;color:var(--primary)}
-.hero-summary{max-width:800px;color:var(--text-muted);font-size:clamp(1.1rem,2vw,1.28rem)}
-.evidence-panel{padding:1.75rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
-.evidence-panel dl{margin:0}.evidence-panel dl div{padding:.8rem 0;border-bottom:1px solid var(--border)}.evidence-panel dl div:last-child{border:0}
-.evidence-panel dt{color:var(--text-muted);font-size:.75rem;text-transform:uppercase}.evidence-panel dd{margin:.15rem 0 0;font-weight:700}
-@media(max-width:950px){.hero-grid{grid-template-columns:1fr;gap:2.5rem}.hero{padding-top:5rem}}
+.hero{padding:6.5rem 0 5.2rem}.hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:4rem;align-items:center}
+h1{max-width:980px;margin:0 0 1.5rem;font-size:clamp(3.1rem,7vw,6rem);line-height:.98;letter-spacing:-.058em;text-wrap:balance}h1 span{display:block;margin-top:.14em;color:var(--primary)}
+.hero-summary{max-width:780px;margin:0 0 2rem;color:var(--text-muted);font-size:clamp(1.08rem,2vw,1.26rem)}
+.evidence-panel{position:relative;overflow:hidden;padding:1.8rem;border:1px solid var(--border-strong);border-radius:var(--radius);background:linear-gradient(145deg,rgba(23,43,69,.95),rgba(13,26,43,.96));box-shadow:var(--shadow)}
+.evidence-panel::before{position:absolute;inset:0 auto auto 0;width:100%;height:2px;background:linear-gradient(90deg,var(--primary),transparent 75%);content:""}
+.evidence-panel dl{margin:0}.evidence-panel dl div{display:grid;gap:.18rem;padding:.9rem 0;border-bottom:1px solid var(--border)}.evidence-panel dl div:last-child{border:0;padding-bottom:0}
+.evidence-panel dt{color:var(--text-muted);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.evidence-panel dd{margin:0;font-weight:700}
+@media(max-width:950px){.hero-grid{grid-template-columns:1fr;gap:2.5rem}.hero{padding:4.8rem 0 4rem}.evidence-panel{max-width:620px}}
+@media(max-width:620px){.hero{padding:3.6rem 0 3.2rem}h1{font-size:clamp(2.6rem,13vw,4rem)}.hero .button{width:100%}}
 </style>
