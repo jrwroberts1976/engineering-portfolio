@@ -51,7 +51,10 @@ import { featuredProjects } from '../data/projects';
               }
             </ul>
 
-            <a class="card-link" href={project.href}>
+            <a
+              class="card-link"
+              href={project.href.endsWith('/') ? project.href : `${project.href}/`}
+            >
               View project →
             </a>
           </article>

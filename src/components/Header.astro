@@ -17,27 +17,27 @@ const links: Array<{
   external?: boolean;
 }> = [
   {
-    href: '/about',
+    href: '/about/',
     label: 'About',
   },
   {
-    href: '/skills',
+    href: '/skills/',
     label: 'Skills',
   },
   {
-    href: '/projects',
+    href: '/projects/',
     label: 'Projects',
   },
   {
-    href: '/lab',
+    href: '/lab/',
     label: 'Engineering Lab',
   },
   {
-    href: '/leadership',
+    href: '/leadership/',
     label: 'Leadership',
   },
   {
-    href: '/beyond-engineering',
+    href: '/beyond-engineering/',
     label: 'Beyond Engineering',
   },
   ...(defenderUrl
@@ -55,14 +55,14 @@ const links: Array<{
     external: true,
   },
   {
-    href: '/contact',
+    href: '/contact/',
     label: 'Contact',
   },
 ];
 
 const isActive = (href: string) =>
   currentPath === href ||
-  currentPath.startsWith(`${href}/`);
+  currentPath.startsWith(href);
 ---
 
 <header class="site-header">
