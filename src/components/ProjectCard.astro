@@ -93,18 +93,16 @@ const {
       border-color 160ms ease;
   }
 
-  .project-card:hover,
-  .project-card:focus-within {
+  .project-card:hover {
     transform: translateY(-4px);
     border-color: rgba(93, 184, 255, 0.45);
   }
 
   .card-header {
     display: flex;
-    flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 0.5rem 1rem;
+    gap: 1rem;
   }
 
   .status {
@@ -143,24 +141,5 @@ const {
     color: var(--primary);
     font-weight: 750;
     text-decoration: none;
-  }
-
-  .card-link:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
-  }
-
-  @media (max-width: 600px) {
-    .project-card {
-      min-height: 0;
-      padding: 1.4rem;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .project-card:hover,
-    .project-card:focus-within {
-      transform: none;
-    }
   }
 </style>

@@ -12,7 +12,7 @@ import {
   title="Professional Profile"
   description="Professional profile, engineering background and career direction of James Roberts."
 >
-  <div class="profile-page">
+  <main class="profile-page">
     <section class="hero">
       <div class="container hero-inner">
         <div class="hero-copy">
@@ -21,7 +21,7 @@ import {
           <p class="hero-lead">{professionalSummary.introduction}</p>
 
           <div class="hero-actions">
-            <a class="button button-primary" href="/files/James%20Roberts.pdf" target="_blank" rel="noopener noreferrer">Download CV</a>
+            <a class="button button-primary" href="/files/James%20Roberts.pdf" target="_blank">Download CV</a>
             <a class="button button-secondary" href="https://www.linkedin.com/in/james-roberts-007752393/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a class="button button-secondary" href="/projects">View engineering work</a>
           </div>
@@ -125,7 +125,7 @@ import {
         <a class="button button-primary" href="/projects">Explore projects →</a>
       </div>
     </section>
-  </div>
+  </main>
 </BaseLayout>
 
 <style>
@@ -148,18 +148,18 @@ import {
   .hero h1 {
     max-width: 1000px;
     margin: .35rem 0 1.6rem;
-    font-size: clamp(2.5rem, 7vw, 6.5rem);
-    line-height: .98;
-    letter-spacing: -.05em;
+    font-size: clamp(3.3rem, 7vw, 6.5rem);
+    line-height: .94;
+    letter-spacing: -.06em;
   }
 
-  .hero h1 span { display: block; margin-top: .2em; color: var(--primary); }
+  .hero h1 span { display: block; color: var(--primary); }
 
   .hero-lead {
     max-width: 760px;
     margin: 0;
     color: var(--text-muted);
-    font-size: clamp(1.05rem, 2vw, 1.22rem);
+    font-size: 1.22rem;
     line-height: 1.75;
   }
 
@@ -178,7 +178,6 @@ import {
     padding: .4rem .7rem;
     border: 1px solid var(--border);
     border-radius: 999px;
-    background: rgba(255,255,255,.025);
     color: var(--text-muted);
     font-size: .78rem;
   }
@@ -196,8 +195,8 @@ import {
   .statement h2, .section-intro h2, .closing h2 {
     max-width: 650px;
     margin: .35rem 0 0;
-    font-size: clamp(1.9rem, 4vw, 3.6rem);
-    line-height: 1.04;
+    font-size: clamp(2rem, 4vw, 3.6rem);
+    line-height: 1.02;
     letter-spacing: -.04em;
   }
 
@@ -256,7 +255,7 @@ import {
     padding: 3.5rem;
     border: 1px solid rgba(93,184,255,.3);
     border-radius: var(--radius);
-    background: linear-gradient(145deg, rgba(23,43,69,.95), rgba(13,26,43,.95));
+    background: var(--surface);
     box-shadow: var(--shadow);
   }
   .closing-panel h2 { margin: .3rem 0 .8rem; }
@@ -268,19 +267,15 @@ import {
     .capability-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .capability:not(:nth-child(3n + 1)) { padding-left: 0; border-left: 0; }
     .capability:nth-child(even) { padding-left: 1.8rem; border-left: 1px solid var(--border); }
-    .closing-panel { gap: 2rem; padding: 2.5rem; }
   }
 
   @media (max-width: 650px) {
-    .hero { padding: 3.5rem 0 3rem; }
-    .section { padding: 3.25rem 0; }
-    .hero h1 { font-size: clamp(2.3rem, 11vw, 4rem); }
-    .hero-actions .button { width: 100%; }
-    .section-intro { margin-bottom: 2.25rem; }
+    .hero { padding: 4.5rem 0 4rem; }
+    .section { padding: 4rem 0; }
+    .hero h1 { font-size: clamp(3rem, 15vw, 4.6rem); }
     .capability-grid { grid-template-columns: 1fr; }
-    .capability, .capability:nth-child(even) { padding-left: 0; border-left: 0; }
-    .closing-panel { align-items: flex-start; flex-direction: column; padding: 1.75rem; }
-    .closing-panel .button { width: 100%; }
-    .timeline-item { grid-template-columns: 38px 1px minmax(0, 1fr); gap: 1rem; min-height: 0; }
+    .capability:nth-child(even) { padding-left: 0; border-left: 0; }
+    .closing-panel { align-items: flex-start; flex-direction: column; padding: 2rem; }
+    .timeline-item { grid-template-columns: 38px 1px minmax(0, 1fr); gap: 1rem; }
   }
 </style>

@@ -15,14 +15,5 @@ const skills=[
 <section class="section section-soft"><div class="container skills-grid">{skills.map((s)=><article id={s.id}><p class="eyebrow">{s.tech}</p><h2>{s.title}</h2><p>{s.evidence}</p><a class="card-link" href={s.href}>View related work →</a></article>)}</div></section>
 </BaseLayout>
 <style>
-.page-intro h1{margin:0;font-size:clamp(2.4rem,7vw,5.5rem);letter-spacing:-.05em;line-height:1}
-.skills-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
-.skills-grid article{padding:2rem;border:1px solid var(--border);border-radius:var(--radius);background:linear-gradient(145deg,rgba(23,43,69,.93),rgba(13,26,43,.93));box-shadow:var(--shadow);transition:transform 160ms ease,border-color 160ms ease}
-.skills-grid article:hover,.skills-grid article:focus-within,.skills-grid article:target{border-color:rgba(93,184,255,.45)}
-.skills-grid article:hover,.skills-grid article:focus-within{transform:translateY(-3px)}
-.skills-grid .eyebrow{line-height:1.5}
-.skills-grid h2{margin:.35rem 0 .8rem;font-size:clamp(1.4rem,3vw,2.2rem)}
-.skills-grid article>p:not(.eyebrow){color:var(--text-muted)}
-@media(max-width:750px){.skills-grid{grid-template-columns:1fr}.skills-grid article{padding:1.5rem}}
-@media(prefers-reduced-motion:reduce){.skills-grid article:hover,.skills-grid article:focus-within{transform:none}}
+.page-intro h1{margin:0;font-size:clamp(3rem,7vw,5.5rem);letter-spacing:-.05em;line-height:1}.skills-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}.skills-grid article{padding:2rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}.skills-grid h2{margin:.35rem 0 .8rem;font-size:clamp(1.6rem,3vw,2.2rem)}.skills-grid article>p:not(.eyebrow){color:var(--text-muted)}@media(max-width:750px){.skills-grid{grid-template-columns:1fr}}
 </style>

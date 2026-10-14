@@ -157,9 +157,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 h1 {
   max-width: 950px;
   margin: 0 0 1.5rem;
-  font-size: clamp(2.5rem, 8vw, 6rem);
-  letter-spacing: -.05em;
-  line-height: 1;
+  font-size: clamp(3.2rem, 8vw, 6rem);
+  letter-spacing: -.055em;
+  line-height: .98;
 }
 
 
@@ -187,6 +187,10 @@ h1 span {
   display: flex;
   flex-direction: column;
   min-height: 260px;
+  padding: 1.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
 }
 
 
@@ -195,9 +199,15 @@ h1 span {
 }
 
 
+.card p {
+  color: var(--text-muted);
+}
+
+
 .card-link {
   margin-top: auto;
-  padding-top: 1rem;
+  color: var(--primary);
+  font-weight: 700;
 }
 
 
@@ -205,22 +215,6 @@ h1 span {
 
   .contact-grid {
     grid-template-columns: 1fr;
-  }
-
-  .contact-hero {
-    padding: 4.5rem 0 3rem;
-  }
-
-}
-
-@media (max-width: 600px) {
-
-  .card {
-    min-height: 0;
-  }
-
-  .contact-hero {
-    padding: 3.5rem 0 2.5rem;
   }
 
 }
