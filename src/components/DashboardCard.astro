@@ -81,17 +81,27 @@ const available = Boolean(dashboardUrl);
         rgba(13, 26, 43, 0.96)
       );
     box-shadow: var(--shadow);
+    transition:
+      transform 160ms ease,
+      border-color 160ms ease;
+  }
+
+  .dashboard-card:not(.unavailable):hover,
+  .dashboard-card:not(.unavailable):focus-within {
+    transform: translateY(-4px);
+    border-color: rgba(93, 184, 255, 0.45);
   }
 
   .dashboard-card.unavailable {
-    opacity: 0.72;
+    opacity: 0.8;
   }
 
   .dashboard-topline {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 1rem;
+    gap: 0.5rem 1rem;
   }
 
   .status {
@@ -147,9 +157,36 @@ const available = Boolean(dashboardUrl);
     text-decoration: none;
   }
 
+  .project-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
   .disabled-button {
     cursor: default;
     color: var(--text-muted);
     background: rgba(255, 255, 255, 0.035);
+  }
+
+  .disabled-button:hover {
+    transform: none;
+  }
+
+  @media (max-width: 600px) {
+    .dashboard-card {
+      min-height: 0;
+      padding: 1.4rem;
+    }
+
+    .dashboard-actions .button {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dashboard-card:not(.unavailable):hover,
+    .dashboard-card:not(.unavailable):focus-within {
+      transform: none;
+    }
   }
 </style>
