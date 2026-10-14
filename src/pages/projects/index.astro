@@ -11,5 +11,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </div></section>
 </BaseLayout>
 <style>
-.page-intro h1{margin:0;font-size:clamp(3rem,7vw,5.5rem);letter-spacing:-.05em;line-height:1}.project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}.project-card{display:block;padding:2rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);text-decoration:none}.project-card.featured{grid-column:1/-1;border-color:rgba(93,184,255,.45)}.project-card>span{color:var(--primary);font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.project-card h2{margin:.5rem 0;font-size:clamp(1.7rem,4vw,2.5rem)}.project-card p{color:var(--text-muted);max-width:760px}.project-card strong{color:var(--primary)}.planned{border-style:dashed}@media(max-width:700px){.project-grid{grid-template-columns:1fr}.project-card.featured{grid-column:auto}}
+.page-intro h1{margin:0;font-size:clamp(2.4rem,7vw,5.5rem);letter-spacing:-.05em;line-height:1}
+.project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
+.project-card{display:block;padding:2rem;border:1px solid var(--border);border-radius:var(--radius);background:linear-gradient(145deg,rgba(23,43,69,.93),rgba(13,26,43,.93));box-shadow:var(--shadow);text-decoration:none;transition:transform 160ms ease,border-color 160ms ease}
+.project-card:hover,.project-card:focus-visible{transform:translateY(-4px);border-color:rgba(93,184,255,.45)}
+.project-card.featured{grid-column:1/-1;border-color:rgba(93,184,255,.45)}
+.project-card>span{color:var(--primary);font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.project-card h2{margin:.5rem 0;font-size:clamp(1.5rem,4vw,2.5rem)}
+.project-card p{color:var(--text-muted);max-width:760px}
+.project-card strong{color:var(--primary)}
+.project-card:hover strong{text-decoration:underline;text-underline-offset:.25em}
+.planned{border-style:dashed}
+@media(max-width:700px){.project-grid{grid-template-columns:1fr}.project-card.featured{grid-column:auto}.project-card{padding:1.5rem}}
+@media(prefers-reduced-motion:reduce){.project-card:hover{transform:none}}
 </style>
