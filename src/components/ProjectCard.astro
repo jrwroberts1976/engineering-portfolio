@@ -35,6 +35,8 @@ const {
   status = 'Active project',
   technologies = [],
 } = Astro.props;
+
+const canonicalHref = href.endsWith('/') ? href : `${href}/`;
 ---
 
 <article class="project-card">
@@ -63,7 +65,7 @@ const {
     )
   }
 
-  <a class="card-link" href={href}>
+  <a class="card-link" href={canonicalHref}>
     View case study →
   </a>
 </article>
